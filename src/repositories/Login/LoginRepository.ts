@@ -46,3 +46,5 @@ class LoginRepository {
         return deletedLogin
     }
 }
+
+export default new LoginRepository()
