@@ -2,7 +2,7 @@ import { PrismaClient ,Client, PrismaPromise, Prisma } from "@prisma/client";
 const prisma = new PrismaClient()
 
 interface CreateDTO {
-    data: Client
+    data: Omit<Client, 'id' | 'created_at' | 'updated_at'>
 }
 interface UpdateDTO {
     id: number;
@@ -17,6 +17,7 @@ class ClientRepository {
         const client = await prisma.client.create({
             data: {
                 ...data
+                
             }
         })
         return client

@@ -2,11 +2,11 @@ import { PrismaClient , ClientProfile, PrismaPromise, Prisma } from "@prisma/cli
 const prisma = new PrismaClient()
 
 interface CreateDTO {
-    data: ClientProfile
+    data: Omit<ClientProfile, 'id' | 'created_at' | 'updated_at'>
 }
 interface UpdateDTO {
     id: number;
-    data: ClientProfile
+    data: Omit<ClientProfile, 'id' | 'created_at' | 'updated_at'>
 }
 interface DeleteDTO {
     id: number
