@@ -1,4 +1,4 @@
-import { PrismaClient ,Client, PrismaPromise, Prisma } from "@prisma/client";
+import { PrismaClient ,Client, PrismaPromise, Prisma, Login } from "@prisma/client";
 const prisma = new PrismaClient()
 
 interface CreateDTO {
@@ -27,7 +27,7 @@ class ClientRepository {
         return clients
 
     }
-    async update({id, data}: UpdateDTO): Promise<Prisma.Prisma__LoginClient<Client>> {
+    async updateClient({id, data}: UpdateDTO): Promise<Prisma.Prisma__LoginClient<Client>> {
         const newClient = await prisma.client.update({
             where: {
                 id
@@ -38,6 +38,8 @@ class ClientRepository {
         })
         return newClient
     }
+
+   
     async delete({id}: DeleteDTO): Promise<Prisma.Prisma__LoginClient<Client>> {
         const deletedClient = await prisma.client.delete({
             where: {
