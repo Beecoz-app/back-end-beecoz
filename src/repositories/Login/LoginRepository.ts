@@ -6,13 +6,14 @@ interface CreateDTO {
 }
 interface UpdateDTO {
     id: number;
-    password: string;
     data: Omit<Login, 'id' | 'created_at' | 'updated_at'>
 }
-interface Update {
+interface UpdatePass {
     id: number;
     password: string;
 }
+
+
 interface DeleteDTO {
     id: number
 }
@@ -32,7 +33,16 @@ class LoginRepository {
 
     }
 
-async updatePassword({id, password}: Update): Promise<Prisma.Prisma__LoginClient<Login>> {
+    async findByEmail({ email }: { email: string }){
+        const emailExists = await prisma.login.findFirst({
+          where: {
+            email,
+          },
+        });
+         return emailExists
+    }
+
+async updatePassword({id, password}: UpdatePass): Promise<Prisma.Prisma__LoginClient<Login>> {
     const newPassword = await prisma.login.update({
             where: {
                 id,
