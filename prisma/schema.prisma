@@ -82,7 +82,7 @@ model Autonomous {
     profile AutonomousProfile @relation(fields: [profileId], references: [id])
     profileId Int @unique
     type TypeUser @relation(fields: [typeId], references: [id])
-    typeId Int @unique
+    typeId Int
     login Login @relation(fields: [loginId], references: [id])
     loginId Int @unique
     service Service[]
@@ -103,7 +103,7 @@ model Client {
     profile ClientProfile @relation(fields: [profileId], references: [id])
     profileId Int @unique
     type TypeUser @relation(fields: [typeId], references: [id])
-    typeId Int @unique
+    typeId Int
     login Login @relation(fields: [loginId], references: [id])
     loginId Int @unique
     publication Publication[]
