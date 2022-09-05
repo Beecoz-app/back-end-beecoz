@@ -4,9 +4,7 @@ import ClientProfileRepository from "../../../repositories/Client/ClientProfile/
 import ClientRepository from "../../../repositories/Client/ClientRepository";
 import LoginRepository from "../../../repositories/Login/LoginRepository";
 import TypeUserRepository from "../../../repositories/TypeUser/TypeUserRepository";
-import { isSomeEmpty } from "../../../utils/isSomeEmpty"
-import { hashPassword, verifyPassword } from "../../../utils/password";
-import { validateEmail } from "../../../utils/validateEmail";
+import { hashPassword} from "../../../utils/password";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -75,16 +73,17 @@ class AuthClientController {
       return res.status(400).json({ message: "Client not found" });
     }
 
-    const isValidPassword = await verifyPassword(password, client.password);
-    if (!isValidPassword) {
-      return res.status(400).json({ message: "Invalid password" });
+    if (!(await bcrypt.compare(password, client.password))) {
+      return res.status(400).json({ message: "Incorrect password" });
     }
 
-    return res.status(200).json({ client });
+    const token = jwt.sign({ id: client.id }, String(process.env.AUTH_SECRET), {
+      expiresIn: 86400,
+    });
+
+
+    return res.status(200).json({ client, token });
   }
-
-  
-
 }
 
 

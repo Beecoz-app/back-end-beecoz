@@ -5,5 +5,4 @@ const authRoutes = Router()
 
 authRoutes.use('/auth/clients', clientAuthRoutes)
 
-
 export {authRoutes}

@@ -58,7 +58,6 @@ CREATE TABLE `tb_autonomous` (
     `loginId` INTEGER NOT NULL,
 
     UNIQUE INDEX `tb_autonomous_profileId_key`(`profileId`),
-    UNIQUE INDEX `tb_autonomous_typeId_key`(`typeId`),
     UNIQUE INDEX `tb_autonomous_loginId_key`(`loginId`),
     PRIMARY KEY (`tb_autonomous_id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -78,7 +77,6 @@ CREATE TABLE `tb_clients` (
     `loginId` INTEGER NOT NULL,
 
     UNIQUE INDEX `tb_clients_profileId_key`(`profileId`),
-    UNIQUE INDEX `tb_clients_typeId_key`(`typeId`),
     UNIQUE INDEX `tb_clients_loginId_key`(`loginId`),
     PRIMARY KEY (`tb_clients_id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
