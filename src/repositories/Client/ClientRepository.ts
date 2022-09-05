@@ -39,7 +39,15 @@ class ClientRepository {
         return newClient
     }
 
-   
+    async findClientById({id}: {id: number}): Promise<Client | null> {
+        const client = await prisma.client.findUnique({
+            where: {    
+                id
+            }
+        })
+        return client
+    }
+
     async delete({id}: DeleteDTO): Promise<Prisma.Prisma__LoginClient<Client>> {
         const deletedClient = await prisma.client.delete({
             where: {

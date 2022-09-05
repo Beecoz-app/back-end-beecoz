@@ -65,6 +65,17 @@ async updatePassword({id, password}: UpdatePass): Promise<Prisma.Prisma__LoginCl
         })
         return newLogin
     }
+
+    async findPasswordById({id}: {id: number}): Promise<Prisma.Prisma__LoginClient<Login | null >> {
+        const password = await prisma.login.findUnique({
+            where: {
+                id
+            }
+        })
+        return password
+    }
+
+
     async delete({id}: DeleteDTO): Promise<Prisma.Prisma__LoginClient<Login>> {
         const deletedLogin = await prisma.login.delete({
             where: {

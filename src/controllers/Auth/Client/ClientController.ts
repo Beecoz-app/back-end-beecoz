@@ -5,6 +5,9 @@ import ClientRepository from "../../../repositories/Client/ClientRepository";
 import LoginRepository from "../../../repositories/Login/LoginRepository";
 import TypeUserRepository from "../../../repositories/TypeUser/TypeUserRepository";
 import { isSomeEmpty } from "../../../utils/isSomeEmpty"
+import { hashPassword, verifyPassword } from "../../../utils/password";
+import { validateEmail } from "../../../utils/validateEmail";
+import bcrypt from "bcrypt";
 
 class AuthClientController {
   async register(req: Request, res: Response) {
@@ -19,6 +22,7 @@ class AuthClientController {
       cpf,
       biography
     }: Client & { email: string; password: string, cellNumber: number | null, biography: string } = req.body;
+      
 
     const login = await LoginRepository.create({ data: { email, password, cellNumber } });
     const profile = await ClientProfileRepository.create({ data: { biography } })
@@ -28,8 +32,59 @@ class AuthClientController {
     const client = await ClientRepository.create({ data: { name, lastName, gender, bornDate: new Date(bornDate), cpf, loginId: login.id, profileId: profile.id, typeId } })
 
     return res.json({ client })
-  };
+  }
+
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+    const parsedId = Number(id);
+    
+    const clientExists = await ClientRepository.findClientById({ id: parsedId });
+    if (!clientExists) {
+      return res.status(400).json({ message: "Client not found" });
+    }
+  
+    await ClientRepository.delete({ id: parsedId });
+
+    return res
+      .status(200)
+      .json({ message: "Client deleted successfully" });
+  }
+
+  async updatePassword(req: Request, res: Response) {
+    const { id } = req.params;
+    const parsedId = Number(id);
+    const { newPassword } = req.body;
+
+    const clientExists = await ClientRepository.findClientById({ id: parsedId });
+    if (!clientExists) {
+      return res.status(400).json({ message: "Client not found" });
+    }
+
+    const brandNewPassword = await LoginRepository.updatePassword({ id: clientExists.loginId, password: await hashPassword(newPassword) });
+    
+    
+    return res.status(200).json({ brandNewPassword });
+  }
+
+  async login (req: Request, res: Response) {
+    const { email, password } = req.body;
+
+    const client = await LoginRepository.findByEmail({ email });
+    if (!client) {
+      return res.status(400).json({ message: "Client not found" });
+    }
+
+    const isValidPassword = await verifyPassword(password, client.password);
+    if (!isValidPassword) {
+      return res.status(400).json({ message: "Invalid password" });
+    }
+
+    return res.status(200).json({ client });
+  }
+
+  
 
 }
 
-export default new AuthClientController()
+
+export default new AuthClientController();
