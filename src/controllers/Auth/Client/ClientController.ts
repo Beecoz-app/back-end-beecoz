@@ -8,6 +8,7 @@ import { isSomeEmpty } from "../../../utils/isSomeEmpty"
 import { hashPassword, verifyPassword } from "../../../utils/password";
 import { validateEmail } from "../../../utils/validateEmail";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 class AuthClientController {
   async register(req: Request, res: Response) {
