@@ -1,4 +1,5 @@
 import { PrismaClient ,AutonomousProfile, PrismaPromise, Prisma } from "@prisma/client";
+import { IAutonomousProfileRepository } from "../../../interfaces/repositories/Autonomous/AutonomousProfile/IAutonomousProfile";
 const prisma = new PrismaClient()
 
 interface CreateDTO {
@@ -12,7 +13,7 @@ interface DeleteDTO {
     id: number
 }
 
-class AutonomousProfilesRepository {
+class AutonomousProfilesRepository implements IAutonomousProfileRepository{
     async create({data}: CreateDTO): Promise<AutonomousProfile> {
         const autonomousProfile = await prisma.autonomousProfile.create({
             data: {
