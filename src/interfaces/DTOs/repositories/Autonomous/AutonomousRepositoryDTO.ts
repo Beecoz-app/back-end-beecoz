@@ -5,7 +5,7 @@ export interface CreateDTO {
 }
 export interface UpdateDTO {
     id: number;
-    data: Autonomous
+    data: Omit<Autonomous, 'id' | 'created_at' | 'updated_at'>
 }
 export interface DeleteDTO {
     id: number

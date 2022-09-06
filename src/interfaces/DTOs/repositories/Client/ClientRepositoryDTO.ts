@@ -5,7 +5,7 @@ export interface CreateDTO {
 }
 export interface UpdateDTO {
     id: number;
-    data: Client
+    data: Omit<Client, 'id' | 'created_at' | 'updated_at'>
 }
 export interface DeleteDTO {
     id: number
