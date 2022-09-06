@@ -78,8 +78,6 @@ class AuthClientController {
       return res.status(400).json({ message: "Client not found" });
     }
 
-    console.log(client.password, password)
-
     if (!await bcrypt.compare(password, client.password)) {
       return res.status(400).json({ message: "Incorrect password" });
     }

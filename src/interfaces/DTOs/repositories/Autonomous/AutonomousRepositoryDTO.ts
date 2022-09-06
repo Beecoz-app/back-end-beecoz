@@ -10,3 +10,6 @@ export interface AutonomousRepositoryUpdateDTO {
 export interface AutonomousRepositoryDeleteDTO {
     id: number
 }
+export interface AutonomousRepositoryFindAutonomousByIdDTO {
+    id: number;
+}
