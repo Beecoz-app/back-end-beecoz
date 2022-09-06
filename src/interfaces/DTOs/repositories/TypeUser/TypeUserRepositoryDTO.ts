@@ -1,15 +1,15 @@
 import { TypeUser } from "@prisma/client";
 
-export interface CreateDTO {
+export interface TypeUserRepositoryCreateDTO {
   data: Omit<TypeUser, "id" | "created_at" | "updated_at">;
 }
-export interface UpdateDTO {
+export interface TypeUserRepositoryUpdateDTO {
   id: number;
   data: Omit<TypeUser, "id" | "created_at" | "updated_at">;
 }
-export interface DeleteDTO {
+export interface TypeUserRepositoryDeleteDTO {
   id: number;
 }
-export interface findByLevelDTO {
+export interface TypeUserRepositoryfindByLevelDTO {
   level: "Beginner" | "Intermediate" | "Queen";
 }

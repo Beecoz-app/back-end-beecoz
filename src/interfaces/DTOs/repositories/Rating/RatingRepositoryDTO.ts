@@ -1,12 +1,12 @@
 import { Rating } from "@prisma/client";
 
-export interface CreateDTO {
+export interface RatingRepositoryCreateDTO {
     data: Omit<Rating, 'id' | 'created_at' | 'updated_at'>
 }
-export interface UpdateDTO {
+export interface RatingRepositoryUpdateDTO {
     id: number;
     data: Omit<Rating, 'id' | 'created_at' | 'updated_at'>
 }
-export interface DeleteDTO {
+export interface RatingRepositoryDeleteDTO {
     id: number
 }

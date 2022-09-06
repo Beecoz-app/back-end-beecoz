@@ -1,12 +1,12 @@
 import { Autonomous } from "@prisma/client";
 
-export interface CreateDTO {
+export interface AutonomousRepositoryCreateDTO {
     data: Omit<Autonomous, 'id' | 'created_at' | 'updated_at'>
 }
-export interface UpdateDTO {
+export interface AutonomousRepositoryUpdateDTO {
     id: number;
     data: Omit<Autonomous, 'id' | 'created_at' | 'updated_at'>
 }
-export interface DeleteDTO {
+export interface AutonomousRepositoryDeleteDTO {
     id: number
 }

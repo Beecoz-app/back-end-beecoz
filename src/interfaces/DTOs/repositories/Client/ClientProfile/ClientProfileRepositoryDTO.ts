@@ -1,12 +1,12 @@
 import { ClientProfile } from "@prisma/client";
 
-export interface CreateDTO {
+export interface ClientProfileRepositoryCreateDTO {
     data: Omit<ClientProfile, 'id' | 'created_at' | 'updated_at'>
 }
-export interface UpdateDTO {
+export interface ClientProfileRepositoryUpdateDTO {
     id: number;
     data: Omit<ClientProfile, 'id' | 'created_at' | 'updated_at'>
 }
-export interface DeleteDTO {
+export interface ClientProfileRepositoryDeleteDTO {
     id: number
 }

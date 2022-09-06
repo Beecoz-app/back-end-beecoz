@@ -1,16 +1,16 @@
 import { Login } from "@prisma/client";
 
-export interface CreateDTO {
+export interface LoginRepositoryCreateDTO {
     data: Omit<Login, 'id' | 'created_at' | 'updated_at'>
 }
-export interface UpdateDTO {
+export interface LoginRepositoryUpdateDTO {
     id: number;
     data: Omit<Login, 'id' | 'created_at' | 'updated_at'>
 }
-export interface UpdatePassword {
+export interface LoginRepositoryUpdatePassword {
     id: number;
     password: string;
 }
-export interface DeleteDTO {
+export interface LoginRepositoryDeleteDTO {
     id: number
 }
