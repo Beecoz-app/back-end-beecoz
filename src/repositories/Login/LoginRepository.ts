@@ -12,8 +12,6 @@ interface UpdatePass {
     id: number;
     password: string;
 }
-
-
 interface DeleteDTO {
     id: number
 }
