@@ -10,3 +10,6 @@ export interface ClientRepositoryUpdateDTO {
 export interface ClientRepositoryDeleteDTO {
     id: number
 }
+export interface ClientRepositoryFindClientByIdDTO {
+    id: number;
+}

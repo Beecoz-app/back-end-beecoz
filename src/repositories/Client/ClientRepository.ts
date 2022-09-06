@@ -1,19 +1,10 @@
 import { PrismaClient ,Client, PrismaPromise, Prisma, Login } from "@prisma/client";
+import { ClientRepositoryCreateDTO, ClientRepositoryFindClientByIdDTO, ClientRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/Client/ClientRepositoryDTO";
+import { IClientRepository } from "../../interfaces/repositories/Client/IClientRepository";
 const prisma = new PrismaClient()
 
-interface CreateDTO {
-    data: Omit<Client, 'id' | 'created_at' | 'updated_at'>
-}
-interface UpdateDTO {
-    id: number;
-    data: Client
-}
-interface DeleteDTO {
-    id: number
-}
-
-class ClientRepository {
-    async create({data}: CreateDTO): Promise<Client> {
+class ClientRepository implements IClientRepository {
+    async create({data}: ClientRepositoryCreateDTO): Promise<Client> {
         const client = await prisma.client.create({
             data: {
                 ...data
@@ -27,7 +18,7 @@ class ClientRepository {
         return clients
 
     }
-    async updateClient({id, data}: UpdateDTO): Promise<Prisma.Prisma__LoginClient<Client>> {
+    async update({id, data}: ClientRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<Client>> {
         const newClient = await prisma.client.update({
             where: {
                 id
@@ -39,7 +30,7 @@ class ClientRepository {
         return newClient
     }
 
-    async findClientById({id}: {id: number}): Promise<Client | null> {
+    async findClientById({id}: ClientRepositoryFindClientByIdDTO): Promise<Client | null> {
         const client = await prisma.client.findUnique({
             where: {    
                 id
