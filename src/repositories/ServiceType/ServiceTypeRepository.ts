@@ -1,4 +1,5 @@
 import { PrismaClient ,ServiceType, Prisma, PrismaPromise } from "@prisma/client";
+import { IServiceTypeRepository } from "../../interfaces/repositories/ServiceType/IServiceTypeRepository";
 const prisma = new PrismaClient()
 
 interface CreateDTO {
@@ -12,7 +13,7 @@ interface DeleteDTO {
     id: number
 }
 
-class ServiceTypeRepository {
+class ServiceTypeRepository implements IServiceTypeRepository {
     async create({data}: CreateDTO): Promise<ServiceType> {
         const serviceType = await prisma.serviceType.create({
             data: {
