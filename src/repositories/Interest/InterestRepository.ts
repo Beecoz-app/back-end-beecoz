@@ -1,19 +1,10 @@
 import { PrismaClient ,Interest, Prisma, PrismaPromise } from "@prisma/client";
+import { InterestRepositoryCreateDTO, InterestRepositoryDeleteDTO, InterestRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/Interest/InterestRepositoryDTO";
+import { IInterestRepository } from "../../interfaces/repositories/Interest/IInterestRepository";
 const prisma = new PrismaClient()
 
-interface CreateDTO {
-    data: Interest
-}
-interface UpdateDTO {
-    id: number;
-    data: Interest
-}
-interface DeleteDTO {
-    id: number
-}
-
-class InterestRepository {
-    async create({data}: CreateDTO): Promise<Interest> {
+class InterestRepository implements IInterestRepository{
+    async create({data}: InterestRepositoryCreateDTO): Promise<Interest> {
         const interest = await prisma.interest.create({
             data: {
                 ...data
@@ -26,7 +17,7 @@ class InterestRepository {
         return interests
 
     }
-    async update({id, data}: UpdateDTO): Promise<Prisma.Prisma__LoginClient<Interest>> {
+    async update({id, data}: InterestRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<Interest>> {
         const newInterest = await prisma.interest.update({
             where: {
                 id
@@ -37,7 +28,7 @@ class InterestRepository {
         })
         return newInterest
     }
-    async delete({id}: DeleteDTO): Promise<Prisma.Prisma__LoginClient<Interest>> {
+    async delete({id}: InterestRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<Interest>> {
         const deletedInterest = await prisma.interest.delete({
             where: {
                 id

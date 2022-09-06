@@ -1,23 +1,11 @@
 import { PrismaClient, TypeUser, Prisma, PrismaPromise } from "@prisma/client";
+import { TypeUserRepositoryCreateDTO, TypeUserRepositoryDeleteDTO, TypeUserRepositoryFindByLevelDTO, TypeUserRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/TypeUser/TypeUserRepositoryDTO";
+import { WorkRepositoryCreateDTO } from "../../interfaces/DTOs/repositories/Work/WorkRepositoryDTO";
 import { IUserTypeRepository } from "../../interfaces/repositories/UserType/IUserTypeRepository";
 const prisma = new PrismaClient();
 
-interface CreateDTO {
-  data: Omit<TypeUser, "id" | "created_at" | "updated_at">;
-}
-interface UpdateDTO {
-  id: number;
-  data: Omit<TypeUser, "id" | "created_at" | "updated_at">;
-}
-interface DeleteDTO {
-  id: number;
-}
-interface findByLevelDTO {
-  level: "Beginner" | "Intermediate" | "Queen";
-}
-
 class TypeUserRepository implements IUserTypeRepository {
-  async create({ data }: CreateDTO): Promise<TypeUser> {
+  async create({ data }: TypeUserRepositoryCreateDTO): Promise<TypeUser> {
     const typeUser = await prisma.typeUser.create({
       data: {
         ...data,
@@ -32,7 +20,7 @@ class TypeUserRepository implements IUserTypeRepository {
   async update({
     id,
     data,
-  }: UpdateDTO): Promise<Prisma.Prisma__LoginClient<TypeUser>> {
+  }: TypeUserRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<TypeUser>> {
     const newTypeUser = await prisma.typeUser.update({
       where: {
         id,
@@ -45,7 +33,7 @@ class TypeUserRepository implements IUserTypeRepository {
   }
   async delete({
     id,
-  }: DeleteDTO): Promise<Prisma.Prisma__LoginClient<TypeUser>> {
+  }: TypeUserRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<TypeUser>> {
     const deletedTypeUser = await prisma.typeUser.delete({
       where: {
         id,
@@ -54,7 +42,7 @@ class TypeUserRepository implements IUserTypeRepository {
     return deletedTypeUser;
   }
 
-  async findByLevel({ level }: findByLevelDTO): Promise<number> {
+  async findByLevel({ level }: TypeUserRepositoryFindByLevelDTO): Promise<number> {
     const type = await prisma.typeUser.findFirst({
       where: {
         level,

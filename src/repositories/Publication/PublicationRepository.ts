@@ -1,20 +1,10 @@
 import { PrismaClient ,Publication, Prisma, PrismaPromise } from "@prisma/client";
+import { PublicationRepositoryCreateDTO, PublicationRepositoryDeleteDTO, PublicationRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/Publication/PublicationRepositoryDTO";
 import { IPublicationRepository } from "../../interfaces/repositories/Publication/IPublicationRepository";
 const prisma = new PrismaClient()
 
-interface CreateDTO {
-    data: Publication
-}
-interface UpdateDTO {
-    id: number;
-    data: Publication
-}
-interface DeleteDTO {
-    id: number
-}
-
 class PublicationRepository implements IPublicationRepository{
-    async create({data}: CreateDTO): Promise<Publication> {
+    async create({data}: PublicationRepositoryCreateDTO): Promise<Publication> {
         const publication = await prisma.publication.create({
             data: {
                 ...data
@@ -27,7 +17,7 @@ class PublicationRepository implements IPublicationRepository{
         return publications
 
     }
-    async update({id, data}: UpdateDTO): Promise<Prisma.Prisma__LoginClient<Publication>> {
+    async update({id, data}: PublicationRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<Publication>> {
         const newPublication = await prisma.publication.update({
             where: {
                 id
@@ -38,7 +28,7 @@ class PublicationRepository implements IPublicationRepository{
         })
         return newPublication
     }
-    async delete({id}: DeleteDTO): Promise<Prisma.Prisma__LoginClient<Publication>> {
+    async delete({id}: PublicationRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<Publication>> {
         const deletedPublication = await prisma.publication.delete({
             where: {
                 id

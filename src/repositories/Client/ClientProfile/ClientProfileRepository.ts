@@ -1,20 +1,10 @@
 import { PrismaClient , ClientProfile, PrismaPromise, Prisma } from "@prisma/client";
-import { IClientpProfileRepository } from "../../../interfaces/repositories/Client/ClientProfile/IClientProfileRepository";
+import { ClientProfileRepositoryCreateDTO, ClientProfileRepositoryDeleteDTO, ClientProfileRepositoryUpdateDTO } from "../../../interfaces/DTOs/repositories/Client/ClientProfile/ClientProfileRepositoryDTO";
+import { IClientProfileRepository } from "../../../interfaces/repositories/Client/ClientProfile/IClientProfileRepository";
 const prisma = new PrismaClient()
 
-interface CreateDTO {
-    data: Omit<ClientProfile, 'id' | 'created_at' | 'updated_at'>
-}
-interface UpdateDTO {
-    id: number;
-    data: Omit<ClientProfile, 'id' | 'created_at' | 'updated_at'>
-}
-interface DeleteDTO {
-    id: number
-}
-
-class ClientProfileRepository implements IClientpProfileRepository {
-    async create({data}: CreateDTO): Promise<ClientProfile> {
+class ClientProfileRepository implements IClientProfileRepository {
+    async create({data}: ClientProfileRepositoryCreateDTO): Promise<ClientProfile> {
         const clientProfile = await prisma.clientProfile.create({
             data: {
                 ...data
@@ -27,7 +17,7 @@ class ClientProfileRepository implements IClientpProfileRepository {
         return clientsProfiles
 
     }
-    async update({id, data}: UpdateDTO): Promise<Prisma.Prisma__LoginClient<ClientProfile>> {
+    async update({id, data}: ClientProfileRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<ClientProfile>> {
         const newClientProfile = await prisma.clientProfile.update({
             where: {
                 id
@@ -38,7 +28,7 @@ class ClientProfileRepository implements IClientpProfileRepository {
         })
         return newClientProfile
     }
-    async delete({id}: DeleteDTO): Promise<Prisma.Prisma__LoginClient<ClientProfile>> {
+    async delete({id}: ClientProfileRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<ClientProfile>> {
         const deletedClientProfile = await prisma.clientProfile.delete({
             where: {
                 id

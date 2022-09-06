@@ -4,7 +4,6 @@ import {
   PrismaPromise,
   Prisma,
 } from "@prisma/client";
-import { AutonomousProfileRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/Autonomous/AutonomousProfile/AutonomousProfileRepostoryDTO";
 import {
   AutonomousRepositoryCreateDTO,
   AutonomousRepositoryDeleteDTO,
@@ -13,16 +12,6 @@ import {
 import { IAutonomousRepository } from "../../interfaces/repositories/Autonomous/IAutonomousRepository";
 const prisma = new PrismaClient();
 
-interface CreateDTO {
-  data: Autonomous;
-}
-interface UpdateDTO {
-  id: number;
-  data: Autonomous;
-}
-interface DeleteDTO {
-  id: number;
-}
 
 class AutonomousRepository implements IAutonomousRepository {
   async create({ data }: AutonomousRepositoryCreateDTO): Promise<Autonomous> {

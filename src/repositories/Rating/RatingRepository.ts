@@ -1,20 +1,10 @@
 import { PrismaClient ,Rating, Prisma, PrismaPromise } from "@prisma/client";
+import { RatingRepositoryCreateDTO, RatingRepositoryDeleteDTO, RatingRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/Rating/RatingRepositoryDTO";
 import { IRatingRepository } from "../../interfaces/repositories/Rating/IRatingRepository";
 const prisma = new PrismaClient()
 
-interface CreateDTO {
-    data: Rating
-}
-interface UpdateDTO {
-    id: number;
-    data: Rating
-}
-interface DeleteDTO {
-    id: number
-}
-
 class RatingRepository implements IRatingRepository {
-    async create({data}: CreateDTO): Promise<Rating> {
+    async create({data}: RatingRepositoryCreateDTO): Promise<Rating> {
         const rating = await prisma.rating.create({
             data: {
                 ...data
@@ -27,7 +17,7 @@ class RatingRepository implements IRatingRepository {
         return ratings
 
     }
-    async update({id, data}: UpdateDTO): Promise<Prisma.Prisma__LoginClient<Rating>> {
+    async update({id, data}: RatingRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<Rating>> {
         const newRating = await prisma.rating.update({
             where: {
                 id
@@ -38,7 +28,7 @@ class RatingRepository implements IRatingRepository {
         })
         return newRating
     }
-    async delete({id}: DeleteDTO): Promise<Prisma.Prisma__LoginClient<Rating>> {
+    async delete({id}: RatingRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<Rating>> {
         const deletedRating = await prisma.rating.delete({
             where: {
                 id

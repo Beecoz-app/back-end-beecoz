@@ -1,20 +1,10 @@
 import { PrismaClient ,ServiceType, Prisma, PrismaPromise } from "@prisma/client";
+import { ServiceTypeRepositoryCreateDTO, ServiceTypeRepositoryDeleteDTO, ServiceTypeRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/ServiceType/ServiceTypeRepositoryDTO";
 import { IServiceTypeRepository } from "../../interfaces/repositories/ServiceType/IServiceTypeRepository";
 const prisma = new PrismaClient()
 
-interface CreateDTO {
-    data: ServiceType
-}
-interface UpdateDTO {
-    id: number;
-    data: ServiceType
-}
-interface DeleteDTO {
-    id: number
-}
-
 class ServiceTypeRepository implements IServiceTypeRepository {
-    async create({data}: CreateDTO): Promise<ServiceType> {
+    async create({data}: ServiceTypeRepositoryCreateDTO): Promise<ServiceType> {
         const serviceType = await prisma.serviceType.create({
             data: {
                 ...data
@@ -27,7 +17,7 @@ class ServiceTypeRepository implements IServiceTypeRepository {
         return servicesTypes
 
     }
-    async update({id, data}: UpdateDTO): Promise<Prisma.Prisma__LoginClient<ServiceType>> {
+    async update({id, data}: ServiceTypeRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<ServiceType>> {
         const newServiceType = await prisma.serviceType.update({
             where: {
                 id
@@ -38,7 +28,7 @@ class ServiceTypeRepository implements IServiceTypeRepository {
         })
         return newServiceType
     }
-    async delete({id}: DeleteDTO): Promise<Prisma.Prisma__LoginClient<ServiceType>> {
+    async delete({id}: ServiceTypeRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<ServiceType>> {
         const deletedServiceType = await prisma.serviceType.delete({
             where: {
                 id

@@ -1,24 +1,11 @@
 import { PrismaClient, Login, Prisma, PrismaPromise } from "@prisma/client";
+import { LoginRepositoryCreateDTO, LoginRepositoryDeleteDTO, LoginRepositoryUpdateDTO, LoginRepositoryUpdatePassword } from "../../interfaces/DTOs/repositories/Login/LoginReposityDTO";
 import { ILoginRepository } from "../../interfaces/repositories/Login/ILoginRepository";
 const prisma = new PrismaClient();
 
-interface CreateDTO {
-  data: Omit<Login, "id" | "created_at" | "updated_at">;
-}
-interface UpdateDTO {
-  id: number;
-  data: Omit<Login, "id" | "created_at" | "updated_at">;
-}
-interface UpdatePass {
-  id: number;
-  password: string;
-}
-interface DeleteDTO {
-  id: number;
-}
 
 class LoginRepository implements ILoginRepository {
-  async create({ data }: CreateDTO): Promise<Login> {
+  async create({ data }: LoginRepositoryCreateDTO): Promise<Login> {
     const login = await prisma.login.create({
       data: {
         ...data,
@@ -43,7 +30,7 @@ class LoginRepository implements ILoginRepository {
   async update({
     id,
     data,
-  }: UpdateDTO): Promise<Prisma.Prisma__LoginClient<Login>> {
+  }: LoginRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<Login>> {
     const newLogin = await prisma.login.update({
       where: {
         id,
@@ -55,7 +42,7 @@ class LoginRepository implements ILoginRepository {
     return newLogin;
   }
 
-  async delete({ id }: DeleteDTO): Promise<Prisma.Prisma__LoginClient<Login>> {
+  async delete({ id }: LoginRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<Login>> {
     const deletedLogin = await prisma.login.delete({
       where: {
         id,
@@ -66,7 +53,7 @@ class LoginRepository implements ILoginRepository {
   async updatePassword({
     id,
     password,
-  }: UpdatePass): Promise<Prisma.Prisma__LoginClient<Login>> {
+  }: LoginRepositoryUpdatePassword): Promise<Prisma.Prisma__LoginClient<Login>> {
     const newPassword = await prisma.login.update({
       where: {
         id,

@@ -1,4 +1,5 @@
 import { PrismaClient ,AutonomousProfile, PrismaPromise, Prisma } from "@prisma/client";
+import { AutonomousProfileRepositoryCreateDTO, AutonomousProfileRepositoryDeleteDTO, AutonomousProfileRepositoryUpdateDTO } from "../../../interfaces/DTOs/repositories/Autonomous/AutonomousProfile/AutonomousProfileRepostoryDTO";
 import { IAutonomousProfileRepository } from "../../../interfaces/repositories/Autonomous/AutonomousProfile/IAutonomousProfile";
 const prisma = new PrismaClient()
 
@@ -14,7 +15,7 @@ interface DeleteDTO {
 }
 
 class AutonomousProfilesRepository implements IAutonomousProfileRepository{
-    async create({data}: CreateDTO): Promise<AutonomousProfile> {
+    async create({data}: AutonomousProfileRepositoryCreateDTO): Promise<AutonomousProfile> {
         const autonomousProfile = await prisma.autonomousProfile.create({
             data: {
                 ...data
@@ -27,7 +28,7 @@ class AutonomousProfilesRepository implements IAutonomousProfileRepository{
         return autonomousProfiles
 
     }
-    async update({id, data}: UpdateDTO): Promise<Prisma.Prisma__LoginClient<AutonomousProfile>> {
+    async update({id, data}: AutonomousProfileRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<AutonomousProfile>> {
         const newAutonomousProfiles = await prisma.autonomousProfile.update({
             where: {
                 id
@@ -38,7 +39,7 @@ class AutonomousProfilesRepository implements IAutonomousProfileRepository{
         })
         return newAutonomousProfiles
     }
-    async delete({id}: DeleteDTO): Promise<Prisma.Prisma__LoginClient<AutonomousProfile>> {
+    async delete({id}: AutonomousProfileRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<AutonomousProfile>> {
         const deletedAutonomousProfile = await prisma.autonomousProfile.delete({
             where: {
                 id

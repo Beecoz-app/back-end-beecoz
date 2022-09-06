@@ -1,19 +1,10 @@
 import { PrismaClient ,Work, Prisma, PrismaPromise } from "@prisma/client";
+import { WorkRepositoryCreateDTO, WorkRepositoryDeleteDTO, WorkRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/Work/WorkRepositoryDTO";
+import { IWorkRepository } from "../../interfaces/repositories/Work/IWorkRepository";
 const prisma = new PrismaClient()
 
-interface CreateDTO {
-    data: Work
-}
-interface UpdateDTO {
-    id: number;
-    data: Work
-}
-interface DeleteDTO {
-    id: number
-}
-
-class WorkRepository {
-    async create({data}: CreateDTO): Promise<Work> {
+class WorkRepository implements IWorkRepository {
+    async create({data}: WorkRepositoryCreateDTO): Promise<Work> {
         const work = await prisma.work.create({
             data: {
                 ...data
@@ -26,7 +17,7 @@ class WorkRepository {
         return works
 
     }
-    async update({id, data}: UpdateDTO): Promise<Prisma.Prisma__LoginClient<Work>> {
+    async update({id, data}: WorkRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<Work>> {
         const newWork = await prisma.work.update({
             where: {
                 id
@@ -37,7 +28,7 @@ class WorkRepository {
         })
         return newWork
     }
-    async delete({id}: DeleteDTO): Promise<Prisma.Prisma__LoginClient<Work>> {
+    async delete({id}: WorkRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<Work>> {
         const deletedWork = await prisma.work.delete({
             where: {
                 id
