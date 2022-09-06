@@ -1,4 +1,5 @@
 import { PrismaClient ,Publication, Prisma, PrismaPromise } from "@prisma/client";
+import { IPublicationRepository } from "../../interfaces/repositories/Publication/IPublicationRepository";
 const prisma = new PrismaClient()
 
 interface CreateDTO {
@@ -12,7 +13,7 @@ interface DeleteDTO {
     id: number
 }
 
-class PublicationRepository {
+class PublicationRepository implements IPublicationRepository{
     async create({data}: CreateDTO): Promise<Publication> {
         const publication = await prisma.publication.create({
             data: {
