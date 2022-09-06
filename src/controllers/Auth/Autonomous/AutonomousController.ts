@@ -23,11 +23,11 @@ class AuthAutonomousController {
         cnpj
         }: Autonomous & { email: string; password: string, cellNumber: number | null, biography: string } = req.body;
 
-        const login = await LoginRepository.create({ data: { email, password, cellNumber } });
+        const login = await LoginRepository.create({ data: { email, password: await hashPassword(password), cellNumber } });
         const typeId = await TypeUserRepository.findByLevel({ level: gender  === 'Female' ? 'Queen' : 'Beginner' })
         const profileId = await AutonomousProfileRepository.create({ data: { biography } })
         
-        const autonomous = await AutonomousRepository.create({ data: { name, lastName, bornDate: new Date(bornDate), cpf, gender, loginId: login.id, typeId, cnpj, profileId: profileId.id } })
+        const autonomous = await AutonomousRepository.create({ data: { name, lastName, bornDate: new Date(bornDate), cpf, gender, loginId: login.id, typeId, cnpj , profileId: profileId.id } })
 
         const token = jwt.sign({ id: autonomous.id }, String(process.env.AUTH_SECRET), {
             expiresIn: 86400,
@@ -76,6 +76,9 @@ class AuthAutonomousController {
           return res.status(400).json({ message: "Client not found" });
         }
     
+        console.log(password, autonomous.password)
+
+
         if (!await bcrypt.compare(password, autonomous.password)) {
           return res.status(400).json({ message: "Incorrect password" });
         }
@@ -89,4 +92,4 @@ class AuthAutonomousController {
       }
 }
 
-export default new AuthAutonomousController;
+export default new AuthAutonomousController();
