@@ -10,6 +10,6 @@ export interface TypeUserRepositoryUpdateDTO {
 export interface TypeUserRepositoryDeleteDTO {
   id: number;
 }
-export interface TypeUserRepositoryfindByLevelDTO {
+export interface TypeUserRepositoryFindByLevelDTO {
   level: "Beginner" | "Intermediate" | "Queen";
 }
