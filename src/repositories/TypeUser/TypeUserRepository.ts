@@ -1,4 +1,5 @@
 import { PrismaClient, TypeUser, Prisma, PrismaPromise } from "@prisma/client";
+import { IUserTypeRepository } from "../../interfaces/repositories/UserType/IUserTypeRepository";
 const prisma = new PrismaClient();
 
 interface CreateDTO {
@@ -15,7 +16,7 @@ interface findByLevelDTO {
   level: "Beginner" | "Intermediate" | "Queen";
 }
 
-class TypeUserRepository {
+class TypeUserRepository implements IUserTypeRepository {
   async create({ data }: CreateDTO): Promise<TypeUser> {
     const typeUser = await prisma.typeUser.create({
       data: {
