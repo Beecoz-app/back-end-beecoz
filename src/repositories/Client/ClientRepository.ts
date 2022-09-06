@@ -1,5 +1,5 @@
 import { PrismaClient ,Client, PrismaPromise, Prisma, Login } from "@prisma/client";
-import { ClientRepositoryCreateDTO, ClientRepositoryFindClientByIdDTO, ClientRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/Client/ClientRepositoryDTO";
+import { ClientRepositoryCreateDTO, ClientRepositoryDeleteDTO, ClientRepositoryFindClientByIdDTO, ClientRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/Client/ClientRepositoryDTO";
 import { IClientRepository } from "../../interfaces/repositories/Client/IClientRepository";
 const prisma = new PrismaClient()
 
@@ -39,7 +39,7 @@ class ClientRepository implements IClientRepository {
         return client
     }
 
-    async delete({id}: DeleteDTO): Promise<Prisma.Prisma__LoginClient<Client>> {
+    async delete({id}: ClientRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<Client>> {
         const deletedClient = await prisma.client.delete({
             where: {
                 id

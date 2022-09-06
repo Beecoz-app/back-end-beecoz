@@ -1,4 +1,5 @@
 import { PrismaClient , ClientProfile, PrismaPromise, Prisma } from "@prisma/client";
+import { IClientpProfileRepository } from "../../../interfaces/repositories/Client/ClientProfile/IClientProfileRepository";
 const prisma = new PrismaClient()
 
 interface CreateDTO {
@@ -12,7 +13,7 @@ interface DeleteDTO {
     id: number
 }
 
-class ClientProfileRepository {
+class ClientProfileRepository implements IClientpProfileRepository {
     async create({data}: CreateDTO): Promise<ClientProfile> {
         const clientProfile = await prisma.clientProfile.create({
             data: {
