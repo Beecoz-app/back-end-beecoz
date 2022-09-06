@@ -14,3 +14,7 @@ export interface LoginRepositoryUpdatePassword {
 export interface LoginRepositoryDeleteDTO {
     id: number
 }
+
+export interface LoginRepositoryFindByIdDTO {
+    id: number
+}

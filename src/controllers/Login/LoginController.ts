@@ -1,74 +1,50 @@
 import { Login } from "@prisma/client";
 import { Request, Response } from "express";
-import LoginRepository from "../../../repositories/Login/LoginRepository";
-import { isSomeEmpty } from "../../../utils/isSomeEmpty"
-import { hashPassword, verifyPassword } from "../../../utils/password";
-import { validateEmail } from "../../../utils/validateEmail";
-
+import LoginRepository from "../../repositories/Login/LoginRepository";
 class LoginController {
     async create(req: Request, res: Response) {
-        const { email, password }: Login = req.body;
-    
-        const isEmailValid = validateEmail(email);
-        const isPasswordValid = verifyPassword(password, hashPassword(password));
-        const isSomeFieldEmpty = isSomeEmpty(email, password);
-    
-        if (!isEmailValid) {
-        return res.status(400).json({ message: "Invalid email" });
-        }
-    
-        if (!isPasswordValid) {
-        return res.status(400).json({ message: "Invalid password" });
-        }
-    
-        if (isSomeFieldEmpty) {
-        return res.status(400).json({ message: "Some field is empty" });
-        }
-    
-        const login = await LoginRepository.create({ data: { email, password } });
+        const { email, password, cellNumber }: Login = req.body;
+
+        const login = await LoginRepository.create({ data: { email, password, cellNumber } });
     
         return res.json({ login });
     }
 
     async update(req: Request, res: Response) {
         const { id } = req.params;
-        const { email, password }: Login = req.body;
-    
-        const isEmailValid = validateEmail(email);
-        const isPasswordValid = verifyPassword(password, hashPassword(password));
-        const isSomeFieldEmpty = isSomeEmpty(email, password);
-    
-        if (!isEmailValid) {
-        return res.status(400).json({ message: "Invalid email" });
-        }
-    
-        if (!isPasswordValid) {
-        return res.status(400).json({ message: "Invalid password" });
-        }
-    
-        if (isSomeFieldEmpty) {
-        return res.status(400).json({ message: "Some field is empty" });
-        }
-    
-        const login = await LoginRepository.update({ where: { id }, data: { email, password } });
+        const { email, password, cellNumber }: Login = req.body;
+        const parsedId = Number( id )
+
+        const login = await LoginRepository.update({ id: parsedId, data: { email, password, cellNumber } });
+        
     
         return res.json({ login });
     }
 
     async delete(req: Request, res: Response) {
         const { id } = req.params;
+        const parsedId = Number(id);
     
-        const login = await LoginRepository.delete({ where: { id } });
+        const login = await LoginRepository.delete({ id: parsedId });
     
         return res.json({ login });
     }
     
    async read (req: Request, res: Response) {
-        const { id } = req.params;
-    
-        const login = await LoginRepository.read({ where: { id } });
+
+        const login = await LoginRepository.read();
     
         return res.json({ login });
+    }
+
+    async readById (req: Request, res:Response) {
+        const { id } = req.params;
+        const parsedId = Number(id);
+
+        const login = await LoginRepository.findLoginById({ id: parsedId });
+
+        return res.json({ login });
+
     }
 }
 

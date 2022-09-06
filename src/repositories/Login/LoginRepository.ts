@@ -1,10 +1,13 @@
 import { PrismaClient, Login, Prisma, PrismaPromise } from "@prisma/client";
-import { LoginRepositoryCreateDTO, LoginRepositoryDeleteDTO, LoginRepositoryUpdateDTO, LoginRepositoryUpdatePassword } from "../../interfaces/DTOs/repositories/Login/LoginReposityDTO";
+import { LoginRepositoryCreateDTO, LoginRepositoryDeleteDTO, LoginRepositoryFindByIdDTO, LoginRepositoryUpdateDTO, LoginRepositoryUpdatePassword } from "../../interfaces/DTOs/repositories/Login/LoginReposityDTO";
 import { ILoginRepository } from "../../interfaces/repositories/Login/ILoginRepository";
 const prisma = new PrismaClient();
 
 
 class LoginRepository implements ILoginRepository {
+  findLoginById({ id }: LoginRepositoryFindByIdDTO): Promise<number> {
+    throw new Error("Method not implemented.");
+  }
   async create({ data }: LoginRepositoryCreateDTO): Promise<Login> {
     const login = await prisma.login.create({
       data: {
@@ -76,6 +79,8 @@ class LoginRepository implements ILoginRepository {
     });
     return password;
   }
+
+
 }
 
 export default new LoginRepository();
