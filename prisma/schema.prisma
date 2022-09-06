@@ -15,7 +15,7 @@ datasource db {
 model Login {
   id    Int     @id @default(autoincrement()) @map("tb_login_id")
   email String  @unique @map("tb_login_email")
-  password String @db.VarChar(20) @map("tb_login_password")
+  password String @map("tb_login_password")
   cellNumber Int?  @unique @map("tb_login_cellnumber")
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt

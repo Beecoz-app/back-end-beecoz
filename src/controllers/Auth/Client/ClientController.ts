@@ -23,14 +23,19 @@ class AuthClientController {
     }: Client & { email: string; password: string, cellNumber: number | null, biography: string } = req.body;
       
 
-    const login = await LoginRepository.create({ data: { email, password, cellNumber } });
+    const login = await LoginRepository.create({ data: { email, password: await hashPassword(password), cellNumber } });
     const profile = await ClientProfileRepository.create({ data: { biography } })
     const typeId = await TypeUserRepository.findByLevel({ level: gender === 'Female' ? 'Queen' : 'Beginner' })
 
 
     const client = await ClientRepository.create({ data: { name, lastName, gender, bornDate: new Date(bornDate), cpf, loginId: login.id, profileId: profile.id, typeId } })
 
-    return res.json({ client })
+    const token = jwt.sign({ id: client.id }, String(process.env.AUTH_SECRET), {
+      expiresIn: 86400,
+    });
+    
+
+    return res.json({ client, token })
   }
 
   async delete(req: Request, res: Response) {
@@ -73,10 +78,12 @@ class AuthClientController {
       return res.status(400).json({ message: "Client not found" });
     }
 
-    if (!(await bcrypt.compare(password, client.password))) {
+    console.log(client.password, password)
+
+    if (!await bcrypt.compare(password, client.password)) {
       return res.status(400).json({ message: "Incorrect password" });
     }
-
+  
     const token = jwt.sign({ id: client.id }, String(process.env.AUTH_SECRET), {
       expiresIn: 86400,
     });
