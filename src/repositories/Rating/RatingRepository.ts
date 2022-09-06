@@ -1,4 +1,5 @@
 import { PrismaClient ,Rating, Prisma, PrismaPromise } from "@prisma/client";
+import { IRatingRepository } from "../../interfaces/repositories/Rating/IRatingRepository";
 const prisma = new PrismaClient()
 
 interface CreateDTO {
@@ -12,7 +13,7 @@ interface DeleteDTO {
     id: number
 }
 
-class RatingRepository {
+class RatingRepository implements IRatingRepository {
     async create({data}: CreateDTO): Promise<Rating> {
         const rating = await prisma.rating.create({
             data: {
