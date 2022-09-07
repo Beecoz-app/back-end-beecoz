@@ -10,3 +10,7 @@ export interface InterestRepositoryUpdateDTO {
 export interface InterestRepositoryDeleteDTO {
     id: number
 }
+
+export interface InterestRepositoryFindInterestByIdDTO {
+    id: number
+}

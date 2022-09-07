@@ -1,9 +1,21 @@
 import { PrismaClient ,Interest, Prisma, PrismaPromise } from "@prisma/client";
 import { InterestRepositoryCreateDTO, InterestRepositoryDeleteDTO, InterestRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/Interest/InterestRepositoryDTO";
 import { IInterestRepository } from "../../interfaces/repositories/Interest/IInterestRepository";
+import { InterestRepositoryFindInterestByIdDTO } from "../../interfaces/DTOs/repositories/Interest/InterestRepositoryDTO";
+
 const prisma = new PrismaClient()
 
 class InterestRepository implements IInterestRepository{
+    
+    async findInterestById({ id }: InterestRepositoryFindInterestByIdDTO): Promise<Interest | null> {
+        const interestId = await prisma.interest.findUnique({
+            where:{
+              id,
+            }
+          })
+          return interestId;
+        }
+    
     async create({data}: InterestRepositoryCreateDTO): Promise<Interest> {
         const interest = await prisma.interest.create({
             data: {

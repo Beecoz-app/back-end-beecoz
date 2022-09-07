@@ -6,5 +6,5 @@ export interface ILoginRepository {
     read(): Promise<PrismaPromise<Login[]>>;
     update({id, data}: LoginRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<Login>>;
     delete({id}: LoginRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<Login>>;
-    findLoginById({id}: LoginRepositoryFindByIdDTO): Promise<number>;
+    findLoginById({id}: LoginRepositoryFindByIdDTO): Promise<Login | null>;
 }

@@ -10,3 +10,7 @@ export interface WorkRepositoryUpdateDTO {
 export interface WorkRepositoryDeleteDTO {
     id: number
 }
+
+export interface WorkRepositoryFindWorkByIdDTO {
+    id: number
+}

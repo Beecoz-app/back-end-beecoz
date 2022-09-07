@@ -1,7 +1,7 @@
 import { Login } from "@prisma/client";
 import { Request, Response } from "express";
 import LoginRepository from "../../repositories/Login/LoginRepository";
-class AuthLoginController {
+class LoginController {
     async create(req: Request, res: Response) {
         const { email, password, cellNumber }: Login = req.body;
 
@@ -48,5 +48,5 @@ class AuthLoginController {
     }
 }
 
-export default new AuthLoginController();
+export default new LoginController();
 

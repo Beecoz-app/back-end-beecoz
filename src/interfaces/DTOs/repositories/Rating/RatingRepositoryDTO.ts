@@ -10,3 +10,7 @@ export interface RatingRepositoryUpdateDTO {
 export interface RatingRepositoryDeleteDTO {
     id: number
 }
+
+export interface RatingRepositoryFindRatingByIdDTO {
+    id: number
+}

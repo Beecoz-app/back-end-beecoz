@@ -10,3 +10,7 @@ export interface PublicationRepositoryUpdateDTO {
 export interface PublicationRepositoryDeleteDTO {
     id: number
 }
+
+export interface PublicationRepositoryFindPublicationByIdDTO {
+    id: number
+}

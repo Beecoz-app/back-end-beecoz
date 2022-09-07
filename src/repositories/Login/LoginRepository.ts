@@ -5,9 +5,16 @@ const prisma = new PrismaClient();
 
 
 class LoginRepository implements ILoginRepository {
-  findLoginById({ id }: LoginRepositoryFindByIdDTO): Promise<number> {
-    throw new Error("Method not implemented.");
+
+  async findLoginById({ id }: LoginRepositoryFindByIdDTO): Promise<Login | null> {
+    const loginId = await prisma.login.findUnique({
+      where:{
+        id,
+      }
+    })
+    return loginId;
   }
+
   async create({ data }: LoginRepositoryCreateDTO): Promise<Login> {
     const login = await prisma.login.create({
       data: {

@@ -10,3 +10,7 @@ export interface ServiceRepositoryUpdateDTO {
 export interface ServiceRepositoryDeleteDTO {
     id: number
 }
+
+export interface ServiceRepositoryFindServiceByIdDTO {
+    id: number
+}
