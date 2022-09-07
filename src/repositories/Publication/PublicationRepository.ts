@@ -1,9 +1,19 @@
 import { PrismaClient ,Publication, Prisma, PrismaPromise } from "@prisma/client";
-import { PublicationRepositoryCreateDTO, PublicationRepositoryDeleteDTO, PublicationRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/Publication/PublicationRepositoryDTO";
+import { PublicationRepositoryCreateDTO, PublicationRepositoryDeleteDTO, PublicationRepositoryFindPublicationByIdDTO, PublicationRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/Publication/PublicationRepositoryDTO";
 import { IPublicationRepository } from "../../interfaces/repositories/Publication/IPublicationRepository";
 const prisma = new PrismaClient()
 
 class PublicationRepository implements IPublicationRepository{
+
+    async findPublicationById({ id }: PublicationRepositoryFindPublicationByIdDTO): Promise<Publication | null> {
+        const publicationId = await prisma.publication.findUnique({
+            where:{
+              id,
+            }
+          })
+          return publicationId;
+        }
+
     async create({data}: PublicationRepositoryCreateDTO): Promise<Publication> {
         const publication = await prisma.publication.create({
             data: {

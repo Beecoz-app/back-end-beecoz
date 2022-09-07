@@ -1,9 +1,18 @@
 import { PrismaClient ,Work, Prisma, PrismaPromise } from "@prisma/client";
-import { WorkRepositoryCreateDTO, WorkRepositoryDeleteDTO, WorkRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/Work/WorkRepositoryDTO";
+import { WorkRepositoryCreateDTO, WorkRepositoryDeleteDTO, WorkRepositoryFindWorkByIdDTO, WorkRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/Work/WorkRepositoryDTO";
 import { IWorkRepository } from "../../interfaces/repositories/Work/IWorkRepository";
 const prisma = new PrismaClient()
 
 class WorkRepository implements IWorkRepository {
+    
+    async findWorkById({ id }: WorkRepositoryFindWorkByIdDTO): Promise<Work | null> {
+        const workId = await prisma.work.findUnique({
+            where:{
+              id,
+            }
+          })
+          return workId;
+        }
     async create({data}: WorkRepositoryCreateDTO): Promise<Work> {
         const work = await prisma.work.create({
             data: {
