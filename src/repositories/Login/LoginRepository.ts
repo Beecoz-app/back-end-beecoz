@@ -23,6 +23,7 @@ class LoginRepository implements ILoginRepository {
     });
     return login;
   }
+  
   async read(): Promise<PrismaPromise<Login[]>> {
     const logins = await prisma.login.findMany();
     return logins;

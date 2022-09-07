@@ -4,20 +4,24 @@ import { IServiceTypeRepository } from "../../interfaces/repositories/ServiceTyp
 const prisma = new PrismaClient()
 
 class ServiceTypeRepository implements IServiceTypeRepository {
-    async create({data}: ServiceTypeRepositoryCreateDTO): Promise<ServiceType> {
+
+    async create({ data }: ServiceTypeRepositoryCreateDTO): Promise<ServiceType> {
         const serviceType = await prisma.serviceType.create({
             data: {
                 ...data
             }
         })
-        return serviceType
+        return serviceType;
     }
     async read(): Promise<PrismaPromise<ServiceType[]>> {
         const servicesTypes = await prisma.serviceType.findMany()
         return servicesTypes
 
     }
-    async update({id, data}: ServiceTypeRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<ServiceType>> {
+    async update({
+        id, 
+        data
+    }: ServiceTypeRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<ServiceType>> {
         const newServiceType = await prisma.serviceType.update({
             where: {
                 id
