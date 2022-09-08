@@ -1,9 +1,18 @@
 import { PrismaClient , ClientProfile, PrismaPromise, Prisma } from "@prisma/client";
-import { ClientProfileRepositoryCreateDTO, ClientProfileRepositoryDeleteDTO, ClientProfileRepositoryUpdateDTO } from "../../../interfaces/DTOs/repositories/Client/ClientProfile/ClientProfileRepositoryDTO";
+import { ClientProfileRepositoryCreateDTO, ClientProfileRepositoryDeleteDTO, ClientProfileRepositoryFindClientProfileByIdDTO, ClientProfileRepositoryUpdateDTO } from "../../../interfaces/DTOs/repositories/Client/ClientProfile/ClientProfileRepositoryDTO";
 import { IClientProfileRepository } from "../../../interfaces/repositories/Client/ClientProfile/IClientProfileRepository";
 const prisma = new PrismaClient()
 
 class ClientProfileRepository implements IClientProfileRepository {
+    async findClientProfileById({ id }: ClientProfileRepositoryFindClientProfileByIdDTO): Promise<ClientProfile | null> {
+        const clientProfileId = await prisma.clientProfile.findUnique({
+            where: {
+                id,
+            }
+            });
+            
+        return clientProfileId;
+    }
     async create({data}: ClientProfileRepositoryCreateDTO): Promise<ClientProfile> {
         const clientProfile = await prisma.clientProfile.create({
             data: {

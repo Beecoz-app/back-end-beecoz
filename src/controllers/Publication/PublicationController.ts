@@ -3,6 +3,7 @@
 // import PublicationRepository from "../../repositories/Publication/PublicationRepository"
 // import ClientRepository from "../../repositories/Client/ClientRepository";
 // import ServiceTypeRepository from "../../repositories/ServiceType/ServiceTypeRepository";
+// import { serviceTypeRoutes } from "../../routes/ServiceType/serviceTypeRoutes";
 
 
 // class PublicationController {
@@ -13,13 +14,13 @@
 //             data, 
 //             region, 
 //             name, 
-//             servtypes 
-//         }: Publication & { name: string, servtypes: string } = req.body;
+//             servTypes 
+//         }: Publication & { name: string, servTypes: string } = req.body;
 
-//         const service = await ServiceTypeRepository.findServiceTypeById({ id: number });
-//         const clientId = await ClientRepository.findClientById({ name });
+//         const service = await ServiceTypeRepository.create({ data: { servTypes} });
+//         const client = await ClientRepository.create({ data: { name } });
 
-//         const publication = PublicationRepository.create({ data: { title, description, data, region, servtypes, name, clientId: clientId.id, serviceId: serviceId.id } });
+//         const publication = PublicationRepository.create({ data: { title, description, data, region, servTypes, name, clientId: clientId.id, serviceTypeId:  } });
 
 //         return res.json({ publication });
 //     }

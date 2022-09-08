@@ -37,6 +37,15 @@ class ClientProfileController {
 
         return res.json({ clientProfile });
     }
+
+    async readById(req: Request, res: Response) {
+        const { id } = req.params;
+        const parsedId = Number(id);
+
+        const clientProfile = await ClientProfileRepository.findClientProfileById({ id: parsedId });
+
+        return res.json({ clientProfile });
+    }
 }
 
 

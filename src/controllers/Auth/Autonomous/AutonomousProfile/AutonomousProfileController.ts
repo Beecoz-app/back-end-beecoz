@@ -37,6 +37,16 @@ class AutonomousProfileController {
     
             return res.json({ autonomousProfile });
         }
+
+        async readById(req: Request, res: Response) {
+            const { id } = req.params;
+            const parsedId = Number(id);
+    
+            const autonomousProfile = await AutonomousProfileRepository.findAutonomousProfileById({ id: parsedId });
+    
+            return res.json({ autonomousProfile });
+        }
+
     }
 
     export default new AutonomousProfileController();
