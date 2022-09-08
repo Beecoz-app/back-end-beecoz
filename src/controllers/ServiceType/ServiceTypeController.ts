@@ -36,6 +36,16 @@ class ServiceTypeController {
     
         return res.json({ serviceType });
     }
+
+    async readById (req: Request, res:Response) {
+        const { id } = req.params;
+        const parsedId = Number(id);
+
+        const serviceType = await ServiceTypeRepository.findServiceTypeById({ id: parsedId });
+
+        return res.json({ serviceType });
+
+    }
 }
 
 export default new ServiceTypeController();

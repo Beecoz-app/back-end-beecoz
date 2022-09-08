@@ -1,9 +1,18 @@
 import { PrismaClient ,ServiceType, Prisma, PrismaPromise } from "@prisma/client";
-import { ServiceTypeRepositoryCreateDTO, ServiceTypeRepositoryDeleteDTO, ServiceTypeRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/ServiceType/ServiceTypeRepositoryDTO";
+import { ServiceTypeRepositoryCreateDTO, ServiceTypeRepositoryDeleteDTO, ServiceTypeRepositoryFindServiceTypeByIdDTO, ServiceTypeRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/ServiceType/ServiceTypeRepositoryDTO";
 import { IServiceTypeRepository } from "../../interfaces/repositories/ServiceType/IServiceTypeRepository";
 const prisma = new PrismaClient()
 
 class ServiceTypeRepository implements IServiceTypeRepository {
+
+    async findServiceTypeById({ id }: ServiceTypeRepositoryFindServiceTypeByIdDTO): Promise<ServiceType | null> {
+        const serviceId = await prisma.serviceType.findUnique({
+            where: {    
+                id
+            }
+        })
+        return serviceId
+    }
 
     async create({ data }: ServiceTypeRepositoryCreateDTO): Promise<ServiceType> {
         const serviceType = await prisma.serviceType.create({

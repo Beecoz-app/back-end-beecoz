@@ -7,10 +7,17 @@
 
 // class PublicationController {
 //     async create(req: Request, res: Response) {
-//         const { title, description, data, region, name, servtypes }: Publication & { name: string, servtypes: string } = req.body;
+//         const { 
+//             title, 
+//             description, 
+//             data, 
+//             region, 
+//             name, 
+//             servtypes 
+//         }: Publication & { name: string, servtypes: string } = req.body;
 
-//         const serviceId = await ServiceTypeRepository.findServiceTypeById({ name: servtypes });
-//         const clientId = await ClientRepository.create({ data: { name } });
+//         const service = await ServiceTypeRepository.findServiceTypeById({ id: number });
+//         const clientId = await ClientRepository.findClientById({ name });
 
 //         const publication = PublicationRepository.create({ data: { title, description, data, region, servtypes, name, clientId: clientId.id, serviceId: serviceId.id } });
 
@@ -21,10 +28,10 @@
 
 //     async update(req: Request, res: Response) {
 //         const { id } = req.params;
-//         const { title, description }: Publication = req.body;
+//         const { title, description, data, region }: Publication = req.body;
 //         const parsedId = Number( id )
 
-//         const publication = await PublicationRepository.update({ id: parsedId, data: { title, description } });
+//         const publication = await PublicationRepository.update({ id: parsedId, data: { title, description, data, region} });
         
 //         return res.json({ publication });
 //     }

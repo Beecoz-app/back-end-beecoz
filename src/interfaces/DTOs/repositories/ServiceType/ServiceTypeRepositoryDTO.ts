@@ -11,4 +11,9 @@ export interface ServiceTypeRepositoryDeleteDTO {
     id: number
 }
 
+export interface ServiceTypeRepositoryFindServiceTypeByIdDTO { 
+    id: number
+}
+
+
 
