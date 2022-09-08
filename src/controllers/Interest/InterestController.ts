@@ -4,15 +4,16 @@
 // import AutonomousRepository from "../../repositories/Autonomous/AutonomousRepository";
 
 // class InterestController {
-//     async create(req: Request, res: Response) {
-//         const { name, description }: Interest & {} = req.body;
 
-//         const autonomous = await AutonomousRepository.create({ data: { name } });
-//         const interest = InterestRepository.create({ data: { name, description } });
+//     async create(req: Request, res: Response) {
+//         const { name }: Interest = req.body;
+
+//         const 
+//         const interest = await InterestRepository.create({ data: { name, description } });
 
 //         return res.json({ interest });
 //     }
-
+    
 //     async update(req: Request, res: Response) {
 //         const { id } = req.params;
 //         const { name, description }: Interest = req.body;
@@ -50,4 +51,4 @@
 //     }
 // }
 
-// export default new AuthInterestController();
+// export default new InterestController();
