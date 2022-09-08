@@ -4,7 +4,7 @@ import ServiceTypeRepository from "../../repositories/ServiceType/ServiceTypeRep
 
 class ServiceTypeController {
     async create(req: Request, res: Response) {
-        const {servTypes}: ServiceType & {} = req.body;
+        const {servTypes}: ServiceType = req.body;
 
         const serviceType = await ServiceTypeRepository.create({ data: { servTypes } });
     
