@@ -26,3 +26,5 @@ const ratingRoutes = Router();
     ratingRoutes.get("/read/:id", async (request: Request, response: Response) => { 
         return RatingController.readById(request, response);
     });
+
+    export { ratingRoutes };
