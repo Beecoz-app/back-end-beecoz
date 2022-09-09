@@ -5,7 +5,7 @@ export interface PublicationRepositoryCreateDTO {
 }
 export interface PublicationRepositoryUpdateDTO {
     id: number;
-    data: Omit<Publication, 'id' | 'created_at' | 'updated_at'>
+    data: Omit<Publication, 'id' | 'created_at' | 'updated_at' | 'serviceTypeId' | 'clientId'>
 }
 export interface PublicationRepositoryDeleteDTO {
     id: number
