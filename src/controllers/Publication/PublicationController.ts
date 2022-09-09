@@ -13,10 +13,8 @@ class PublicationController {
             title, 
             description, 
             data, 
-            region, 
-            name, 
-            servTypes 
-        }: Publication & { name: string, servTypes: string } = req.body;
+            region,  
+        }: Publication & {} = req.body;
 
         const publication = PublicationRepository.create({ data: { title, description, data, region, serviceTypeId: Number(idServiceType), clientId: Number(idClient)} });
 
@@ -32,7 +30,7 @@ class PublicationController {
 
 
 
-        const publication = await PublicationRepository.update({ id: parsedId, data: { data, region, description, title} });
+        const publication = await PublicationRepository.update({ id: parsedId, data: { data, region, description, title } });
         
         return res.json({ publication });
     }
