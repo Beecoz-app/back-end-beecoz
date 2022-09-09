@@ -5,24 +5,13 @@ import AutonomousRepository from "../../repositories/Autonomous/AutonomousReposi
 
 class InterestController {
 
-    // async create(req: Request, res: Response) {
-    //     const {  }: Interest = req.body;
+    async create(req: Request, res: Response) {
+        const {idAutonomous, idPublication} = req.params
 
-    //     const 
-    //     const interest = await InterestRepository.create({ data: { name, description } });
-
-    //     return res.json({ interest });
-    // }
-    
-    // async update(req: Request, res: Response) {
-    //     const { id } = req.params;
-    //     const { name, description }: Interest = req.body;
-    //     const parsedId = Number( id )
-
-    //     const interest = await InterestRepository.update({ id: parsedId, data: { name, description } });
+        const service = await InterestRepository.create({ data: { publicationId: Number(idPublication), autonomousId: Number(idAutonomous) } });
         
-    //     return res.json({ interest });
-    // }
+        return res.json({ service });
+    }
 
     async delete(req: Request, res: Response) {
         const { id } = req.params;
