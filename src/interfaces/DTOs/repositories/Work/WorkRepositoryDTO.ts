@@ -1,11 +1,11 @@
 import { Work } from "@prisma/client";
 
 export interface WorkRepositoryCreateDTO {
-    data: Omit<Work, 'id' | 'çreated_at' | 'updated_at' >
+    data: Omit<Work, 'id' | 'created_at' | 'updated_at' >
 }
 export interface WorkRepositoryUpdateDTO {
     id: number;
-    data: Omit<Work, 'id' | 'created_at' | 'updated_at'>
+    data: Omit<Work, 'id' | 'created_at' | 'updated_at' | 'interestId' | 'ratingId'>
 }
 export interface WorkRepositoryDeleteDTO {
     id: number
@@ -18,3 +18,4 @@ export interface WorkRepositoryFindWorkByIdDTO {
 export interface WorkRepositoryFindWorkByStatusDTO {
     status: "Progress" | "Completed" | "Open";
 }
+
