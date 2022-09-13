@@ -21,5 +21,11 @@ autonomousAuthRoutes.post("/register", async (request: Request, response: Respon
     const  userId  = request.userId;
     return response.json({userId})
   });
+  autonomousAuthRoutes.put("/update-email/:id", async (request: Request, response: Response) => {
+    return AuthAutonomousController.updateEmail(request, response);
+  });
+  autonomousAuthRoutes.get("/show/:id", async (request: Request, response: Response) => {
+    return AuthAutonomousController.show(request, response);
+  });
 
 export { autonomousAuthRoutes };

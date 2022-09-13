@@ -38,6 +38,24 @@ class AuthClientController {
     return res.json({ client, token })
   }
 
+  async read (req: Request, res: Response) {
+    const { id } = req.params;
+    const parsedId = Number(id);
+
+    const client = await ClientRepository.findClientById({ id: parsedId });
+
+    return res.json(client)
+  }
+
+  async readById (req: Request, res:Response) {
+    const { id } = req.params;
+    const parsedId = Number(id);
+
+    const client = await ClientRepository.findClientById({ id: parsedId });
+
+    return res.json(client)
+  }
+
   async delete(req: Request, res: Response) {
     const { id } = req.params;
     const parsedId = Number(id);
@@ -54,21 +72,30 @@ class AuthClientController {
       .json({ message: "Client deleted successfully" });
   }
 
-  async updatePassword(req: Request, res: Response) {
+  async update(req: Request, res: Response) {
     const { id } = req.params;
     const parsedId = Number(id);
-    const { newPassword } = req.body;
 
     const clientExists = await ClientRepository.findClientById({ id: parsedId });
     if (!clientExists) {
       return res.status(400).json({ message: "Client not found" });
     }
 
-    const brandNewPassword = await LoginRepository.updatePassword({ id: clientExists.loginId, password: await hashPassword(newPassword) });
-    
-    
-    return res.status(200).json({ brandNewPassword });
+    const {
+      name,
+      email,
+      password,
+      cellNumber,
+      lastName,
+    }: Client & { email: string; password: string, cellNumber: number | null } = req.body;
+
+    const login = await LoginRepository.update({ id: clientExists.loginId, data: { email, password: await hashPassword(password), cellNumber } });
+    const client = await ClientRepository.update({ id: parsedId, data: { name, lastName, loginId: login.id } })
+
+    return res.json({ client })
   }
+
+    
 
   async login (req: Request, res: Response) {
     const { email, password } = req.body;

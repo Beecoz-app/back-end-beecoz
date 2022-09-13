@@ -29,6 +29,7 @@ class ClientRepository implements IClientRepository {
         })
         return newClient
     }
+    
 
     async findClientById({id}: ClientRepositoryFindClientByIdDTO): Promise<Client | null> {
         const client = await prisma.client.findUnique({
@@ -50,3 +51,6 @@ class ClientRepository implements IClientRepository {
 }
 
 export default new ClientRepository()
+
+
+
