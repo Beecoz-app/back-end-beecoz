@@ -95,7 +95,14 @@ class AuthClientController {
     return res.json({ client })
   }
 
-    
+    async show (req: Request, res: Response) {
+      const { id } = req.params;
+      const parsedId = Number(id);
+
+      const client = await ClientRepository.findClientById({ id: parsedId });
+
+      return res.json(client)
+    }
 
   
 }

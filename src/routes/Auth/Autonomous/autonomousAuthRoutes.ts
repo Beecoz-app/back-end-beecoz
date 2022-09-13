@@ -18,5 +18,8 @@ autonomousAuthRoutes.post("/register", async (request: Request, response: Respon
   autonomousAuthRoutes.get("/show/:id", async (request: Request, response: Response) => {
     return AuthAutonomousController.show(request, response);
   });
+  autonomousAuthRoutes.put("/update/:id", async (request: Request, response: Response) => {
+    return AuthAutonomousController.update(request, response);
+  });
 
 export { autonomousAuthRoutes };

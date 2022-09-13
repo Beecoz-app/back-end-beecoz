@@ -17,6 +17,12 @@ const clientAuthRoutes = Router();
     const  userId  = request.userId;
     return response.json({userId})
   });
+  clientAuthRoutes.put("/update/:id", async (request: Request, response: Response) => { 
+    return AuthClientController.update(request, response);
+  });
+  clientAuthRoutes.get("/show/:id", async (request: Request, response: Response) => {
+    return AuthClientController.show(request, response);
+  });
 
   
 
