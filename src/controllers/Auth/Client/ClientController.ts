@@ -75,12 +75,6 @@ class AuthClientController {
   async update(req: Request, res: Response) {
     const { id } = req.params;
     const parsedId = Number(id);
-
-    const clientExists = await ClientRepository.findClientById({ id: parsedId });
-    if (!clientExists) {
-      return res.status(400).json({ message: "Client not found" });
-    }
-
     const {
       name,
       email,
@@ -89,6 +83,12 @@ class AuthClientController {
       lastName,
     }: Client & { email: string; password: string, cellNumber: number | null } = req.body;
 
+    const clientExists = await ClientRepository.findClientById({ id: parsedId });
+    if (!clientExists) {
+      return res.status(400).json({ message: "Client not found" });
+    }
+
+    
     const login = await LoginRepository.update({ id: clientExists.loginId, data: { email, password: await hashPassword(password), cellNumber } });
     const client = await ClientRepository.update({ id: parsedId, data: { name, lastName, loginId: login.id } })
 
@@ -97,25 +97,7 @@ class AuthClientController {
 
     
 
-  async login (req: Request, res: Response) {
-    const { email, password } = req.body;
-
-    const client = await LoginRepository.findByEmail({ email });
-    if (!client) {
-      return res.status(400).json({ message: "Client not found" });
-    }
-
-    if (!await bcrypt.compare(password, client.password)) {
-      return res.status(400).json({ message: "Incorrect password" });
-    }
   
-    const token = jwt.sign({ id: client.id }, String(process.env.AUTH_SECRET), {
-      expiresIn: 86400,
-    });
-
-
-    return res.status(200).json({ client, token });
-  }
 }
 
 

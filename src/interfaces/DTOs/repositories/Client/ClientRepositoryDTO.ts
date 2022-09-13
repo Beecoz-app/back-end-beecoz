@@ -5,7 +5,7 @@ export interface ClientRepositoryCreateDTO {
 }
 export interface ClientRepositoryUpdateDTO {
     id: number;
-    data: Omit<Client, 'id' | 'created_at' | 'updated_at' | 'gender' | 'cpf' | 'bornDate' | 'profileId' | 'typeId'>
+    data: Omit<Client, 'id' | 'created_at' | 'updated_at' | 'gender' | 'cpf' | 'bornDate' | 'profileId' | 'typeId' >
 }
 export interface ClientRepositoryDeleteDTO {
     id: number

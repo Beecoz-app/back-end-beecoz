@@ -13,22 +13,11 @@ const clientAuthRoutes = Router();
   clientAuthRoutes.delete("/delete/:id", async (request: Request, response: Response) => {
     return AuthClientController.delete(request, response);
   });
-  clientAuthRoutes.put("/update-password/:id", async (request: Request, response: Response) => {
-    return AuthClientController.updatePassword(request, response);
-  });
-  clientAuthRoutes.get("/login", async (request: Request, response: Response) => {
-    return AuthClientController.login(request, response);
-  });
   clientAuthRoutes.get("/teste", authenticateToken ,async (request: Request, response: Response) => {
     const  userId  = request.userId;
     return response.json({userId})
   });
-  clientAuthRoutes.put("/update-email/:id", async (request: Request, response: Response) => {
-    return AuthClientController.updateEmail(request, response);
-  });
-  clientAuthRoutes.get("/show/:id", async (request: Request, response: Response) => {
-    return AuthClientController.show(request, response);
-  });
+
   
 
 

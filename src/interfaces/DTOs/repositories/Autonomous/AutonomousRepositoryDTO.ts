@@ -5,7 +5,7 @@ export interface AutonomousRepositoryCreateDTO {
 }
 export interface AutonomousRepositoryUpdateDTO {
     id: number;
-    data: Omit<Autonomous, 'id' | 'created_at' | 'updated_at'>
+    data: Omit<Autonomous, 'id' | 'created_at' | 'updated_at' | 'gender' | 'cpf' | 'bornDate' | 'profileId' | 'typeId' | 'cnpj'>
 }
 export interface AutonomousRepositoryDeleteDTO {
     id: number
