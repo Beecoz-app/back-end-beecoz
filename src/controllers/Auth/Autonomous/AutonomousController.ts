@@ -36,6 +36,48 @@ class AuthAutonomousController {
         return res.json({ autonomous, token })
     }
 
+    async show(req: Request, res: Response) {
+        const { id } = req.params;
+
+        const autonomous = await AutonomousRepository.findAutonomousById({ id })
+
+        return res.json(autonomous)
+    }
+
+
+    async index(req: Request, res: Response) {
+        const autonomous = await AutonomousRepository.findAllAutonomous()
+        
+        return res.json(autonomous)
+    }
+
+    async update(req: Request, res: Response) {
+        const { id } = req.params;
+        const { name, lastName, bornDate, cpf } = req.body;
+
+        const autonomous = await AutonomousRepository.update({ id, data: { name, lastName, bornDate, cpf } })
+        
+        return res.json(autonomous)
+
+    }
+
+
+    async updateEmail(req: Request, res: Response) {
+      const { id } = req.params;
+      const parsedId = Number(id);
+      const { newEmail } = req.body;
+  
+      const autonomousExists = await AutonomousRepository.findAutonomousById({ id: parsedId });
+      if (!autonomousExists) {
+        return res.status(400).json({ message: "Client not found" });
+      }
+  
+      const brandNewEmail = await LoginRepository.updateEmail({ id: autonomousExists.loginId, email: newEmail });
+      
+      
+      return res.status(200).json({ brandNewEmail });
+    }
+    
     async delete(req: Request, res: Response) {
         const { id } = req.params;
         const parsedId = Number(id);

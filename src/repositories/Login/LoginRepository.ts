@@ -1,5 +1,5 @@
 import { PrismaClient, Login, Prisma, PrismaPromise } from "@prisma/client";
-import { LoginRepositoryCreateDTO, LoginRepositoryDeleteDTO, LoginRepositoryFindByIdDTO, LoginRepositoryUpdateDTO, LoginRepositoryUpdatePassword } from "../../interfaces/DTOs/repositories/Login/LoginReposityDTO";
+import { LoginRepositoryCreateDTO, LoginRepositoryDeleteDTO, LoginRepositoryFindByIdDTO, LoginRepositoryUpdateDTO, LoginRepositoryUpdatePassword, LoginRepositoryUpdateEmail} from "../../interfaces/DTOs/repositories/Login/LoginReposityDTO";
 import { ILoginRepository } from "../../interfaces/repositories/Login/ILoginRepository";
 const prisma = new PrismaClient();
 
@@ -61,6 +61,7 @@ class LoginRepository implements ILoginRepository {
     });
     return deletedLogin;
   }
+  
   async updatePassword({
     id,
     password,
@@ -88,6 +89,20 @@ class LoginRepository implements ILoginRepository {
     return password;
   }
 
+  async updateEmail({
+    id,
+    email,
+  }: LoginRepositoryUpdateEmail): Promise<Prisma.Prisma__LoginClient<Login>> {
+    const newEmail = await prisma.login.update({
+      where: {
+        id,
+      },
+      data: {
+        email,
+      },
+    });
+    return newEmail;
+  }
 
 }
 

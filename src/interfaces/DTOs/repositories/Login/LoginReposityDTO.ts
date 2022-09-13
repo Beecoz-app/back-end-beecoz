@@ -18,3 +18,7 @@ export interface LoginRepositoryDeleteDTO {
 export interface LoginRepositoryFindByIdDTO {
     id: number
 }
+export interface LoginRepositoryUpdateEmail {
+    id: number
+    email: string
+}
