@@ -5,8 +5,8 @@ import { clientAuthRoutes } from "./Client/clientAuthRoutes";
 
 const authRoutes = Router()
 
-authRoutes.use('/auth/clients', clientAuthRoutes)
-authRoutes.use('/auth/autonomous', autonomousAuthRoutes)
+authRoutes.use('/clients', clientAuthRoutes)
+authRoutes.use('/autonomous', autonomousAuthRoutes)
 
 authRoutes.post('/login', (request, response) => {
     return AuthController.login(request, response)

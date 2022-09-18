@@ -3,6 +3,6 @@ import { authRoutes } from "./Auth/authRoutes";
 
 const routes = Router()
 
-routes.use(authRoutes)
+routes.use('/auth', authRoutes)
 
 export {routes}
