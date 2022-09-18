@@ -8,21 +8,13 @@ import {
   AutonomousRepositoryCreateDTO,
   AutonomousRepositoryDeleteDTO,
   AutonomousRepositoryFindAutonomousByIdDTO,
+  AutonomousRepositoryFindAutonomousByLoginIdDTO,
   AutonomousRepositoryUpdateDTO,
 } from "../../interfaces/DTOs/repositories/Autonomous/AutonomousRepositoryDTO";
 import { IAutonomousRepository } from "../../interfaces/repositories/Autonomous/IAutonomousRepository";
 const prisma = new PrismaClient();
 
-
 class AutonomousRepository implements IAutonomousRepository {
-  async findAutonomousById({ id }: AutonomousRepositoryFindAutonomousByIdDTO): Promise<Autonomous | null> {
-    const autonomousId = await prisma.autonomous.findUnique({
-      where:{
-        id,
-      }
-    })
-    return autonomousId;
-  }
   async create({ data }: AutonomousRepositoryCreateDTO): Promise<Autonomous> {
     const autonomous = await prisma.autonomous.create({
       data: {
@@ -62,6 +54,26 @@ class AutonomousRepository implements IAutonomousRepository {
       },
     });
     return deletedAutonomous;
+  }
+  async findAutonomousById({
+    id,
+  }: AutonomousRepositoryFindAutonomousByIdDTO): Promise<Autonomous | null> {
+    const autonomousId = await prisma.autonomous.findUnique({
+      where: {
+        id,
+      },
+    });
+    return autonomousId;
+  }
+  async findAutonomousByLoginId({
+    loginId,
+  }: AutonomousRepositoryFindAutonomousByLoginIdDTO): Promise<Autonomous | null> {
+    const autonomous = await prisma.autonomous.findUnique({
+      where: {
+        loginId,
+      },
+    });
+    return autonomous;
   }
 }
 
