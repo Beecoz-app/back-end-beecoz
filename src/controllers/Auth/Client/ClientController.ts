@@ -4,7 +4,7 @@ import ClientProfileRepository from "../../../repositories/Client/ClientProfile/
 import ClientRepository from "../../../repositories/Client/ClientRepository";
 import TypeUserRepository from "../../../repositories/TypeUser/TypeUserRepository";
 import jwt from "jsonwebtoken";
-import { hashPassword } from "../../../utils/password";
+import { hashPassword } from "../../../utils/hashPassword";
 
 class ClientController {
   async register(req: Request, res: Response) {
