@@ -4,7 +4,7 @@ import AutonomousRepository from "../../../repositories/Autonomous/AutonomousRep
 import TypeUserRepository from "../../../repositories/TypeUser/TypeUserRepository";
 import jwt from "jsonwebtoken";
 import AutonomousProfileRepository from "../../../repositories/Autonomous/AutonomousProfile/AutonomousProfileRepository";
-import { hashPassword } from "../../../utils/password";
+import { hashPassword } from "../../../utils/hashPassword";
 
 class AuthAutonomousController {
   async register(req: Request, res: Response) {
