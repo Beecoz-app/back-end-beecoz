@@ -1,9 +1,10 @@
 import { Client } from "@prisma/client";
 import { Request, Response } from "express";
-import ClientProfileRepository from "../../../repositories/Client/ClientProfile/ClientProfileRepository";
-import ClientRepository from "../../../repositories/Client/ClientRepository";
-import TypeUserRepository from "../../../repositories/TypeUser/TypeUserRepository";
+import ClientProfileRepository from "../../repositories/Client/ClientProfile/ClientProfileRepository";
+import ClientRepository from "../../repositories/Client/ClientRepository";
+import TypeUserRepository from "../../repositories/TypeUser/TypeUserRepository";
 import jwt from "jsonwebtoken";
+import { hashPassword } from "../../utils/password";
 
 class AuthClientController {
   async register(req: Request, res: Response) {
@@ -37,7 +38,7 @@ class AuthClientController {
         profileId: profile.id,
         typeId,
         login,
-        password
+        password: await hashPassword(password)
       },
     });
 
@@ -103,7 +104,7 @@ class AuthClientController {
 
     const client = await ClientRepository.update({
       id: parsedId,
-      data: { name, lastName, login, password},
+      data: { name, lastName, login, password: await hashPassword(password)},
     });
 
     return res.json({ client });
