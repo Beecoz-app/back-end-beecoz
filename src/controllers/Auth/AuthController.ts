@@ -1,7 +1,6 @@
 import {Request, Response} from 'express'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import LoginRepository from '../../repositories/Login/LoginRepository';
 import ClientRepository from '../../repositories/Client/ClientRepository';
 import AutonomousRepository from '../../repositories/Autonomous/AutonomousRepository';
 

@@ -13,6 +13,6 @@ export interface AutonomousRepositoryDeleteDTO {
 export interface AutonomousRepositoryFindAutonomousByIdDTO {
     id: number;
 }
-export interface AutonomousRepositoryFindAutonomousByLoginIdDTO {
-    loginId: number;
+export interface AutonomousRepositoryFindAutonomousByLoginDTO {
+    login: number;
 }
