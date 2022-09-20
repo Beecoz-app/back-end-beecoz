@@ -14,5 +14,5 @@ export interface AutonomousRepositoryFindAutonomousByIdDTO {
     id: number;
 }
 export interface AutonomousRepositoryFindAutonomousByLoginDTO {
-    login: number;
+    login: string;
 }

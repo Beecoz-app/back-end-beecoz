@@ -14,5 +14,5 @@ export interface ClientRepositoryFindClientByIdDTO {
     id: number;
 }
 export interface ClientRepositoryFindClientByLoginDTO {
-    login: number
+    login: string
 }
