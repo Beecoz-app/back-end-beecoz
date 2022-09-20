@@ -4,7 +4,7 @@ import { RatingRepositoryCreateDTO, RatingRepositoryDeleteDTO, RatingRepositoryU
 export interface IRatingRepository {
     create({data}: RatingRepositoryCreateDTO): Promise<Rating>;
     read(): Promise<PrismaPromise<Rating[]>>;
-    update({id, data}: RatingRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<Rating>>;
-    delete({id}: RatingRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<Rating>>;
+    update({id, data}: RatingRepositoryUpdateDTO): Promise<Rating>;
+    delete({id}: RatingRepositoryDeleteDTO): Promise<Rating>;
     findRatingById({id}: RatingRepositoryFindRatingByIdDTO): Promise<Rating | null>;
 }

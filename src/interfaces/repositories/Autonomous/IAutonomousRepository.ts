@@ -4,8 +4,8 @@ import { AutonomousRepositoryCreateDTO, AutonomousRepositoryDeleteDTO, Autonomou
 export interface IAutonomousRepository {
     create({data}: AutonomousRepositoryCreateDTO): Promise<Autonomous>;
     read(): Promise<PrismaPromise<Autonomous[]>>;
-    update({id, data}: AutonomousRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<Autonomous>>;
-    delete({id}: AutonomousRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<Autonomous>>;
+    update({id, data}: AutonomousRepositoryUpdateDTO): Promise<Autonomous>;
+    delete({id}: AutonomousRepositoryDeleteDTO): Promise<Autonomous>;
     findAutonomousById({id}: AutonomousRepositoryFindAutonomousByIdDTO): Promise<Autonomous | null>;
     findAutonomousByLoginId({loginId}: AutonomousRepositoryFindAutonomousByLoginIdDTO): Promise<Autonomous | null>
 }

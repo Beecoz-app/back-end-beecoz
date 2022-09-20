@@ -4,7 +4,7 @@ import { ServiceTypeRepositoryCreateDTO, ServiceTypeRepositoryUpdateDTO, Service
 export interface IServiceTypeRepository {
     create({data}: ServiceTypeRepositoryCreateDTO): Promise<ServiceType>;
     read(): Promise<PrismaPromise<ServiceType[]>>;
-    update({id, data}: ServiceTypeRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<ServiceType>>;
-    delete({id}: ServiceTypeRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<ServiceType>>;
+    update({id, data}: ServiceTypeRepositoryUpdateDTO): Promise<ServiceType>;
+    delete({id}: ServiceTypeRepositoryDeleteDTO): Promise<ServiceType>;
     findServiceTypeById({id}: ServiceTypeRepositoryFindServiceTypeByIdDTO): Promise<ServiceType | null>;
 }

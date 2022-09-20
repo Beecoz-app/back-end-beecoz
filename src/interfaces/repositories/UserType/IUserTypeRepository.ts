@@ -4,7 +4,7 @@ import { TypeUserRepositoryCreateDTO, TypeUserRepositoryDeleteDTO, TypeUserRepos
 export interface IUserTypeRepository {
     create({data}: TypeUserRepositoryCreateDTO): Promise<TypeUser>;
     read(): Promise<PrismaPromise<TypeUser[]>>;
-    update({id, data}: TypeUserRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<TypeUser>>;
-    delete({id}: TypeUserRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<TypeUser>>;
+    update({id, data}: TypeUserRepositoryUpdateDTO): Promise<TypeUser>;
+    delete({id}: TypeUserRepositoryDeleteDTO): Promise<TypeUser>;
     findByLevel({level}: TypeUserRepositoryFindByLevelDTO): Promise<number>;
 }

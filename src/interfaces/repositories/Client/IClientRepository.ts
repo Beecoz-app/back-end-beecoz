@@ -4,8 +4,8 @@ import { ClientRepositoryCreateDTO, ClientRepositoryDeleteDTO, ClientRepositoryF
 export interface IClientRepository {
     create({data}: ClientRepositoryCreateDTO): Promise<Client>;
     read(): Promise<PrismaPromise<Client[]>>;
-    update({id, data}: ClientRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<Client>>;
-    delete({id}: ClientRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<Client>>;
+    update({id, data}: ClientRepositoryUpdateDTO): Promise<Client>;
+    delete({id}: ClientRepositoryDeleteDTO): Promise<Client>;
     findClientById({id}: ClientRepositoryFindClientByIdDTO): Promise<Client | null>;
     findClientByLoginId({loginId}: ClientRepositoryFindClientByLoginIdDTO): Promise<Client | null>
 }
