@@ -6,7 +6,7 @@ import TypeUserRepository from "../../repositories/TypeUser/TypeUserRepository";
 import jwt from "jsonwebtoken";
 import { hashPassword } from "../../utils/password";
 
-class AuthClientController {
+class ClientController {
   async register(req: Request, res: Response) {
     const {
       name,
@@ -33,12 +33,12 @@ class AuthClientController {
         name,
         lastName,
         gender,
-        bornDate: new Date(),
+        bornDate: new Date(bornDate),
         cpf,
+        login,
+        password: await hashPassword(password),
         profileId: profile.id,
         typeId,
-        login,
-        password: await hashPassword(password)
       },
     });
 
@@ -50,19 +50,7 @@ class AuthClientController {
   }
 
   async read(req: Request, res: Response) {
-    const { id } = req.params;
-    const parsedId = Number(id);
-
-    const client = await ClientRepository.findClientById({ id: parsedId });
-
-    return res.json(client);
-  }
-
-  async readById(req: Request, res: Response) {
-    const { id } = req.params;
-    const parsedId = Number(id);
-
-    const client = await ClientRepository.findClientById({ id: parsedId });
+    const client = await ClientRepository.read();
 
     return res.json(client);
   }
@@ -109,15 +97,6 @@ class AuthClientController {
 
     return res.json({ client });
   }
-
-  async show(req: Request, res: Response) {
-    const { id } = req.params;
-    const parsedId = Number(id);
-
-    const client = await ClientRepository.findClientById({ id: parsedId });
-
-    return res.json(client);
-  }
 }
 
-export default new AuthClientController();
+export default new ClientController();
