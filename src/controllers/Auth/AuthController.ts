@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import ClientRepository from "../../repositories/Client/ClientRepository";
 import AutonomousRepository from "../../repositories/Autonomous/AutonomousRepository";
+import { generateToken } from "../../utils/generateToken";
 
 class AuthController {
   async login(req: Request, res: Response) {
@@ -24,17 +25,9 @@ class AuthController {
         return res.status(400).json({ message: "Incorrect password" });
       }
 
-      const token = jwt.sign(
-        { id: clientExists.id },
-        String(process.env.AUTH_SECRET),
-        {
-          expiresIn: 86400,
-        }
-      );
-
       return res
         .status(200)
-        .json({ client: clientExists, token, type: "Client" });
+        .json({ client: clientExists, token: generateToken('id', clientExists.id), type: "Client" });
     } else {
       const autonomousExists = await AutonomousRepository.findAutonomousByLogin(
         { login }
@@ -48,17 +41,9 @@ class AuthController {
         return res.status(400).json({ message: "Incorrect password" });
       }
 
-      const token = jwt.sign(
-        { id: autonomousExists.id },
-        String(process.env.AUTH_SECRET),
-        {
-          expiresIn: 86400,
-        }
-      );
-
       return res
         .status(200)
-        .json({ client: autonomousExists, token, type: "Autonomous" });
+        .json({ client: autonomousExists, token: generateToken('id', autonomousExists.id), type: "Autonomous" });
     }
   }
 }

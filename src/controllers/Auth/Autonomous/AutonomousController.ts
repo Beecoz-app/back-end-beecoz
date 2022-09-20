@@ -5,6 +5,7 @@ import TypeUserRepository from "../../../repositories/TypeUser/TypeUserRepositor
 import jwt from "jsonwebtoken";
 import AutonomousProfileRepository from "../../../repositories/Autonomous/AutonomousProfile/AutonomousProfileRepository";
 import { hashPassword } from "../../../utils/hashPassword";
+import { generateToken } from "../../../utils/generateToken";
 
 class AuthAutonomousController {
   async register(req: Request, res: Response) {
@@ -42,15 +43,7 @@ class AuthAutonomousController {
       },
     });
 
-    const token = jwt.sign(
-      { id: autonomous.id },
-      String(process.env.AUTH_SECRET),
-      {
-        expiresIn: 86400,
-      }
-    );
-
-    return res.json({ autonomous, token });
+    return res.json({ autonomous, token: generateToken('id', autonomous.id) });
   }
 
   async show(req: Request, res: Response) {

@@ -5,6 +5,7 @@ import ClientRepository from "../../../repositories/Client/ClientRepository";
 import TypeUserRepository from "../../../repositories/TypeUser/TypeUserRepository";
 import jwt from "jsonwebtoken";
 import { hashPassword } from "../../../utils/hashPassword";
+import { generateToken } from "../../../utils/generateToken";
 
 class ClientController {
   async register(req: Request, res: Response) {
@@ -42,11 +43,7 @@ class ClientController {
       },
     });
 
-    const token = jwt.sign({ id: client.id }, String(process.env.AUTH_SECRET), {
-      expiresIn: 86400,
-    });
-
-    return res.json({ client, token });
+    return res.json({ client, token: generateToken('id', client.id) });
   }
 
   async read(req: Request, res: Response) {
