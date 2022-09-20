@@ -27,7 +27,7 @@ class PublicationRepository implements IPublicationRepository{
         return publications
 
     }
-    async update({id, data}: PublicationRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<Publication>> {
+    async update({id, data}: PublicationRepositoryUpdateDTO): Promise<Publication> {
         const newPublication = await prisma.publication.update({
             where: {
                 id
@@ -38,7 +38,7 @@ class PublicationRepository implements IPublicationRepository{
         })
         return newPublication
     }
-    async delete({id}: PublicationRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<Publication>> {
+    async delete({id}: PublicationRepositoryDeleteDTO): Promise<Publication> {
         const deletedPublication = await prisma.publication.delete({
             where: {
                 id

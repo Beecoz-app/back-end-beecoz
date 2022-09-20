@@ -20,7 +20,7 @@ class TypeUserRepository implements IUserTypeRepository {
   async update({
     id,
     data,
-  }: TypeUserRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<TypeUser>> {
+  }: TypeUserRepositoryUpdateDTO): Promise<TypeUser> {
     const newTypeUser = await prisma.typeUser.update({
       where: {
         id,
@@ -33,7 +33,7 @@ class TypeUserRepository implements IUserTypeRepository {
   }
   async delete({
     id,
-  }: TypeUserRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<TypeUser>> {
+  }: TypeUserRepositoryDeleteDTO): Promise<TypeUser> {
     const deletedTypeUser = await prisma.typeUser.delete({
       where: {
         id,

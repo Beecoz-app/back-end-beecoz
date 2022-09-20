@@ -7,5 +7,4 @@ export interface IClientRepository {
     update({id, data}: ClientRepositoryUpdateDTO): Promise<Client>;
     delete({id}: ClientRepositoryDeleteDTO): Promise<Client>;
     findClientById({id}: ClientRepositoryFindClientByIdDTO): Promise<Client | null>;
-    findClientByLoginId({loginId}: ClientRepositoryFindClientByLoginIdDTO): Promise<Client | null>
 }

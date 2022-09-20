@@ -27,7 +27,7 @@ class ServiceRepository implements IServiceRepository {
         return services
 
     }
-    async update({id, data}: ServiceRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<Service>> {
+    async update({id, data}: ServiceRepositoryUpdateDTO): Promise<Service> {
         const newService = await prisma.service.update({
             where: {
                 id
@@ -38,7 +38,7 @@ class ServiceRepository implements IServiceRepository {
         })
         return newService
     }
-    async delete({id}: ServiceRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<Service>> {
+    async delete({id}: ServiceRepositoryDeleteDTO): Promise<Service> {
         const deletedService = await prisma.service.delete({
             where: {
                 id

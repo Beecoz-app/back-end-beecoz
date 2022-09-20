@@ -7,5 +7,4 @@ export interface IAutonomousRepository {
     update({id, data}: AutonomousRepositoryUpdateDTO): Promise<Autonomous>;
     delete({id}: AutonomousRepositoryDeleteDTO): Promise<Autonomous>;
     findAutonomousById({id}: AutonomousRepositoryFindAutonomousByIdDTO): Promise<Autonomous | null>;
-    findAutonomousByLoginId({loginId}: AutonomousRepositoryFindAutonomousByLoginIdDTO): Promise<Autonomous | null>
 }

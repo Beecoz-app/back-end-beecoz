@@ -31,7 +31,7 @@ class AutonomousRepository implements IAutonomousRepository {
     id,
     data,
   }: AutonomousRepositoryUpdateDTO): Promise<
-    Prisma.Prisma__LoginClient<Autonomous>
+    Autonomous
   > {
     const newAutonomous = await prisma.autonomous.update({
       where: {
@@ -46,7 +46,7 @@ class AutonomousRepository implements IAutonomousRepository {
   async delete({
     id,
   }: AutonomousRepositoryDeleteDTO): Promise<
-    Prisma.Prisma__LoginClient<Autonomous>
+    Autonomous
   > {
     const deletedAutonomous = await prisma.autonomous.delete({
       where: {
@@ -64,16 +64,6 @@ class AutonomousRepository implements IAutonomousRepository {
       },
     });
     return autonomousId;
-  }
-  async findAutonomousByLoginId({
-    loginId,
-  }: AutonomousRepositoryFindAutonomousByLoginIdDTO): Promise<Autonomous | null> {
-    const autonomous = await prisma.autonomous.findUnique({
-      where: {
-        loginId,
-      },
-    });
-    return autonomous;
   }
 }
 

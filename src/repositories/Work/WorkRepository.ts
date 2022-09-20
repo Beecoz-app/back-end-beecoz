@@ -36,7 +36,7 @@ class WorkRepository implements IWorkRepository {
         return works
 
     }
-    async update({id, data}: WorkRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<Work>> {
+    async update({id, data}: WorkRepositoryUpdateDTO): Promise<Work> {
         const newWork = await prisma.work.update({
             where: {
                 id
@@ -47,7 +47,7 @@ class WorkRepository implements IWorkRepository {
         })
         return newWork
     }
-    async delete({id}: WorkRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<Work>> {
+    async delete({id}: WorkRepositoryDeleteDTO): Promise<Work> {
         const deletedWork = await prisma.work.delete({
             where: {
                 id

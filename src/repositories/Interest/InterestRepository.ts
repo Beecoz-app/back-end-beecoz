@@ -29,7 +29,7 @@ class InterestRepository implements IInterestRepository{
         return interests
 
     }
-    async update({id, data}: InterestRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<Interest>> {
+    async update({id, data}: InterestRepositoryUpdateDTO): Promise<Interest> {
         const newInterest = await prisma.interest.update({
             where: {
                 id
@@ -40,7 +40,7 @@ class InterestRepository implements IInterestRepository{
         })
         return newInterest
     }
-    async delete({id}: InterestRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<Interest>> {
+    async delete({id}: InterestRepositoryDeleteDTO): Promise<Interest> {
         const deletedInterest = await prisma.interest.delete({
             where: {
                 id

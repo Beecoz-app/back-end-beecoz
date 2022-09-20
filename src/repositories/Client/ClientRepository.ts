@@ -1,10 +1,4 @@
-import {
-  PrismaClient,
-  Client,
-  PrismaPromise,
-  Prisma,
-  Login,
-} from "@prisma/client";
+import { PrismaClient, Client, PrismaPromise, Prisma } from "@prisma/client";
 import {
   ClientRepositoryCreateDTO,
   ClientRepositoryDeleteDTO,
@@ -28,10 +22,7 @@ class ClientRepository implements IClientRepository {
     const clients = await prisma.client.findMany();
     return clients;
   }
-  async update({
-    id,
-    data,
-  }: ClientRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<Client>> {
+  async update({ id, data }: ClientRepositoryUpdateDTO): Promise<Client> {
     const newClient = await prisma.client.update({
       where: {
         id,
@@ -43,9 +34,7 @@ class ClientRepository implements IClientRepository {
     return newClient;
   }
 
-  async delete({
-    id,
-  }: ClientRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<Client>> {
+  async delete({ id }: ClientRepositoryDeleteDTO): Promise<Client> {
     const deletedClient = await prisma.client.delete({
       where: {
         id,
@@ -59,16 +48,6 @@ class ClientRepository implements IClientRepository {
     const client = await prisma.client.findUnique({
       where: {
         id,
-      },
-    });
-    return client;
-  }
-  async findClientByLoginId({
-    loginId,
-  }: ClientRepositoryFindClientByLoginIdDTO): Promise<Client | null> {
-    const client = await prisma.client.findUnique({
-      where: {
-        loginId,
       },
     });
     return client;

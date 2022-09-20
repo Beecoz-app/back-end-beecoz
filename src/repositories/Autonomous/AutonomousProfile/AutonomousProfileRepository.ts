@@ -38,7 +38,7 @@ class AutonomousProfilesRepository implements IAutonomousProfileRepository{
         return autonomousProfiles
 
     }
-    async update({id, data}: AutonomousProfileRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<AutonomousProfile>> {
+    async update({id, data}: AutonomousProfileRepositoryUpdateDTO): Promise<AutonomousProfile> {
         const newAutonomousProfiles = await prisma.autonomousProfile.update({
             where: {
                 id
@@ -49,7 +49,7 @@ class AutonomousProfilesRepository implements IAutonomousProfileRepository{
         })
         return newAutonomousProfiles
     }
-    async delete({id}: AutonomousProfileRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<AutonomousProfile>> {
+    async delete({id}: AutonomousProfileRepositoryDeleteDTO): Promise<AutonomousProfile> {
         const deletedAutonomousProfile = await prisma.autonomousProfile.delete({
             where: {
                 id
