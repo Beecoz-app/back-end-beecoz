@@ -30,7 +30,7 @@ class AuthController {
           return res.status(200).json({ user: isClient, token });
         } else {
           const token = jwt.sign({ id: isAutonomous?.id }, String(process.env.AUTH_SECRET), {
-            expiresIn: 86400,
+            expiresIn: 60,
           });
 
           return res.status(200).json({ user: isAutonomous, token });
