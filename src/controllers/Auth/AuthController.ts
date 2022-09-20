@@ -1,40 +1,66 @@
-import {Request, Response} from 'express'
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-import ClientRepository from '../../repositories/Client/ClientRepository';
-import AutonomousRepository from '../../repositories/Autonomous/AutonomousRepository';
+import { Request, Response } from "express";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import ClientRepository from "../../repositories/Client/ClientRepository";
+import AutonomousRepository from "../../repositories/Autonomous/AutonomousRepository";
 
 class AuthController {
-    async login (req: Request, res: Response) {
-        const { email, password } = req.body;
-    
-        const userExists = await LoginRepository.findByEmail({ email });
+  async login(req: Request, res: Response) {
+    const {
+      login,
+      password,
+      type,
+    }: { login: string; password: string; type: "Client" | "Autonomous" } =
+      req.body;
 
-        if (!userExists) {
-          return res.status(400).json({ message: "Client not found" });
-        }
-    
-        if (!await bcrypt.compare(password, userExists.password)) {
-          return res.status(400).json({ message: "Incorrect password" });
-        }
+    if (type === "Client") {
+      const clientExists = await ClientRepository.findClientByLogin({ login });
 
-        const isClient = await ClientRepository.findClientByLoginId({loginId: userExists.id})
-        const isAutonomous = await AutonomousRepository.findAutonomousByLoginId({loginId: userExists.id})
-
-        if (isClient) {
-          const token = jwt.sign({ id: isClient.id }, String(process.env.AUTH_SECRET), {
-            expiresIn: 86400,
-          });
-
-          return res.status(200).json({ user: isClient, token });
-        } else {
-          const token = jwt.sign({ id: isAutonomous?.id }, String(process.env.AUTH_SECRET), {
-            expiresIn: 60,
-          });
-
-          return res.status(200).json({ user: isAutonomous, token });
-        }
+      if (!clientExists) {
+        return res.status(400).json({ message: "Client not found" });
       }
+
+      if (!(await bcrypt.compare(password, clientExists.password))) {
+        return res.status(400).json({ message: "Incorrect password" });
+      }
+
+      const token = jwt.sign(
+        { id: clientExists.id },
+        String(process.env.AUTH_SECRET),
+        {
+          expiresIn: 86400,
+        }
+      );
+
+      return res
+        .status(200)
+        .json({ client: clientExists, token, type: "Client" });
+    } else {
+      const autonomousExists = await AutonomousRepository.findAutonomousByLogin(
+        { login }
+      );
+
+      if (!autonomousExists) {
+        return res.status(400).json({ message: "Client not found" });
+      }
+
+      if (!(await bcrypt.compare(password, autonomousExists.password))) {
+        return res.status(400).json({ message: "Incorrect password" });
+      }
+
+      const token = jwt.sign(
+        { id: autonomousExists.id },
+        String(process.env.AUTH_SECRET),
+        {
+          expiresIn: 86400,
+        }
+      );
+
+      return res
+        .status(200)
+        .json({ client: autonomousExists, token, type: "Autonomous" });
+    }
+  }
 }
 
-export default new AuthController()
+export default new AuthController();

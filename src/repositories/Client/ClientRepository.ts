@@ -52,7 +52,7 @@ class ClientRepository implements IClientRepository {
     });
     return client;
   }
-  async findClientBy({ login }: ClientRepositoryFindClientByLoginDTO): Promise<Client | null> {
+  async findClientByLogin({ login }: ClientRepositoryFindClientByLoginDTO): Promise<Client | null> {
     const client = await prisma.client.findUnique({
       where: {
         login,
