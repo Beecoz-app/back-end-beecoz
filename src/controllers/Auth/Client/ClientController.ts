@@ -2,35 +2,23 @@ import { Client } from "@prisma/client";
 import { Request, Response } from "express";
 import ClientProfileRepository from "../../../repositories/Client/ClientProfile/ClientProfileRepository";
 import ClientRepository from "../../../repositories/Client/ClientRepository";
-import LoginRepository from "../../../repositories/Login/LoginRepository";
 import TypeUserRepository from "../../../repositories/TypeUser/TypeUserRepository";
-import { hashPassword } from "../../../utils/password";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 class AuthClientController {
   async register(req: Request, res: Response) {
     const {
       name,
-      email,
+      login,
       password,
-      cellNumber,
       lastName,
       gender,
       bornDate,
       cpf,
       biography,
     }: Client & {
-      email: string;
-      password: string;
-      cellNumber: string;
       biography: string;
     } = req.body;
-
-
-    const login = await LoginRepository.create({
-      data: { email, password: await hashPassword(password), cellNumber },
-    });
 
     const profile = await ClientProfileRepository.create({
       data: { biography },
@@ -46,9 +34,10 @@ class AuthClientController {
         gender,
         bornDate: new Date(),
         cpf,
-        loginId: login.id,
         profileId: profile.id,
         typeId,
+        login,
+        password
       },
     });
 
@@ -98,27 +87,23 @@ class AuthClientController {
     const parsedId = Number(id);
     const {
       name,
-      email,
+      login,
       password,
-      cellNumber,
       lastName,
-    }: Client & { email: string; password: string; cellNumber: string } =
+    }: Client =
       req.body;
 
     const clientExists = await ClientRepository.findClientById({
       id: parsedId,
     });
+
     if (!clientExists) {
       return res.status(400).json({ message: "Client not found" });
     }
 
-    const login = await LoginRepository.update({
-      id: clientExists.loginId,
-      data: { email, password: await hashPassword(password), cellNumber },
-    });
     const client = await ClientRepository.update({
       id: parsedId,
-      data: { name, lastName, loginId: login.id },
+      data: { name, lastName, login, password},
     });
 
     return res.json({ client });
