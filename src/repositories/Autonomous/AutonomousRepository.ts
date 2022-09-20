@@ -8,7 +8,7 @@ import {
   AutonomousRepositoryCreateDTO,
   AutonomousRepositoryDeleteDTO,
   AutonomousRepositoryFindAutonomousByIdDTO,
-  AutonomousRepositoryFindAutonomousByLoginIdDTO,
+  AutonomousRepositoryFindAutonomousByLoginDTO,
   AutonomousRepositoryUpdateDTO,
 } from "../../interfaces/DTOs/repositories/Autonomous/AutonomousRepositoryDTO";
 import { IAutonomousRepository } from "../../interfaces/repositories/Autonomous/IAutonomousRepository";
@@ -61,6 +61,14 @@ class AutonomousRepository implements IAutonomousRepository {
     const autonomousId = await prisma.autonomous.findUnique({
       where: {
         id,
+      },
+    });
+    return autonomousId;
+  }
+  async findAutonomousByLogin({ login }: AutonomousRepositoryFindAutonomousByLoginDTO): Promise<Autonomous | null> {
+    const autonomousId = await prisma.autonomous.findUnique({
+      where: {
+        login,
       },
     });
     return autonomousId;

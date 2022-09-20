@@ -3,7 +3,7 @@ import {
   ClientRepositoryCreateDTO,
   ClientRepositoryDeleteDTO,
   ClientRepositoryFindClientByIdDTO,
-  ClientRepositoryFindClientByLoginIdDTO,
+  ClientRepositoryFindClientByLoginDTO,
   ClientRepositoryUpdateDTO,
 } from "../../interfaces/DTOs/repositories/Client/ClientRepositoryDTO";
 import { IClientRepository } from "../../interfaces/repositories/Client/IClientRepository";
@@ -33,7 +33,7 @@ class ClientRepository implements IClientRepository {
     });
     return newClient;
   }
-
+  
   async delete({ id }: ClientRepositoryDeleteDTO): Promise<Client> {
     const deletedClient = await prisma.client.delete({
       where: {
@@ -48,6 +48,14 @@ class ClientRepository implements IClientRepository {
     const client = await prisma.client.findUnique({
       where: {
         id,
+      },
+    });
+    return client;
+  }
+  async findClientBy({ login }: ClientRepositoryFindClientByLoginDTO): Promise<Client | null> {
+    const client = await prisma.client.findUnique({
+      where: {
+        login,
       },
     });
     return client;

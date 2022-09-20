@@ -1,5 +1,5 @@
 import { Autonomous, Prisma, PrismaPromise } from "@prisma/client"
-import { AutonomousRepositoryCreateDTO, AutonomousRepositoryDeleteDTO, AutonomousRepositoryUpdateDTO, AutonomousRepositoryFindAutonomousByIdDTO, AutonomousRepositoryFindAutonomousByLoginIdDTO } from "../../DTOs/repositories/Autonomous/AutonomousRepositoryDTO"
+import { AutonomousRepositoryCreateDTO, AutonomousRepositoryDeleteDTO, AutonomousRepositoryUpdateDTO, AutonomousRepositoryFindAutonomousByIdDTO, AutonomousRepositoryFindAutonomousByLoginDTO } from "../../DTOs/repositories/Autonomous/AutonomousRepositoryDTO"
 
 export interface IAutonomousRepository {
     create({data}: AutonomousRepositoryCreateDTO): Promise<Autonomous>;
@@ -7,4 +7,5 @@ export interface IAutonomousRepository {
     update({id, data}: AutonomousRepositoryUpdateDTO): Promise<Autonomous>;
     delete({id}: AutonomousRepositoryDeleteDTO): Promise<Autonomous>;
     findAutonomousById({id}: AutonomousRepositoryFindAutonomousByIdDTO): Promise<Autonomous | null>;
+    findAutonomousByLogin({login}: AutonomousRepositoryFindAutonomousByLoginDTO): Promise<Autonomous | null>
 }
