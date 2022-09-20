@@ -2,35 +2,24 @@ import { Client } from "@prisma/client";
 import { Request, Response } from "express";
 import ClientProfileRepository from "../../../repositories/Client/ClientProfile/ClientProfileRepository";
 import ClientRepository from "../../../repositories/Client/ClientRepository";
-import LoginRepository from "../../../repositories/Login/LoginRepository";
 import TypeUserRepository from "../../../repositories/TypeUser/TypeUserRepository";
-import { hashPassword } from "../../../utils/password";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { hashPassword } from "../../../utils/password";
 
-class AuthClientController {
+class ClientController {
   async register(req: Request, res: Response) {
     const {
       name,
-      email,
+      login,
       password,
-      cellNumber,
       lastName,
       gender,
       bornDate,
       cpf,
       biography,
     }: Client & {
-      email: string;
-      password: string;
-      cellNumber: string;
       biography: string;
     } = req.body;
-
-
-    const login = await LoginRepository.create({
-      data: { email, password: await hashPassword(password), cellNumber },
-    });
 
     const profile = await ClientProfileRepository.create({
       data: { biography },
@@ -44,9 +33,10 @@ class AuthClientController {
         name,
         lastName,
         gender,
-        bornDate: new Date(),
+        bornDate: new Date(bornDate),
         cpf,
-        loginId: login.id,
+        login,
+        password: await hashPassword(password),
         profileId: profile.id,
         typeId,
       },
@@ -60,19 +50,7 @@ class AuthClientController {
   }
 
   async read(req: Request, res: Response) {
-    const { id } = req.params;
-    const parsedId = Number(id);
-
-    const client = await ClientRepository.findClientById({ id: parsedId });
-
-    return res.json(client);
-  }
-
-  async readById(req: Request, res: Response) {
-    const { id } = req.params;
-    const parsedId = Number(id);
-
-    const client = await ClientRepository.findClientById({ id: parsedId });
+    const client = await ClientRepository.read();
 
     return res.json(client);
   }
@@ -98,40 +76,27 @@ class AuthClientController {
     const parsedId = Number(id);
     const {
       name,
-      email,
+      login,
       password,
-      cellNumber,
       lastName,
-    }: Client & { email: string; password: string; cellNumber: string } =
+    }: Client =
       req.body;
 
     const clientExists = await ClientRepository.findClientById({
       id: parsedId,
     });
+
     if (!clientExists) {
       return res.status(400).json({ message: "Client not found" });
     }
 
-    const login = await LoginRepository.update({
-      id: clientExists.loginId,
-      data: { email, password: await hashPassword(password), cellNumber },
-    });
     const client = await ClientRepository.update({
       id: parsedId,
-      data: { name, lastName, loginId: login.id },
+      data: { name, lastName, login, password: await hashPassword(password)},
     });
 
     return res.json({ client });
   }
-
-  async show(req: Request, res: Response) {
-    const { id } = req.params;
-    const parsedId = Number(id);
-
-    const client = await ClientRepository.findClientById({ id: parsedId });
-
-    return res.json(client);
-  }
 }
 
-export default new AuthClientController();
+export default new ClientController();

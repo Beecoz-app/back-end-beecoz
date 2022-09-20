@@ -13,6 +13,6 @@ export interface ClientRepositoryDeleteDTO {
 export interface ClientRepositoryFindClientByIdDTO {
     id: number;
 }
-export interface ClientRepositoryFindClientByLoginIdDTO {
-    loginId: number
+export interface ClientRepositoryFindClientByLoginDTO {
+    login: string
 }

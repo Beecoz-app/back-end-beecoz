@@ -27,7 +27,7 @@ class RatingRepository implements IRatingRepository {
         return ratings
 
     }
-    async update({id, data}: RatingRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<Rating>> {
+    async update({id, data}: RatingRepositoryUpdateDTO): Promise<Rating> {
         const newRating = await prisma.rating.update({
             where: {
                 id
@@ -38,7 +38,7 @@ class RatingRepository implements IRatingRepository {
         })
         return newRating
     }
-    async delete({id}: RatingRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<Rating>> {
+    async delete({id}: RatingRepositoryDeleteDTO): Promise<Rating> {
         const deletedRating = await prisma.rating.delete({
             where: {
                 id

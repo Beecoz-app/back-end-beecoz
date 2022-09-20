@@ -12,18 +12,6 @@ datasource db {
 
 //TABELA LOGIN E TABELA USERTIPO
 
-model Login {
-  id    Int     @id @default(autoincrement()) @map("tb_login_id")
-  email String  @unique @map("tb_login_email")
-  password String @map("tb_login_password")
-  cellNumber String?  @unique @map("tb_login_cellnumber")
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  autonomous Autonomous[]
-  client Client[]
-  @@map("tb_login")
-}
-
 enum Level {
   Beginner
   Intermediate
@@ -31,163 +19,170 @@ enum Level {
 }
 
 model TypeUser {
-  id  Int   @id @default(autoincrement()) @map("tb_usertype_id")
-  level Level @map("tb_usertype_level")
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id         Int          @id @default(autoincrement()) @map("tb_usertype_id")
+  level      Level        @map("tb_usertype_level")
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
   autonomous Autonomous[]
-  client Client[]
+  client     Client[]
+
   @@map("tb_usertype")
 }
 
 model ClientProfile {
-  id Int @id @default(autoincrement()) @map("tb_client_profiles_id")
-  biography String @map("tb_client_profiles_bio")
+  id         Int      @id @default(autoincrement()) @map("tb_client_profiles_id")
+  biography  String   @map("tb_client_profiles_bio")
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  client Client?
-  
+  client     Client?
+
   @@map("tb_client_profiles")
 }
 
 //TABELA PERFIL CLIENTE E AUTONOMO
 
-
 model AutonomousProfile {
-  id Int @id @default(autoincrement()) @map("tb_autonomous_profiles_id")
-  biography String @map("tb_autonomous_profiles_bio")
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id         Int         @id @default(autoincrement()) @map("tb_autonomous_profiles_id")
+  biography  String      @map("tb_autonomous_profiles_bio")
+  created_at DateTime    @default(now())
+  updated_at DateTime    @updatedAt
   autonomous Autonomous?
+
   @@map("tb_autonomous_profiles")
 }
 
 //TABELA AUTONOMO E CLIENTE
 
 enum Gender {
-  Male 
+  Male
   Female
 }
 
 model Autonomous {
-    id Int @id @default(autoincrement())  @map("tb_autonomous_id")
-    name String @db.VarChar(20)   @map("tb_autonomous_name")
-    lastName String @db.VarChar(60)  @map("tb_autonomous_lastname")
-    gender Gender 
-    bornDate DateTime @db.Date @map("tb_autonomous_borndate")
-    cpf String @db.Char(11)  @map("tb_autonomous_cpf")
-    cnpj String? @db.Char(14) @map("tb_autonomous_cnpj")
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
-    profile AutonomousProfile @relation(fields: [profileId], references: [id])
-    profileId Int @unique
-    type TypeUser @relation(fields: [typeId], references: [id])
-    typeId Int
-    login Login @relation(fields: [loginId], references: [id])
-    loginId Int @unique
-    service Service[]
-    interest Interest[]
-    
-    @@map("tb_autonomous")
+  id         Int               @id @default(autoincrement()) @map("tb_autonomous_id")
+  name       String            @map("tb_autonomous_name") @db.VarChar(20)
+  lastName   String            @map("tb_autonomous_lastname") @db.VarChar(60)
+  login      String            @unique @map("tb_autonomous_login") @db.VarChar(60)
+  password   String            @map("tb_autonomous_password") @db.VarChar(60)
+  gender     Gender
+  bornDate   DateTime          @map("tb_autonomous_borndate") @db.Date
+  cpf        String            @map("tb_autonomous_cpf") @db.Char(11)
+  cnpj       String?           @map("tb_autonomous_cnpj") @db.Char(14)
+  created_at DateTime          @default(now())
+  updated_at DateTime          @updatedAt
+  profile    AutonomousProfile @relation(fields: [profileId], references: [id])
+  profileId  Int               @unique
+  type       TypeUser          @relation(fields: [typeId], references: [id])
+  typeId     Int
+  service    Service[]
+  interest   Interest[]
+
+  @@map("tb_autonomous")
 }
 
 model Client {
-    id Int @id @default(autoincrement()) @map("tb_clients_id")
-    name String @db.VarChar(20)  @map("tb_clients_name")
-    lastName String @db.VarChar(60) @map("tb_clients_lastname")
-    gender Gender 
-    bornDate DateTime @db.Date @map("tb_clients_borndate")
-    cpf String @db.Char(11) @map("tb_clients_cpf")
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
-    profile ClientProfile @relation(fields: [profileId], references: [id])
-    profileId Int @unique
-    type TypeUser @relation(fields: [typeId], references: [id])
-    typeId Int
-    login Login @relation(fields: [loginId], references: [id])
-    loginId Int @unique
-    publication Publication[]
-    @@map("tb_clients")
+  id          Int           @id @default(autoincrement()) @map("tb_clients_id")
+  name        String        @map("tb_clients_name") @db.VarChar(20)
+  lastName    String        @map("tb_clients_lastname") @db.VarChar(60)
+  login       String        @unique @map("tb_clients_login") @db.VarChar(60)
+  password    String        @map("tb_clients_password") @db.VarChar(60)
+  gender      Gender
+  bornDate    DateTime      @map("tb_clients_borndate") @db.Date
+  cpf         String        @map("tb_clients_cpf") @db.Char(11)
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @updatedAt
+  profile     ClientProfile @relation(fields: [profileId], references: [id])
+  profileId   Int           @unique
+  type        TypeUser      @relation(fields: [typeId], references: [id])
+  typeId      Int
+  publication Publication[]
+
+  @@map("tb_clients")
 }
 
 //TABELAS SERVICOS
 
 model ServiceType {
-  id Int @id @default(autoincrement()) @map("tb_servtypes_id")
-  servTypes String @db.VarChar(60) @map("tb_servtypes_service")
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  service Service[]
+  id          Int           @id @default(autoincrement()) @map("tb_servtypes_id")
+  servTypes   String        @map("tb_servtypes_service") @db.VarChar(60)
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @updatedAt
+  service     Service[]
   publication Publication[]
+
   @@map("tb_servtypes")
 }
 
 model Service {
-    id Int @id @default(autoincrement()) @map("tb_services_id")
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
-    autonomous Autonomous @relation(fields: [autonomousId], references: [id])
-    autonomousId Int @unique
-    serviceType ServiceType @relation(fields: [serviceTypeId], references: [id])
-    serviceTypeId Int @unique
-@@map("tb_services")
+  id            Int         @id @default(autoincrement()) @map("tb_services_id")
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+  autonomous    Autonomous  @relation(fields: [autonomousId], references: [id])
+  autonomousId  Int         @unique
+  serviceType   ServiceType @relation(fields: [serviceTypeId], references: [id])
+  serviceTypeId Int         @unique
+
+  @@map("tb_services")
 }
 
 //TABELA PUBLICACAO E INTERESSE
 
 model Publication {
-    id Int @id @default(autoincrement()) @map("tb_publications_id")
-    title String @db.VarChar(30) @map("tb_publications_title")
-    description String @map("tb_publications_desc")
-    region String
-    data DateTime @db.Date @map("tb_publications_data")
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
-    servType ServiceType @relation(fields: [serviceTypeId], references: [id])
-    serviceTypeId Int @unique
-    client Client @relation(fields: [clientId], references: [id])
-    clientId Int
-    interest Interest[]
-    type Level @map("tb_publication_type")
-@@map("tb_publications")
+  id            Int         @id @default(autoincrement()) @map("tb_publications_id")
+  title         String      @map("tb_publications_title") @db.VarChar(30)
+  description   String      @map("tb_publications_desc")
+  region        String
+  data          DateTime    @map("tb_publications_data") @db.Date
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+  servType      ServiceType @relation(fields: [serviceTypeId], references: [id])
+  serviceTypeId Int         @unique
+  client        Client      @relation(fields: [clientId], references: [id])
+  clientId      Int
+  interest      Interest[]
+  type          Level       @map("tb_publication_type")
+
+  @@map("tb_publications")
 }
 
 model Interest {
-  id Int @id @default(autoincrement()) @map("tb_interests_id")
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  publication Publication @relation(fields: [publicationId], references: [id])
+  id            Int         @id @default(autoincrement()) @map("tb_interests_id")
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+  publication   Publication @relation(fields: [publicationId], references: [id])
   publicationId Int
-  autonomous Autonomous @relation(fields: [autonomousId], references: [id])
-  autonomousId Int
-  work Work?
+  autonomous    Autonomous  @relation(fields: [autonomousId], references: [id])
+  autonomousId  Int
+  work          Work?
+
   @@map("tb_interests")
 }
 
 //TABELA CHAT
 
 model chat {
-  id Int @id @default(autoincrement()) @map("tb_chat_id")
+  id         Int      @id @default(autoincrement()) @map("tb_chat_id")
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  hour DateTime @default(now()) @map("tb_chat_hour")
-  message Bytes @map("tb_chat_message")
-  
+  hour       DateTime @default(now()) @map("tb_chat_hour")
+  message    Bytes    @map("tb_chat_message")
+
   @@map("tb_chat")
 }
 
 //TABELA AVALIACAO E TRABALHO
 
 model Rating {
-  id Int @id @default(autoincrement()) @map("tb_ratings_id")
-  stars Int @map("tb_ratings_stars")
-  comment String? @map("tb_ratings_comment")
+  id         Int      @id @default(autoincrement()) @map("tb_ratings_id")
+  stars      Int      @map("tb_ratings_stars")
+  comment    String?  @map("tb_ratings_comment")
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  work Work[]
+  work       Work[]
+
   @@map("tb_ratings")
 }
- 
+
 enum Status {
   Progress
   Completed
@@ -195,13 +190,14 @@ enum Status {
 }
 
 model Work {
-  id Int @id @default(autoincrement()) @map("tb_works_id")
-  status Status 
+  id         Int      @id @default(autoincrement()) @map("tb_works_id")
+  status     Status
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  interest Interest @relation(fields: [interestId], references: [id]) 
-  interestId Int @unique
-  rating Rating @relation(fields: [ratingId], references: [id])
-  ratingId Int
+  interest   Interest @relation(fields: [interestId], references: [id])
+  interestId Int      @unique
+  rating     Rating   @relation(fields: [ratingId], references: [id])
+  ratingId   Int
+
   @@map("tb_works")
 }
