@@ -1,10 +1,10 @@
 import { Autonomous } from "@prisma/client";
 import { Request, Response } from "express";
-import AutonomousRepository from "../../repositories/Autonomous/AutonomousRepository";
-import TypeUserRepository from "../../repositories/TypeUser/TypeUserRepository";
+import AutonomousRepository from "../../../repositories/Autonomous/AutonomousRepository";
+import TypeUserRepository from "../../../repositories/TypeUser/TypeUserRepository";
 import jwt from "jsonwebtoken";
-import AutonomousProfileRepository from "../../repositories/Autonomous/AutonomousProfile/AutonomousProfileRepository";
-import { hashPassword } from "../../utils/password";
+import AutonomousProfileRepository from "../../../repositories/Autonomous/AutonomousProfile/AutonomousProfileRepository";
+import { hashPassword } from "../../../utils/password";
 
 class AuthAutonomousController {
   async register(req: Request, res: Response) {

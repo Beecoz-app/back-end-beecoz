@@ -1,6 +1,6 @@
 import { AutonomousProfile } from "@prisma/client";
 import { Request, Response } from "express";
-import AutonomousProfileRepository from "../../../repositories/Autonomous/AutonomousProfile/AutonomousProfileRepository";
+import AutonomousProfileRepository from "../../../../repositories/Autonomous/AutonomousProfile/AutonomousProfileRepository";
 
 class AutonomousProfileController {
     

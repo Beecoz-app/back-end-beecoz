@@ -1,7 +1,7 @@
 import { AutonomousProfile } from "@prisma/client";
 import { Request, Response } from "express";
 import AutonomousProfileRepository from "../../../../repositories/Autonomous/AutonomousProfile/AutonomousProfileRepository";
-import AutonomousProfileController from "../../../../controllers/Autonomous/AutonomousProfile/AutonomousProfileController";
+import AutonomousProfileController from "../../../../controllers/Auth/Autonomous/AutonomousProfile/AutonomousProfileController";
 
 import { Router } from "express";
 

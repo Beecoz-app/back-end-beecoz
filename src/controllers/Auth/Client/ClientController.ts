@@ -1,10 +1,10 @@
 import { Client } from "@prisma/client";
 import { Request, Response } from "express";
-import ClientProfileRepository from "../../repositories/Client/ClientProfile/ClientProfileRepository";
-import ClientRepository from "../../repositories/Client/ClientRepository";
-import TypeUserRepository from "../../repositories/TypeUser/TypeUserRepository";
+import ClientProfileRepository from "../../../repositories/Client/ClientProfile/ClientProfileRepository";
+import ClientRepository from "../../../repositories/Client/ClientRepository";
+import TypeUserRepository from "../../../repositories/TypeUser/TypeUserRepository";
 import jwt from "jsonwebtoken";
-import { hashPassword } from "../../utils/password";
+import { hashPassword } from "../../../utils/password";
 
 class ClientController {
   async register(req: Request, res: Response) {

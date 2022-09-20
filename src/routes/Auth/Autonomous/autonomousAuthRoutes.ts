@@ -1,6 +1,6 @@
 import {Request, Response} from 'express'
 import { Router } from "express";
-import AuthAutonomousController from '../../../controllers/Autonomous/AutonomousController'
+import AuthAutonomousController from '../../../controllers/Auth/Autonomous/AutonomousController'
 
 const autonomousAuthRoutes = Router();
 

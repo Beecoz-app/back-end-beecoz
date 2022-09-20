@@ -1,7 +1,7 @@
 import { ClientProfile } from "@prisma/client";
 import { Request, Response } from "express";
 import ClientProfileRepository from "../../../../repositories/Client/ClientProfile/ClientProfileRepository";
-import ClientProfileController from "../../../../controllers/Client/ClientProfile/ClientProfileController";
+import ClientProfileController from "../../../../controllers/Auth/Client/ClientProfile/ClientProfileController";
 
 import { Router } from "express";
 

@@ -1,6 +1,6 @@
 import { Client } from "@prisma/client";
 import {Request, Response} from 'express'
-import ClientController from '../../../controllers/Client/ClientController'
+import ClientController from '../../../controllers/Auth/Client/ClientController'
 
 import { Router } from "express";
 

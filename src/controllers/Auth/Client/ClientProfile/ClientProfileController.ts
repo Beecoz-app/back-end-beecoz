@@ -1,6 +1,6 @@
 import { ClientProfile } from "@prisma/client";
 import { Request, Response } from "express";
-import ClientProfileRepository from "../../../repositories/Client/ClientProfile/ClientProfileRepository";
+import ClientProfileRepository from "../../../../repositories/Client/ClientProfile/ClientProfileRepository";
 
 class ClientProfileController {
 
