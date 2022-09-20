@@ -1,7 +1,6 @@
 import { Autonomous } from "@prisma/client";
 import { Request, Response } from "express";
 import AutonomousRepository from "../../../repositories/Autonomous/AutonomousRepository";
-import LoginRepository from "../../../repositories/Login/LoginRepository";
 import TypeUserRepository from "../../../repositories/TypeUser/TypeUserRepository";
 import { hashPassword} from "../../../utils/password";
 import bcrypt from "bcrypt";
@@ -12,22 +11,20 @@ class AuthAutonomousController {
     async register(req: Request, res: Response) {
         const {
         name,
-        email,
+        login,
         password,
-        cellNumber,
         lastName,
         gender,
         cpf,
         biography,
         bornDate,
         cnpj
-        }: Autonomous & { email: string; password: string, cellNumber: number | null, biography: string } = req.body;
+        }: Autonomous & {biography: string} = req.body;
 
-        const login = await LoginRepository.create({ data: { email, password: await hashPassword(password), cellNumber } });
         const typeId = await TypeUserRepository.findByLevel({ level: gender  === 'Female' ? 'Queen' : 'Beginner' })
         const profileId = await AutonomousProfileRepository.create({ data: { biography } })
         
-        const autonomous = await AutonomousRepository.create({ data: { name, lastName, bornDate: new Date(bornDate), cpf, gender, loginId: login.id, typeId, cnpj , profileId: profileId.id } })
+        const autonomous = await AutonomousRepository.create({ data: { name, lastName, bornDate: new Date(bornDate), cpf, gender, typeId, cnpj , profileId: profileId.id, login, password } })
 
         const token = jwt.sign({ id: autonomous.id }, String(process.env.AUTH_SECRET), {
             expiresIn: 86400,
@@ -67,9 +64,9 @@ class AuthAutonomousController {
         const { id } = req.params;
         const {
           name,
-          email,
+          login,
           password,
-          cellNumber,
+          
           lastName,
         }: Autonomous & { email: string; password: string, cellNumber: number | null } = req.body;
         const parsedId = Number(id);
@@ -79,8 +76,7 @@ class AuthAutonomousController {
           return res.status(400).json({ message: "Autonomous not found" });
         }
     
-        const login = await LoginRepository.update({ id: autonomousExists.loginId, data: { email, password: await hashPassword(password), cellNumber } });
-        const autonomous = await AutonomousRepository.update({ id: parsedId, data: { name, lastName, loginId: login.id } })
+        const autonomous = await AutonomousRepository.update({ id: parsedId, data: { name, lastName, login, password } })
     
         return res.json({ autonomous })
       }
