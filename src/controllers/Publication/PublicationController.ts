@@ -1,9 +1,10 @@
 import {Publication} from "@prisma/client"
-import {Request, Response} from "express"
+import {Request, response, Response} from "express"
 import PublicationRepository from "../../repositories/Publication/PublicationRepository"
 import ClientRepository from "../../repositories/Client/ClientRepository";
 import ServiceTypeRepository from "../../repositories/ServiceType/ServiceTypeRepository";
 import { serviceTypeRoutes } from "../../routes/ServiceType/serviceTypeRoutes";
+import TypeUserRepository from "../../repositories/TypeUser/TypeUserRepository";
 
 
 class PublicationController {
@@ -13,24 +14,46 @@ class PublicationController {
             title, 
             description, 
             data, 
-            region,  
+            region,
         }: Publication & {} = req.body;
 
-        const publication = PublicationRepository.create({ data: { title, description, data, region, serviceTypeId: Number(idServiceType), clientId: Number(idClient)} });
+        const client = await ClientRepository.findClientById({id: Number(idClient)})
 
-        return res.json({ publication });
+        if (client?.typeId === 1) {
+            const publication = PublicationRepository.create({ data: { title, description, data: new Date(data), type: 'Beginner', region, serviceTypeId: 1, clientId: Number(idClient)}});
+
+            return res.json({ publication });
+        } else {
+            const publication = PublicationRepository.create({ data: { title, description, data: new Date(data), type: 'Queen', region, serviceTypeId: 1, clientId: Number(idClient)}});
+
+            return res.json({ publication });
+        }
     }
+
+    async createPublicationOnlyQueenOrIntermediateUser(req: Request, res:Response) {
+        const {idClient, idServiceType} = req.params
+        const { 
+            title, 
+            description, 
+            data, 
+            region,
+        }: Publication & {} = req.body;
 
         
 
+        const queenPublication = PublicationRepository.create({ data: { title, description, data: new Date, region, type: 'Queen', serviceTypeId: 1, clientId: Number(idClient)} });
+
+        return response.status(200).json({queenPublication})
+    }
+
     async update(req: Request, res: Response) {
         const { id, idClient, idServiceType } = req.params;
-        const { title, description, data, region }: Publication = req.body;
+        const { title, description, data, region, type }: Publication = req.body;
         const parsedId = Number( id )
 
 
 
-        const publication = await PublicationRepository.update({ id: parsedId, data: { data, region, description, title } });
+        const publication = await PublicationRepository.update({ id: parsedId, data: { data, region, description, title, type } });
         
         return res.json({ publication });
     }

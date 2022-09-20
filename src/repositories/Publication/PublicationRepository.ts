@@ -17,7 +17,7 @@ class PublicationRepository implements IPublicationRepository{
     async create({data}: PublicationRepositoryCreateDTO): Promise<Publication> {
         const publication = await prisma.publication.create({
             data: {
-                ...data
+                    ...data
             }
         })
         return publication

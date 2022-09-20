@@ -148,6 +148,7 @@ model Publication {
     client Client @relation(fields: [clientId], references: [id])
     clientId Int
     interest Interest[]
+    type Level @map("tb_publication_type")
 @@map("tb_publications")
 }
 
