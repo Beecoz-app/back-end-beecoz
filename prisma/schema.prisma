@@ -12,17 +12,6 @@ datasource db {
 
 //TABELA LOGIN E TABELA USERTIPO
 
-model Login {
-  id    Int     @id @default(autoincrement()) @map("tb_login_id")
-  email String  @unique @map("tb_login_email")
-  password String @map("tb_login_password")
-  cellNumber String?  @unique @map("tb_login_cellnumber")
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  autonomous Autonomous[]
-  client Client[]
-  @@map("tb_login")
-}
 
 enum Level {
   Beginner
@@ -73,6 +62,8 @@ model Autonomous {
     id Int @id @default(autoincrement())  @map("tb_autonomous_id")
     name String @db.VarChar(20)   @map("tb_autonomous_name")
     lastName String @db.VarChar(60)  @map("tb_autonomous_lastname")
+    login String  @db.VarChar(60) @map("tb_autonomous_login")
+    password String @db.VarChar(60) @map("tb_autonomous_password")
     gender Gender 
     bornDate DateTime @db.Date @map("tb_autonomous_borndate")
     cpf String @db.Char(11)  @map("tb_autonomous_cpf")
@@ -83,8 +74,6 @@ model Autonomous {
     profileId Int @unique
     type TypeUser @relation(fields: [typeId], references: [id])
     typeId Int
-    login Login @relation(fields: [loginId], references: [id])
-    loginId Int @unique
     service Service[]
     interest Interest[]
     
@@ -95,6 +84,8 @@ model Client {
     id Int @id @default(autoincrement()) @map("tb_clients_id")
     name String @db.VarChar(20)  @map("tb_clients_name")
     lastName String @db.VarChar(60) @map("tb_clients_lastname")
+    login String @db.VarChar(60) @map("tb_clients_login")
+    password String @db.VarChar(60) @map("tb_clients_password")
     gender Gender 
     bornDate DateTime @db.Date @map("tb_clients_borndate")
     cpf String @db.Char(11) @map("tb_clients_cpf")
@@ -104,8 +95,6 @@ model Client {
     profileId Int @unique
     type TypeUser @relation(fields: [typeId], references: [id])
     typeId Int
-    login Login @relation(fields: [loginId], references: [id])
-    loginId Int @unique
     publication Publication[]
     @@map("tb_clients")
 }
