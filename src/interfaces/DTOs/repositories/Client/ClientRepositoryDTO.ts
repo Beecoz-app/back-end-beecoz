@@ -16,3 +16,9 @@ export interface ClientRepositoryFindClientByIdDTO {
 export interface ClientRepositoryFindClientByLoginDTO {
     login: string
 }
+
+export interface ClientRepositoryUpdatePasswordDTO {
+    id: number;
+    password: string;
+}
+

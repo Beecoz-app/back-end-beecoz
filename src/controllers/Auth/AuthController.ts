@@ -48,6 +48,43 @@ class AuthController {
         .json({ user: autonomousExists, token: generateToken('id', autonomousExists.id), type: "Autonomous" });
     }
   }
+
+
+  async newClientPassword(req: Request, res: Response) {
+    const { id } = req.params;
+    const parsedId = Number(id);
+    const { password }: { password: string } = req.body;
+
+    const clientExists = await ClientRepository.findClientById({ id: parsedId });
+
+    if (!clientExists) {
+      return res.status(400).json({ message: "Client not found" });
+    }
+    const client = await ClientRepository.updatePassword({
+      id: Number(id),
+      password: await bcrypt.hash(password, 8),
+    });
+
+    return res.json({ client });
+  }
+
+  async newAutonomousPassword(req: Request, res: Response) {
+    const { id } = req.params;
+    const parsedId = Number(id);
+    const { password }: { password: string } = req.body;
+
+    const autonomousExists = await AutonomousRepository.findAutonomousById({ id: parsedId });
+
+    if (!autonomousExists) {
+      return res.status(400).json({ message: "Autonomous not found" });
+    }
+    const autonomous = await AutonomousRepository.updatePassword({
+      id: Number(id),
+      password: await bcrypt.hash(password, 8),
+    });
+
+    return res.json({ autonomous });
+  }
 }
 
 export default new AuthController();

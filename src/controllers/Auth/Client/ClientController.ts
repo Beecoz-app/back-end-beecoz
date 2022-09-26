@@ -93,6 +93,8 @@ class ClientController {
 
     return res.json({ client });
   }
+
+  
 }
 
 export default new ClientController();

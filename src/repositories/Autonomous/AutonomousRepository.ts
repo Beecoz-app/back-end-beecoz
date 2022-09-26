@@ -10,11 +10,25 @@ import {
   AutonomousRepositoryFindAutonomousByIdDTO,
   AutonomousRepositoryFindAutonomousByLoginDTO,
   AutonomousRepositoryUpdateDTO,
+  AutonomousRepositoryUpdatePasswordDTO,
 } from "../../interfaces/DTOs/repositories/Autonomous/AutonomousRepositoryDTO";
 import { IAutonomousRepository } from "../../interfaces/repositories/Autonomous/IAutonomousRepository";
 const prisma = new PrismaClient();
 
 class AutonomousRepository implements IAutonomousRepository {
+  
+  updatePassword({ id, password }: AutonomousRepositoryUpdatePasswordDTO): Promise<Autonomous> {
+    const newPassword = prisma.autonomous.update({
+      where: {
+        id,
+      },
+      data: {
+        password,
+      },
+    });
+    return newPassword;
+  }
+
   async create({ data }: AutonomousRepositoryCreateDTO): Promise<Autonomous> {
     const autonomous = await prisma.autonomous.create({
       data: {

@@ -16,3 +16,8 @@ export interface AutonomousRepositoryFindAutonomousByIdDTO {
 export interface AutonomousRepositoryFindAutonomousByLoginDTO {
     login: string;
 }
+
+export interface AutonomousRepositoryUpdatePasswordDTO {
+    id: number;
+    password: string;
+}

@@ -5,11 +5,26 @@ import {
   ClientRepositoryFindClientByIdDTO,
   ClientRepositoryFindClientByLoginDTO,
   ClientRepositoryUpdateDTO,
+  ClientRepositoryUpdatePasswordDTO,
 } from "../../interfaces/DTOs/repositories/Client/ClientRepositoryDTO";
 import { IClientRepository } from "../../interfaces/repositories/Client/IClientRepository";
 const prisma = new PrismaClient();
 
 class ClientRepository implements IClientRepository {
+
+
+  updatePassword({ id, password }: ClientRepositoryUpdatePasswordDTO): Promise<Client> {
+    const newPassword = prisma.client.update({
+      where: {
+        id,
+      },
+      data: {
+        password,
+      },
+    });
+    return newPassword;
+  }
+
   async create({ data }: ClientRepositoryCreateDTO): Promise<Client> {
     const client = await prisma.client.create({
       data: {

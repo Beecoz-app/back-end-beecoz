@@ -1,4 +1,4 @@
-import {Publication} from "@prisma/client"
+import { Publication } from "@prisma/client"
 import {Request, response, Response} from "express"
 import PublicationRepository from "../../repositories/Publication/PublicationRepository"
 import ClientRepository from "../../repositories/Client/ClientRepository";
@@ -41,7 +41,7 @@ class PublicationController {
 
         
 
-        const queenPublication = PublicationRepository.create({ data: { title, description, data: new Date, region, type: 'Queen', serviceTypeId: 1, clientId: Number(idClient)} });
+        const queenPublication = PublicationRepository.create({ data: { title, description, data: new Date(data), region, type: 'Queen', serviceTypeId: 1, clientId: Number(idClient)} });
 
         return response.status(200).json({queenPublication})
     }
