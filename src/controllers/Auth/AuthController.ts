@@ -14,6 +14,7 @@ class AuthController {
     }: { login: string; password: string; type: "Client" | "Autonomous" } =
       req.body;
 
+
     if (type === "Client") {
       const clientExists = await ClientRepository.findClientByLogin({ login });
 
@@ -27,7 +28,7 @@ class AuthController {
 
       return res
         .status(200)
-        .json({ client: clientExists, token: generateToken('id', clientExists.id), type: "Client" });
+        .json({ user: clientExists, token: generateToken('id', clientExists.id), type: "Client" });
     } else {
       const autonomousExists = await AutonomousRepository.findAutonomousByLogin(
         { login }
@@ -41,9 +42,10 @@ class AuthController {
         return res.status(400).json({ message: "Incorrect password" });
       }
 
+
       return res
         .status(200)
-        .json({ client: autonomousExists, token: generateToken('id', autonomousExists.id), type: "Autonomous" });
+        .json({ user: autonomousExists, token: generateToken('id', autonomousExists.id), type: "Autonomous" });
     }
   }
 }

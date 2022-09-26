@@ -3,7 +3,6 @@ import { Request, Response } from "express";
 import ClientProfileRepository from "../../../repositories/Client/ClientProfile/ClientProfileRepository";
 import ClientRepository from "../../../repositories/Client/ClientRepository";
 import TypeUserRepository from "../../../repositories/TypeUser/TypeUserRepository";
-import jwt from "jsonwebtoken";
 import { hashPassword } from "../../../utils/hashPassword";
 import { generateToken } from "../../../utils/generateToken";
 

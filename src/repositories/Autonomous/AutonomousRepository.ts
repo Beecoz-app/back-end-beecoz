@@ -68,7 +68,7 @@ class AutonomousRepository implements IAutonomousRepository {
   async findAutonomousByLogin({ login }: AutonomousRepositoryFindAutonomousByLoginDTO): Promise<Autonomous | null> {
     const autonomousId = await prisma.autonomous.findUnique({
       where: {
-        login,
+        login
       },
     });
     return autonomousId;
