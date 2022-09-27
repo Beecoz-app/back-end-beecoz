@@ -53,7 +53,15 @@ class PublicationController {
 
     return res.json({ publications });
   }
+  async readById(req: Request, res: Response) {
+    const { id } = req.params;
 
+    const publication = await PublicationRepository.findPublicationById({
+      id: Number(id),
+    });
+
+    return res.json({ publication });
+  }
   async update(req: Request, res: Response) {
     const { id } = req.params;
     const { title, description, data, region, type }: Publication = req.body;
@@ -74,16 +82,6 @@ class PublicationController {
     return res.json({ publication });
   }
 
-  async readById(req: Request, res: Response) {
-    const { id } = req.params;
-    const parsedId = Number(id);
-
-    const publication = await PublicationRepository.findPublicationById({
-      id: parsedId,
-    });
-
-    return res.json({ publication });
-  }
 }
 
 export default new PublicationController();

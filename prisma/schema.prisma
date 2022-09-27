@@ -114,13 +114,13 @@ model ServiceType {
 }
 
 model Service {
-  id            Int         @id @default(autoincrement()) @map("tb_services_id")
-  created_at    DateTime    @default(now())
-  updated_at    DateTime    @updatedAt
-  autonomous    Autonomous  @relation(fields: [autonomousId], references: [id])
-  autonomousId  Int         @unique
-  serviceType   ServiceType @relation(fields: [servTypeId], references: [id])
-  servTypeId Int
+  id           Int         @id @default(autoincrement()) @map("tb_services_id")
+  created_at   DateTime    @default(now())
+  updated_at   DateTime    @updatedAt
+  autonomous   Autonomous  @relation(fields: [autonomousId], references: [id])
+  autonomousId Int         @unique
+  serviceType  ServiceType @relation(fields: [servTypeId], references: [id])
+  servTypeId   Int
 
   @@map("tb_services")
 }
@@ -128,19 +128,19 @@ model Service {
 //TABELA PUBLICACAO E INTERESSE
 
 model Publication {
-  id            Int         @id @default(autoincrement()) @map("tb_publications_id")
-  title         String      @map("tb_publications_title") @db.VarChar(30)
-  description   String      @map("tb_publications_desc")
-  region        String
-  data          DateTime    @map("tb_publications_data") @db.Date
-  created_at    DateTime    @default(now())
-  updated_at    DateTime    @updatedAt
-  servType      ServiceType @relation(fields: [servTypeId], references: [id])
-  servTypeId Int
-  client        Client      @relation(fields: [clientId], references: [id])
-  clientId      Int
-  interest      Interest[]
-  type          Level       @map("tb_publication_type")
+  id          Int         @id @default(autoincrement()) @map("tb_publications_id")
+  title       String      @map("tb_publications_title") @db.VarChar(30)
+  description String      @map("tb_publications_desc")
+  region      String
+  data        DateTime    @map("tb_publications_data") @db.Date
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  servType    ServiceType @relation(fields: [servTypeId], references: [id])
+  servTypeId  Int
+  client      Client      @relation(fields: [clientId], references: [id])
+  clientId    Int         @unique
+  interest    Interest[]
+  type        Level       @map("tb_publication_type")
 
   @@map("tb_publications")
 }

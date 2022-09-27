@@ -15,6 +15,12 @@ publicationRoutes.post(
 publicationRoutes.get("/read", async (request: Request, response: Response) => {
   return PublicationController.read(request, response);
 });
+publicationRoutes.get(
+  "/read/:id",
+  async (request: Request, response: Response) => {
+    return PublicationController.readById(request, response);
+  }
+);
 publicationRoutes.put(
   "/update/:id",
   async (request: Request, response: Response) => {
@@ -25,13 +31,6 @@ publicationRoutes.delete(
   "/delete/:id",
   async (request: Request, response: Response) => {
     return PublicationController.delete(request, response);
-  }
-);
-
-publicationRoutes.get(
-  "/read/:id",
-  async (request: Request, response: Response) => {
-    return PublicationController.readById(request, response);
   }
 );
 
