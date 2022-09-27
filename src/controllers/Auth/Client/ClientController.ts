@@ -94,7 +94,29 @@ class ClientController {
     return res.json({ client });
   }
 
-  
+  async changePassword(req: Request, res: Response) {
+    const { id } = req.params;
+    const { oldPassword, newPassword }: { oldPassword: string; newPassword: string } = req.body;
+    const parsedId = Number(id);
+
+    const clientsExists = await ClientRepository.findClientById({
+      id: parsedId,
+    });
+    if (!clientsExists) {
+      return res.status(400).json({ message: "Client not found" });
+    }
+
+    const passwordMatch = await clientsExists.password === oldPassword;
+    if (!passwordMatch) {
+      return res.status(400).json({ message: "Password does not match" });
+    }
+
+    await ClientRepository.updatePassword({
+      id: parsedId,
+      password: await hashPassword(newPassword) });
+
+    return res.status(200).json({ message: "Password updated" });
+}
 }
 
 export default new ClientController();

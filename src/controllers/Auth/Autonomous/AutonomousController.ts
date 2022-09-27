@@ -102,6 +102,30 @@ class AuthAutonomousController {
 
     return res.json({ autonomous });
   }
+
+  async changePassword(req: Request, res: Response) {
+    const { id } = req.params;
+    const { oldPassword, newPassword }: { oldPassword: string; newPassword: string } = req.body;
+    const parsedId = Number(id);
+
+    const autonomousExists = await AutonomousRepository.findAutonomousById({
+      id: parsedId,
+    });
+    if (!autonomousExists) {
+      return res.status(400).json({ message: "Autonomous not found" });
+    }
+
+    const passwordMatch = await autonomousExists.password === oldPassword;
+    if (!passwordMatch) {
+      return res.status(400).json({ message: "Password does not match" });
+    }
+
+    await AutonomousRepository.updatePassword({
+      id: parsedId,
+      password: await hashPassword(newPassword) });
+
+    return res.status(200).json({ message: "Password updated" });
+  }
 }
 
 export default new AuthAutonomousController();

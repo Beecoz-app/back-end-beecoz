@@ -76,7 +76,6 @@ model Autonomous {
   typeId     Int
   service    Service[]
   interest   Interest[]
-
   @@map("tb_autonomous")
 }
 

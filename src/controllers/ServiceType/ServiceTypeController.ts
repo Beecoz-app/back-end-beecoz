@@ -44,7 +44,6 @@ class ServiceTypeController {
         const serviceType = await ServiceTypeRepository.findServiceTypeById({ id: parsedId });
 
         return res.json({ serviceType });
-
     }
 }
 

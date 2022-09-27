@@ -45,6 +45,7 @@ class PublicationController {
 
         return response.status(200).json({queenPublication})
     }
+    
 
     async update(req: Request, res: Response) {
         const { id, idClient, idServiceType } = req.params;
