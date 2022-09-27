@@ -68,9 +68,8 @@ class PublicationController {
 
   async delete(req: Request, res: Response) {
     const { id } = req.params;
-    const parsedId = Number(id);
 
-    const publication = await PublicationRepository.delete({ id: parsedId });
+    const publication = await PublicationRepository.delete({ id: Number(id) });
 
     return res.json({ publication });
   }
