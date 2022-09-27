@@ -119,7 +119,7 @@ model Service {
   autonomous    Autonomous  @relation(fields: [autonomousId], references: [id])
   autonomousId  Int         @unique
   serviceType   ServiceType @relation(fields: [serviceTypeId], references: [id])
-  serviceTypeId Int         @unique
+  serviceTypeId Int         
 
   @@map("tb_services")
 }
@@ -135,7 +135,7 @@ model Publication {
   created_at    DateTime    @default(now())
   updated_at    DateTime    @updatedAt
   servType      ServiceType @relation(fields: [serviceTypeId], references: [id])
-  serviceTypeId Int         @unique
+  serviceTypeId Int         
   client        Client      @relation(fields: [clientId], references: [id])
   clientId      Int
   interest      Interest[]

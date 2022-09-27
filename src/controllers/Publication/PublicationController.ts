@@ -9,7 +9,7 @@ import TypeUserRepository from "../../repositories/TypeUser/TypeUserRepository";
 
 class PublicationController {
     async create(req: Request, res: Response) {
-        const {idClient, idServiceType} = req.params
+        const {userId} = req
         const { 
             title, 
             description, 

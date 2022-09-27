@@ -7,11 +7,7 @@ import { Router } from "express";
 
 const publicationRoutes = Router();
 
-    publicationRoutes.post("/create/:idClient/:idServiceType", async (request: Request, response: Response) => {
-        return PublicationController.create(request, response);
-    });
-
-    publicationRoutes.post("/create/:idClient/:idServiceType", async (request: Request, response: Response) => {
+    publicationRoutes.post("/create/idServiceType", async (request: Request, response: Response) => {
         return PublicationController.createPublicationOnlyQueenOrIntermediateUser(request, response);
     });
 

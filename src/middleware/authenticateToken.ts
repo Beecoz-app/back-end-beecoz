@@ -17,7 +17,7 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
     jwt.verify(token, String(process.env.AUTH_SECRET), (err, decoded) => {
         
         if (err) return res.status(401).json({ message: 'Token invalid' })
-        req.userId = (<any>decoded)
+        req.userId = (<{id: number, iat: number, exp: number}>decoded).id
 
         console.log('decoded', decoded)
 
