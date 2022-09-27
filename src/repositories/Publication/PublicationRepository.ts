@@ -1,5 +1,5 @@
 import { PrismaClient ,Publication, Prisma, PrismaPromise } from "@prisma/client";
-import { PublicationRepositoryCreateDTO, PublicationRepositoryDeleteDTO, PublicationRepositoryFindPublicationByIdDTO, PublicationRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/Publication/PublicationRepositoryDTO";
+import { PublicationRepositoryCreateDTO, PublicationRepositoryDeleteDTO, PublicationRepositoryFindPublicationByIdDTO, PublicationRepositoryReadDTO, PublicationRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/Publication/PublicationRepositoryDTO";
 import { IPublicationRepository } from "../../interfaces/repositories/Publication/IPublicationRepository";
 const prisma = new PrismaClient()
 
@@ -22,8 +22,13 @@ class PublicationRepository implements IPublicationRepository{
         })
         return publication
     }
-    async read(): Promise<PrismaPromise<Publication[]>> {
-        const publications = await prisma.publication.findMany()
+    async read({clientId}: PublicationRepositoryReadDTO): Promise<PrismaPromise<Publication[]>> {
+        const publications = await prisma.publication.findMany({
+            where: {
+                clientId
+            }
+        })
+
         return publications
 
     }
