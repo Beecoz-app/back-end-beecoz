@@ -17,14 +17,14 @@ class PublicationController {
             region,
         }: Publication & {} = req.body;
 
-        const client = await ClientRepository.findClientById({id: Number(idClient)})
+        const client = await ClientRepository.findClientById({id: Number(userId)})
 
         if (client?.typeId === 1) {
-            const publication = PublicationRepository.create({ data: { title, description, data: new Date(data), type: 'Beginner', region, serviceTypeId: 1, clientId: Number(idClient)}});
+            const publication = await PublicationRepository.create({ data: { title, description, data: new Date(data), type: 'Beginner', region, servTypeId: 1, clientId: Number(userId)}});
 
             return res.json({ publication });
         } else {
-            const publication = PublicationRepository.create({ data: { title, description, data: new Date(data), type: 'Queen', region, serviceTypeId: 1, clientId: Number(idClient)}});
+            const publication = await PublicationRepository.create({ data: { title, description, data: new Date(data), type: 'Queen', region, servTypeId: 1, clientId: Number(userId)}});
 
             return res.json({ publication });
         }
