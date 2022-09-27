@@ -23,10 +23,12 @@ class PublicationRepository implements IPublicationRepository {
     return publication;
   }
   async read({
+    id,
     clientId,
   }: PublicationRepositoryReadDTO): Promise<PrismaPromise<Publication[]>> {
     const publications = await prisma.publication.findMany({
       where: {
+        id,
         clientId,
       },
     });
@@ -35,16 +37,19 @@ class PublicationRepository implements IPublicationRepository {
   }
   async findPublicationById({
     id,
+    clientId
   }: PublicationRepositoryFindPublicationByIdDTO): Promise<Publication | null> {
     const publicationId = await prisma.publication.findUnique({
       where: {
         id,
+        clientId
       },
     });
     return publicationId;
   }
   async update({
     id,
+    clientId,
     data,
   }: PublicationRepositoryUpdateDTO): Promise<Publication> {
     const newPublication = await prisma.publication.update({
@@ -57,10 +62,11 @@ class PublicationRepository implements IPublicationRepository {
     });
     return newPublication;
   }
-  async delete({ id }: PublicationRepositoryDeleteDTO): Promise<Publication> {
+  async delete({ id, clientId }: PublicationRepositoryDeleteDTO): Promise<Publication> {
     const deletedPublication = await prisma.publication.delete({
       where: {
         id,
+        clientId,
       },
     });
     return deletedPublication;
