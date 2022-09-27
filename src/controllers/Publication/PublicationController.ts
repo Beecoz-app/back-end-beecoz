@@ -49,19 +49,18 @@ class PublicationController {
   async read(req: Request, res: Response) {
     const { userId } = req;
 
-    const publications = await PublicationRepository.read({clientId: userId});
+    const publications = await PublicationRepository.read({ clientId: userId });
 
     return res.json({ publications });
   }
 
   async update(req: Request, res: Response) {
-    const { id, idClient, idServiceType } = req.params;
+    const { id } = req.params;
     const { title, description, data, region, type }: Publication = req.body;
-    const parsedId = Number(id);
 
     const publication = await PublicationRepository.update({
-      id: parsedId,
-      data: { data, region, description, title, type },
+      id: Number(id),
+      data: { title, description, data: new Date(data), region, servTypeId: 2 },
     });
 
     return res.json({ publication });
@@ -75,7 +74,6 @@ class PublicationController {
 
     return res.json({ publication });
   }
-
 
   async readById(req: Request, res: Response) {
     const { id } = req.params;

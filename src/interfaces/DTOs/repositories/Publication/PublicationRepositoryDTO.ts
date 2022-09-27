@@ -10,7 +10,7 @@ export interface PublicationRepositoryUpdateDTO {
   id: number;
   data: Omit<
     Publication,
-    "id" | "created_at" | "updated_at" | "serviceTypeId" | "clientId"
+    "id" | "created_at" | "updated_at" | "serviceTypeId" | "clientId" | "type"
   >;
 }
 export interface PublicationRepositoryDeleteDTO {
