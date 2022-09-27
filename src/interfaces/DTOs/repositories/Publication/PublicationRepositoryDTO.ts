@@ -1,16 +1,22 @@
 import { Publication } from "@prisma/client";
 
 export interface PublicationRepositoryCreateDTO {
-    data: Omit<Publication, 'id' | 'created_at' | 'updated_at'>
+  data: Omit<Publication, "id" | "created_at" | "updated_at">;
+}
+export interface PublicationRepositoryReadDTO {
+  clientId: number;
 }
 export interface PublicationRepositoryUpdateDTO {
-    id: number;
-    data: Omit<Publication, 'id' | 'created_at' | 'updated_at' | 'serviceTypeId' | 'clientId'>
+  id: number;
+  data: Omit<
+    Publication,
+    "id" | "created_at" | "updated_at" | "serviceTypeId" | "clientId"
+  >;
 }
 export interface PublicationRepositoryDeleteDTO {
-    id: number
+  id: number;
 }
 
 export interface PublicationRepositoryFindPublicationByIdDTO {
-    id: number
+  id: number;
 }
