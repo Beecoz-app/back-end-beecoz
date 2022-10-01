@@ -9,7 +9,8 @@ import TypeUserRepository from "../../repositories/TypeUser/TypeUserRepository";
 class PublicationController {
   async create(req: Request, res: Response) {
     const { userId } = req;
-    const { title, description, data, region }: Publication & {} = req.body;
+    const { title, description, data, region, servTypeId }: Publication & {} =
+      req.body;
 
     const client = await ClientRepository.findClientById({
       id: Number(userId),
@@ -23,7 +24,7 @@ class PublicationController {
           data: new Date(data),
           type: "Beginner",
           region,
-          servTypeId: 1,
+          servTypeId: Number(servTypeId),
           clientId: Number(userId),
         },
       });
@@ -37,7 +38,7 @@ class PublicationController {
           data: new Date(data),
           type: "Queen",
           region,
-          servTypeId: 1,
+          servTypeId: Number(servTypeId),
           clientId: Number(userId),
         },
       });
@@ -71,12 +72,19 @@ class PublicationController {
   async update(req: Request, res: Response) {
     const { id } = req.params;
     const { userId } = req;
-    const { title, description, data, region, type }: Publication = req.body;
+    const { title, description, data, region, servTypeId }: Publication =
+      req.body;
 
     const publication = await PublicationRepository.update({
       id: Number(id),
       clientId: userId,
-      data: { title, description, data: new Date(data), region, servTypeId: 2 },
+      data: {
+        title,
+        description,
+        data: new Date(data),
+        region,
+        servTypeId: Number(servTypeId),
+      },
     });
 
     return res.json({ publication });
