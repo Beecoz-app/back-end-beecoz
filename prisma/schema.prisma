@@ -104,7 +104,7 @@ model Client {
 
 model ServiceType {
   id          Int           @id @default(autoincrement()) @map("tb_servtypes_id")
-  servTypes   String        @map("tb_servtypes_service") @db.VarChar(60)
+  name        String        @map("tb_servtypes_name") @db.VarChar(60)
   created_at  DateTime      @default(now())
   updated_at  DateTime      @updatedAt
   service     Service[]
