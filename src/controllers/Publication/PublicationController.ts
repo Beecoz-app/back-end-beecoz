@@ -5,6 +5,7 @@ import ClientRepository from "../../repositories/Client/ClientRepository";
 import ServiceTypeRepository from "../../repositories/ServiceType/ServiceTypeRepository";
 import { serviceTypeRoutes } from "../../routes/ServiceType/serviceTypeRoutes";
 import TypeUserRepository from "../../repositories/TypeUser/TypeUserRepository";
+import InterestRepository from "../../repositories/Interest/InterestRepository";
 
 class PublicationController {
   async create(req: Request, res: Response) {

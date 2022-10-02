@@ -14,3 +14,6 @@ export interface InterestRepositoryDeleteDTO {
 export interface InterestRepositoryFindInterestByIdDTO {
     id: number
 }
+export interface InterestRepositoryFindInterestByPublicationDTO {
+    publicationId: number
+}

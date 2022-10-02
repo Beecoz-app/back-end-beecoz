@@ -1,5 +1,5 @@
-import { PrismaClient ,Interest, Prisma, PrismaPromise } from "@prisma/client";
-import { InterestRepositoryCreateDTO, InterestRepositoryDeleteDTO, InterestRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/Interest/InterestRepositoryDTO";
+import { PrismaClient ,Interest, Prisma, PrismaPromise, Publication } from "@prisma/client";
+import { InterestRepositoryCreateDTO, InterestRepositoryDeleteDTO, InterestRepositoryFindInterestByPublicationDTO, InterestRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/Interest/InterestRepositoryDTO";
 import { IInterestRepository } from "../../interfaces/repositories/Interest/IInterestRepository";
 import { InterestRepositoryFindInterestByIdDTO } from "../../interfaces/DTOs/repositories/Interest/InterestRepositoryDTO";
 
@@ -27,7 +27,15 @@ class InterestRepository implements IInterestRepository{
     async read(): Promise<PrismaPromise<Interest[]>> {
         const interests = await prisma.interest.findMany()
         return interests
+    }
+    async readByPublication({publicationId}: InterestRepositoryFindInterestByPublicationDTO): Promise<Interest[]> {
+        const interest = await prisma.interest.findMany({
+            where: {
+                publicationId
+            }
+        })
 
+        return interest
     }
     async update({id, data}: InterestRepositoryUpdateDTO): Promise<Interest> {
         const newInterest = await prisma.interest.update({
