@@ -1,16 +1,14 @@
-import { Interest } from "@prisma/client";
 import { Request, Response } from 'express';
 import InterestRepository from '../../repositories/Interest/InterestRepository';
-import AutonomousRepository from "../../repositories/Autonomous/AutonomousRepository";
 
 class InterestController {
 
     async create(req: Request, res: Response) {
         const {idAutonomous, idPublication} = req.params
 
-        const service = await InterestRepository.create({ data: { publicationId: Number(idPublication), autonomousId: Number(idAutonomous) } });
+        const interest = await InterestRepository.create({ data: { publicationId: Number(idPublication), autonomousId: Number(idAutonomous) } });
         
-        return res.json({ service });
+        return res.json({ interest });
     }
 
     async delete(req: Request, res: Response) {
