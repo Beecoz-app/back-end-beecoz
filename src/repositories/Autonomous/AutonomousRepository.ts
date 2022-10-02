@@ -92,6 +92,10 @@ class AutonomousRepository implements IAutonomousRepository {
           },
         },
       },
+      include: {
+        profile: true,
+        service: true
+      }
     });
     return newAutonomous;
   }

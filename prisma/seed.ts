@@ -34,7 +34,7 @@ async function main() {
     })
 
     const churrasqueiroService = await prisma.serviceType.upsert({
-        where: {id: 1},
+        where: {id: 2},
         update: {},
         create: {
             name: 'Churrasqueiro'

@@ -61,7 +61,7 @@ class AuthAutonomousController {
     return res.json(autonomous);
   }
   async update(req: Request, res: Response) {
-    const { id } = req.params;
+    const { userId } = req;
     const {
       name,
       login,
@@ -72,14 +72,14 @@ class AuthAutonomousController {
     }: Autonomous & { servTypeId: string; biography: string } = req.body;
 
     const autonomousExists = await AutonomousRepository.findAutonomousById({
-      id: Number(id),
+      id: Number(userId),
     });
     if (!autonomousExists) {
       return res.status(400).json({ message: "Autonomous not found" });
     }
 
     const autonomous = await AutonomousRepository.update({
-      id: Number(id),
+      id: Number(userId),
       data: {
         autonomousData: {
           name,
