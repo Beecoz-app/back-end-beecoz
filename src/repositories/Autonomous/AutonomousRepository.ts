@@ -29,11 +29,31 @@ class AutonomousRepository implements IAutonomousRepository {
     return newPassword;
   }
 
-  async create({ data }: AutonomousRepositoryCreateDTO): Promise<Autonomous> {
+  async create({ data: {autonomousData, serviceData} }: AutonomousRepositoryCreateDTO): Promise<Autonomous> {
     const autonomous = await prisma.autonomous.create({
       data: {
-        ...data,
+
+        name: autonomousData.name,
+        lastName: autonomousData.lastName,
+        login: autonomousData.login,
+        password: autonomousData.password,
+        gender: autonomousData.gender,
+        bornDate: autonomousData.bornDate,
+        cpf: autonomousData.cpf,
+        cnpj: autonomousData.cnpj,
+        typeId: autonomousData.typeId,
+        profileId: autonomousData.profileId,
+
+        service: {
+          create: {
+            servTypeId: serviceData
+          }
+        }
       },
+      include: {
+        service: true,
+        profile: true
+      }
     });
     return autonomous;
   }

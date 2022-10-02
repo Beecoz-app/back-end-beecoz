@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import {PrismaClient} from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function main() {
@@ -25,6 +25,22 @@ async function main() {
         }
     })
     
+    const marcenarioService = await prisma.serviceType.upsert({
+        where: {id: 1},
+        update: {},
+        create: {
+            name: 'Marcenaria'
+        }
+    })
+
+    const churrasqueiroService = await prisma.serviceType.upsert({
+        where: {id: 1},
+        update: {},
+        create: {
+            name: 'Churrasqueiro'
+        }
+    })
+
 }
 
 main()

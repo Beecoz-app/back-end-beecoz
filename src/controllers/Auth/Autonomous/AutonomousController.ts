@@ -19,7 +19,8 @@ class AuthAutonomousController {
       biography,
       bornDate,
       cnpj,
-    }: Autonomous & { biography: string } = req.body;
+      servTypeId,
+    }: Autonomous & { biography: string; servTypeId: string } = req.body;
 
     const typeId = await TypeUserRepository.findByLevel({
       level: gender === "Female" ? "Queen" : "Beginner",
@@ -30,20 +31,23 @@ class AuthAutonomousController {
 
     const autonomous = await AutonomousRepository.create({
       data: {
-        name,
-        lastName,
-        bornDate: new Date(bornDate),
-        cpf,
-        gender,
-        typeId,
-        cnpj,
-        profileId: profileId.id,
-        login,
-        password: await hashPassword(password),
+        autonomousData: {
+          name,
+          lastName,
+          bornDate: new Date(bornDate),
+          cpf,
+          gender,
+          typeId,
+          cnpj,
+          profileId: profileId.id,
+          login,
+          password: await hashPassword(password),
+        },
+        serviceData: Number(servTypeId),
       },
     });
 
-    return res.json({ autonomous, token: generateToken('id', autonomous.id) });
+    return res.json({ autonomous, token: generateToken("id", autonomous.id) });
   }
 
   async show(req: Request, res: Response) {
@@ -105,7 +109,10 @@ class AuthAutonomousController {
 
   async changePassword(req: Request, res: Response) {
     const { id } = req.params;
-    const { oldPassword, newPassword }: { oldPassword: string; newPassword: string } = req.body;
+    const {
+      oldPassword,
+      newPassword,
+    }: { oldPassword: string; newPassword: string } = req.body;
     const parsedId = Number(id);
 
     const autonomousExists = await AutonomousRepository.findAutonomousById({
@@ -115,14 +122,15 @@ class AuthAutonomousController {
       return res.status(400).json({ message: "Autonomous not found" });
     }
 
-    const passwordMatch = await autonomousExists.password === oldPassword;
+    const passwordMatch = (await autonomousExists.password) === oldPassword;
     if (!passwordMatch) {
       return res.status(400).json({ message: "Password does not match" });
     }
 
     await AutonomousRepository.updatePassword({
       id: parsedId,
-      password: await hashPassword(newPassword) });
+      password: await hashPassword(newPassword),
+    });
 
     return res.status(200).json({ message: "Password updated" });
   }

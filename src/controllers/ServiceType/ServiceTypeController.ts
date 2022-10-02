@@ -4,19 +4,19 @@ import ServiceTypeRepository from "../../repositories/ServiceType/ServiceTypeRep
 
 class ServiceTypeController {
     async create(req: Request, res: Response) {
-        const {servTypes}: ServiceType = req.body;
+        const {name}: ServiceType = req.body;
 
-        const serviceType = await ServiceTypeRepository.create({ data: { servTypes } });
+        const serviceType = await ServiceTypeRepository.create({ data: { name } });
     
         return res.json({ serviceType });
     }
 
     async update(req: Request, res: Response) {
         const { id } = req.params;
-        const { servTypes }: ServiceType = req.body;
+        const { name }: ServiceType = req.body;
         const parsedId = Number( id )
 
-        const serviceType = await ServiceTypeRepository.update({ id: parsedId, data: { servTypes } });
+        const serviceType = await ServiceTypeRepository.update({ id: parsedId, data: { name } });
         
         return res.json({ serviceType });
     }
