@@ -39,9 +39,8 @@ class ServiceTypeController {
 
   async delete(req: Request, res: Response) {
     const { id } = req.params;
-    const parsedId = Number(id);
 
-    const serviceType = await ServiceTypeRepository.delete({ id: parsedId });
+    const serviceType = await ServiceTypeRepository.delete({ id: Number(id) });
 
     return res.json({ serviceType });
   }
