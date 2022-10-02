@@ -15,7 +15,7 @@ export interface AutonomousRepositoryUpdateDTO {
     };
 }
 export interface AutonomousRepositoryDeleteDTO {
-    id: number
+    id: number | undefined
 }
 export interface AutonomousRepositoryFindAutonomousByIdDTO {
     id: number;

@@ -50,12 +50,11 @@ class AuthAutonomousController {
     return res.json({ autonomous, token: generateToken("id", autonomous.id) });
   }
 
-  async show(req: Request, res: Response) {
+  async findById(req: Request, res: Response) {
     const { id } = req.params;
-    const parsedId = Number(id);
-
+    
     const autonomous = await AutonomousRepository.findAutonomousById({
-      id: parsedId,
+      id: Number(id),
     });
 
     return res.json(autonomous);
@@ -100,6 +99,8 @@ class AuthAutonomousController {
   async delete(req: Request, res: Response) {
     const { userId } = req;
 
+    console.log(userId)
+
     const clientExists = await AutonomousRepository.findAutonomousById({
       id: Number(userId),
     });
@@ -110,7 +111,7 @@ class AuthAutonomousController {
 
     await AutonomousRepository.delete({ id: Number(userId) });
 
-    return res.status(200).json({ message: "Client deleted successfully" });
+    return res.status(200).json({ message: "Autonomous deleted successfully" });
   }
 
   async changePassword(req: Request, res: Response) {

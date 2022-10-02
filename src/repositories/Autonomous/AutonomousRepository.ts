@@ -119,12 +119,16 @@ class AutonomousRepository implements IAutonomousRepository {
     return newAutonomous;
   }
   async delete({ id }: AutonomousRepositoryDeleteDTO): Promise<Autonomous> {
+    console.log('repo', id)
+    
     const deletedAutonomous = await prisma.autonomous.delete({
       where: {
-        id,
-      },
-    });
-    return deletedAutonomous;
+        id
+      }
+    })
+
+    return deletedAutonomous
+
   }
   async findAutonomousByLogin({
     login,

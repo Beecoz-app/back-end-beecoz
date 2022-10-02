@@ -18,5 +18,19 @@ autonomousAuthRoutes.put(
     return AuthAutonomousController.update(request, response);
   }
 );
+autonomousAuthRoutes.delete(
+  "/delete",
+  authenticateToken,
+  async (request: Request, response: Response) => {
+    return AuthAutonomousController.delete(request, response);
+  }
+);
+autonomousAuthRoutes.get(
+  "/read/:id",
+  authenticateToken,
+  async (request: Request, response: Response) => {
+    return AuthAutonomousController.findById(request, response);
+  }
+);
 
 export { autonomousAuthRoutes };
