@@ -98,17 +98,17 @@ class AuthAutonomousController {
   }
 
   async delete(req: Request, res: Response) {
-    const { id } = req.params;
-    const parsedId = Number(id);
+    const { userId } = req;
 
     const clientExists = await AutonomousRepository.findAutonomousById({
-      id: parsedId,
+      id: Number(userId),
     });
+
     if (!clientExists) {
       return res.status(400).json({ message: "Client not found" });
     }
 
-    await AutonomousRepository.delete({ id: parsedId });
+    await AutonomousRepository.delete({ id: Number(userId) });
 
     return res.status(200).json({ message: "Client deleted successfully" });
   }
