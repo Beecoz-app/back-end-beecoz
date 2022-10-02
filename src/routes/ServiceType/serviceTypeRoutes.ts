@@ -1,4 +1,3 @@
-import { ServiceType } from "@prisma/client";
 import { Request, Response } from "express";
 import ServiceTypeController from "../../controllers/ServiceType/ServiceTypeController";
 
