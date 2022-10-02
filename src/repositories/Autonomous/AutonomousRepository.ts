@@ -16,8 +16,10 @@ import { IAutonomousRepository } from "../../interfaces/repositories/Autonomous/
 const prisma = new PrismaClient();
 
 class AutonomousRepository implements IAutonomousRepository {
-  
-  updatePassword({ id, password }: AutonomousRepositoryUpdatePasswordDTO): Promise<Autonomous> {
+  updatePassword({
+    id,
+    password,
+  }: AutonomousRepositoryUpdatePasswordDTO): Promise<Autonomous> {
     const newPassword = prisma.autonomous.update({
       where: {
         id,
@@ -29,10 +31,11 @@ class AutonomousRepository implements IAutonomousRepository {
     return newPassword;
   }
 
-  async create({ data: {autonomousData, serviceData} }: AutonomousRepositoryCreateDTO): Promise<Autonomous> {
+  async create({
+    data: { autonomousData, serviceData },
+  }: AutonomousRepositoryCreateDTO): Promise<Autonomous> {
     const autonomous = await prisma.autonomous.create({
       data: {
-
         name: autonomousData.name,
         lastName: autonomousData.lastName,
         login: autonomousData.login,
@@ -46,14 +49,14 @@ class AutonomousRepository implements IAutonomousRepository {
 
         service: {
           create: {
-            servTypeId: serviceData
-          }
-        }
+            servTypeId: serviceData,
+          },
+        },
       },
       include: {
         service: true,
-        profile: true
-      }
+        profile: true,
+      },
     });
     return autonomous;
   }
@@ -63,25 +66,36 @@ class AutonomousRepository implements IAutonomousRepository {
   }
   async update({
     id,
-    data,
-  }: AutonomousRepositoryUpdateDTO): Promise<
-    Autonomous
-  > {
+    data: { autonomousData, serviceData, profileData },
+  }: AutonomousRepositoryUpdateDTO): Promise<Autonomous> {
     const newAutonomous = await prisma.autonomous.update({
       where: {
         id,
       },
       data: {
-        ...data,
+        ...autonomousData,
+
+        service: {
+          update: {
+            data: {
+              servTypeId: serviceData,
+            },
+            where: {
+              autonomousId: id,
+            },
+          },
+        },
+
+        profile: {
+          update: {
+            biography: profileData.biography,
+          },
+        },
       },
     });
     return newAutonomous;
   }
-  async delete({
-    id,
-  }: AutonomousRepositoryDeleteDTO): Promise<
-    Autonomous
-  > {
+  async delete({ id }: AutonomousRepositoryDeleteDTO): Promise<Autonomous> {
     const deletedAutonomous = await prisma.autonomous.delete({
       where: {
         id,
@@ -99,10 +113,12 @@ class AutonomousRepository implements IAutonomousRepository {
     });
     return autonomousId;
   }
-  async findAutonomousByLogin({ login }: AutonomousRepositoryFindAutonomousByLoginDTO): Promise<Autonomous | null> {
+  async findAutonomousByLogin({
+    login,
+  }: AutonomousRepositoryFindAutonomousByLoginDTO): Promise<Autonomous | null> {
     const autonomousId = await prisma.autonomous.findUnique({
       where: {
-        login
+        login,
       },
     });
     return autonomousId;

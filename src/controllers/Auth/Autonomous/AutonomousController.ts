@@ -60,6 +60,42 @@ class AuthAutonomousController {
 
     return res.json(autonomous);
   }
+  async update(req: Request, res: Response) {
+    const { id } = req.params;
+    const {
+      name,
+      login,
+      password,
+      lastName,
+      servTypeId,
+      biography,
+    }: Autonomous & { servTypeId: string; biography: string } = req.body;
+
+    const autonomousExists = await AutonomousRepository.findAutonomousById({
+      id: Number(id),
+    });
+    if (!autonomousExists) {
+      return res.status(400).json({ message: "Autonomous not found" });
+    }
+
+    const autonomous = await AutonomousRepository.update({
+      id: Number(id),
+      data: {
+        autonomousData: {
+          name,
+          lastName,
+          login,
+          password: await hashPassword(password),
+        },
+        serviceData: Number(servTypeId),
+        profileData: {
+          biography,
+        },
+      },
+    });
+
+    return res.json({ autonomous });
+  }
 
   async delete(req: Request, res: Response) {
     const { id } = req.params;
@@ -75,36 +111,6 @@ class AuthAutonomousController {
     await AutonomousRepository.delete({ id: parsedId });
 
     return res.status(200).json({ message: "Client deleted successfully" });
-  }
-
-  async update(req: Request, res: Response) {
-    const { id } = req.params;
-    const {
-      name,
-      login,
-      password,
-
-      lastName,
-    }: Autonomous & {
-      email: string;
-      password: string;
-      cellNumber: number | null;
-    } = req.body;
-    const parsedId = Number(id);
-
-    const autonomousExists = await AutonomousRepository.findAutonomousById({
-      id: parsedId,
-    });
-    if (!autonomousExists) {
-      return res.status(400).json({ message: "Autonomous not found" });
-    }
-
-    const autonomous = await AutonomousRepository.update({
-      id: parsedId,
-      data: { name, lastName, login, password: await hashPassword(password) },
-    });
-
-    return res.json({ autonomous });
   }
 
   async changePassword(req: Request, res: Response) {

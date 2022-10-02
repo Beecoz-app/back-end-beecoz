@@ -1,4 +1,4 @@
-import { Autonomous } from "@prisma/client";
+import { Autonomous, AutonomousProfile } from "@prisma/client";
 
 export interface AutonomousRepositoryCreateDTO {
     data: {
@@ -8,7 +8,11 @@ export interface AutonomousRepositoryCreateDTO {
 }
 export interface AutonomousRepositoryUpdateDTO {
     id: number;
-    data: Omit<Autonomous, 'id' | 'created_at' | 'updated_at' | 'gender' | 'cpf' | 'bornDate' | 'profileId' | 'typeId' | 'cnpj'>
+    data: {
+        autonomousData: Pick<Autonomous, 'name' | 'lastName' | 'login' | 'password'>
+        serviceData: number,
+        profileData: Pick<AutonomousProfile, 'biography'>
+    };
 }
 export interface AutonomousRepositoryDeleteDTO {
     id: number
