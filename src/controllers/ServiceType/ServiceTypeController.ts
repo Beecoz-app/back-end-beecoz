@@ -28,10 +28,9 @@ class ServiceTypeController {
   async update(req: Request, res: Response) {
     const { id } = req.params;
     const { name }: ServiceType = req.body;
-    const parsedId = Number(id);
 
     const serviceType = await ServiceTypeRepository.update({
-      id: parsedId,
+      id: Number(id),
       data: { name },
     });
 

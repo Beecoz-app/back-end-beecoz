@@ -56,7 +56,10 @@ class ServiceTypeRepository implements IServiceTypeRepository {
   async update({
     id,
     data,
-  }: ServiceTypeRepositoryUpdateDTO): Promise<ServiceType> {
+  }: ServiceTypeRepositoryUpdateDTO): Promise<{
+    id: number;
+    name: string;
+}> {
     const newServiceType = await prisma.serviceType.update({
       where: {
         id,
@@ -64,6 +67,10 @@ class ServiceTypeRepository implements IServiceTypeRepository {
       data: {
         ...data,
       },
+      select: {
+        id: true,
+        name: true
+      }
     });
     return newServiceType;
   }

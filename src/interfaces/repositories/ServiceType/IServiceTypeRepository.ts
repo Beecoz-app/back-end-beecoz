@@ -20,6 +20,9 @@ export interface IServiceTypeRepository {
     id: number;
     name: string;
   } | null>;
-  update({ id, data }: ServiceTypeRepositoryUpdateDTO): Promise<ServiceType>;
+  update({ id, data }: ServiceTypeRepositoryUpdateDTO): Promise<{
+    id: number;
+    name: string;
+  }>;
   delete({ id }: ServiceTypeRepositoryDeleteDTO): Promise<ServiceType>;
 }

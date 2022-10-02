@@ -14,14 +14,13 @@ const serviceTypeRoutes = Router();
     serviceTypeRoutes.get("/read/:id", async (request: Request, response: Response) => {
         return ServiceTypeController.readById(request, response);
     });
-
+    serviceTypeRoutes.put("/update/:id", async (request: Request, response: Response) => {
+        return ServiceTypeController.update(request, response);
+    });
     serviceTypeRoutes.delete("/delete/:id", async (request: Request, response: Response) => {
         return ServiceTypeController.delete(request, response);
     });
 
-    serviceTypeRoutes.put("/update/:id", async (request: Request, response: Response) => {
-        return ServiceTypeController.update(request, response);
-    });
 
 
     export { serviceTypeRoutes };
