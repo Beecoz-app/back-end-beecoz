@@ -26,6 +26,13 @@ autonomousAuthRoutes.delete(
   }
 );
 autonomousAuthRoutes.get(
+  "/read",
+  authenticateToken,
+  async (request: Request, response: Response) => {
+    return AuthAutonomousController.findAll(request, response);
+  }
+);
+autonomousAuthRoutes.get(
   "/read/:id",
   authenticateToken,
   async (request: Request, response: Response) => {

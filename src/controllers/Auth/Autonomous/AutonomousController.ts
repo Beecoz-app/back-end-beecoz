@@ -50,9 +50,15 @@ class AuthAutonomousController {
     return res.json({ autonomous, token: generateToken("id", autonomous.id) });
   }
 
+  async findAll(req: Request, res: Response) {
+    const autonomous = await AutonomousRepository.read();
+
+    return res.json(autonomous);
+  }
+
   async findById(req: Request, res: Response) {
     const { id } = req.params;
-    
+
     const autonomous = await AutonomousRepository.findAutonomousById({
       id: Number(id),
     });
