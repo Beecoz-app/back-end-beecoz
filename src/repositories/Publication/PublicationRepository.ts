@@ -18,6 +18,13 @@ class PublicationRepository implements IPublicationRepository {
       data: {
         ...data,
       },
+      include: {
+        interest: {
+          select: {
+            id: true
+          }
+        }
+      }
     });
     return publication;
   }
@@ -32,7 +39,11 @@ class PublicationRepository implements IPublicationRepository {
       include: {
         interest: {
           include: {
-            autonomous: true
+            autonomous: {
+              select: {
+                id: true
+              }
+            }
           }
         }
       }
@@ -51,7 +62,11 @@ class PublicationRepository implements IPublicationRepository {
       include: {
         interest: {
           include: {
-            autonomous: true
+            autonomous: {
+              select: {
+                id: true
+              }
+            }
           }
         }
       }
