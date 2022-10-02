@@ -8,5 +8,7 @@ export interface IAutonomousRepository {
     delete({id}: AutonomousRepositoryDeleteDTO): Promise<Autonomous>;
     findAutonomousById({id}: AutonomousRepositoryFindAutonomousByIdDTO): Promise<Autonomous | null>;
     findAutonomousByLogin({login}: AutonomousRepositoryFindAutonomousByLoginDTO): Promise<Autonomous | null>
-    updatePassword({id, password}: AutonomousRepositoryUpdatePasswordDTO): Promise<Autonomous>;
+    updatePassword({id, password}: AutonomousRepositoryUpdatePasswordDTO): Promise<Prisma.Prisma__AutonomousClient<{
+        password: string;
+    }>>;
 }

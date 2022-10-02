@@ -39,5 +39,12 @@ autonomousAuthRoutes.delete(
     return AuthAutonomousController.delete(request, response);
   }
 );
+autonomousAuthRoutes.patch(
+  "/change_password/:id",
+  authenticateToken,
+  async (request: Request, response: Response) => {
+    return AuthAutonomousController.changePassword(request, response);
+  }
+);
 
 export { autonomousAuthRoutes };

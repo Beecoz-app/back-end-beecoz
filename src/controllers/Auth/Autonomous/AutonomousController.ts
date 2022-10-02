@@ -1,8 +1,8 @@
 import { Autonomous } from "@prisma/client";
 import { Request, Response } from "express";
+import bcrypt from 'bcrypt'
 import AutonomousRepository from "../../../repositories/Autonomous/AutonomousRepository";
 import TypeUserRepository from "../../../repositories/TypeUser/TypeUserRepository";
-import jwt from "jsonwebtoken";
 import AutonomousProfileRepository from "../../../repositories/Autonomous/AutonomousProfile/AutonomousProfileRepository";
 import { hashPassword } from "../../../utils/hashPassword";
 import { generateToken } from "../../../utils/generateToken";
@@ -105,7 +105,7 @@ class AuthAutonomousController {
   async delete(req: Request, res: Response) {
     const { id } = req.params;
 
-    console.log(id)
+    console.log(id);
 
     const clientExists = await AutonomousRepository.findAutonomousById({
       id: Number(id),
@@ -126,26 +126,24 @@ class AuthAutonomousController {
       oldPassword,
       newPassword,
     }: { oldPassword: string; newPassword: string } = req.body;
-    const parsedId = Number(id);
 
     const autonomousExists = await AutonomousRepository.findAutonomousById({
-      id: parsedId,
+      id: Number(id),
     });
     if (!autonomousExists) {
       return res.status(400).json({ message: "Autonomous not found" });
     }
 
-    const passwordMatch = (await autonomousExists.password) === oldPassword;
-    if (!passwordMatch) {
+    if (!(await bcrypt.compare(oldPassword, autonomousExists.password))) {
       return res.status(400).json({ message: "Password does not match" });
     }
 
-    await AutonomousRepository.updatePassword({
-      id: parsedId,
+    const password = await AutonomousRepository.updatePassword({
+      id: Number(id),
       password: await hashPassword(newPassword),
     });
 
-    return res.status(200).json({ message: "Password updated" });
+    return res.status(200).json({ password});
   }
 }
 

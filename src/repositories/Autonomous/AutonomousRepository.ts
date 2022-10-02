@@ -16,21 +16,6 @@ import { IAutonomousRepository } from "../../interfaces/repositories/Autonomous/
 const prisma = new PrismaClient();
 
 class AutonomousRepository implements IAutonomousRepository {
-  updatePassword({
-    id,
-    password,
-  }: AutonomousRepositoryUpdatePasswordDTO): Promise<Autonomous> {
-    const newPassword = prisma.autonomous.update({
-      where: {
-        id,
-      },
-      data: {
-        password,
-      },
-    });
-    return newPassword;
-  }
-
   async create({
     data: { autonomousData, serviceData },
   }: AutonomousRepositoryCreateDTO): Promise<Autonomous> {
@@ -119,16 +104,15 @@ class AutonomousRepository implements IAutonomousRepository {
     return newAutonomous;
   }
   async delete({ id }: AutonomousRepositoryDeleteDTO): Promise<Autonomous> {
-    console.log('repo', id)
-    
+    console.log("repo", id);
+
     const deletedAutonomous = await prisma.autonomous.delete({
       where: {
-        id
-      }
-    })
+        id,
+      },
+    });
 
-    return deletedAutonomous
-
+    return deletedAutonomous;
   }
   async findAutonomousByLogin({
     login,
@@ -139,6 +123,28 @@ class AutonomousRepository implements IAutonomousRepository {
       },
     });
     return autonomousId;
+  }
+
+  async updatePassword({
+    id,
+    password,
+  }: AutonomousRepositoryUpdatePasswordDTO): Promise<
+    Prisma.Prisma__AutonomousClient<{
+      password: string;
+    }>
+  > {
+    const newPassword = await prisma.autonomous.update({
+      where: {
+        id,
+      },
+      data: {
+        password,
+      },
+      select: {
+        password: true,
+      },
+    });
+    return newPassword;
   }
 }
 
