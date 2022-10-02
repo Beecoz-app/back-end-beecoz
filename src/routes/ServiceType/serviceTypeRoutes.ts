@@ -8,6 +8,12 @@ const serviceTypeRoutes = Router();
     serviceTypeRoutes.post("/create", async (request: Request, response: Response) => {
         return ServiceTypeController.create(request, response);
     });
+    serviceTypeRoutes.get("/read", async (request: Request, response: Response) => {
+        return ServiceTypeController.read(request, response);
+    });
+    serviceTypeRoutes.get("/read/:id", async (request: Request, response: Response) => {
+        return ServiceTypeController.readById(request, response);
+    });
 
     serviceTypeRoutes.delete("/delete/:id", async (request: Request, response: Response) => {
         return ServiceTypeController.delete(request, response);
@@ -17,8 +23,5 @@ const serviceTypeRoutes = Router();
         return ServiceTypeController.update(request, response);
     });
 
-    serviceTypeRoutes.get("/read", async (request: Request, response: Response) => {
-        return ServiceTypeController.read(request, response);
-    });
 
     export { serviceTypeRoutes };
