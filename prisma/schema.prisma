@@ -138,7 +138,7 @@ model Publication {
   servType    ServiceType @relation(fields: [servTypeId], references: [id])
   servTypeId  Int
   client      Client      @relation(fields: [clientId], references: [id])
-  clientId    Int         @unique
+  clientId    Int         
   interest    Interest[]
   type        Level       @map("tb_publication_type")
 

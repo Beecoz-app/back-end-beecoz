@@ -7,7 +7,7 @@ import { Router } from "express";
 const publicationRoutes = Router();
 
 publicationRoutes.post(
-  "/create/:idServiceType",
+  "/create",
   async (request: Request, response: Response) => {
     return PublicationController.create(request, response);
   }

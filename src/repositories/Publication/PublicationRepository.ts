@@ -1,7 +1,6 @@
 import {
   PrismaClient,
   Publication,
-  PrismaPromise,
 } from "@prisma/client";
 import {
   PublicationRepositoryCreateDTO,
@@ -30,6 +29,13 @@ class PublicationRepository implements IPublicationRepository {
       where: {
         clientId
       },
+      include: {
+        interest: {
+          include: {
+            autonomous: true
+          }
+        }
+      }
     })
 
     return publications
@@ -42,6 +48,13 @@ class PublicationRepository implements IPublicationRepository {
       where: {
         id
       },
+      include: {
+        interest: {
+          include: {
+            autonomous: true
+          }
+        }
+      }
     })
     return publication;
   }
