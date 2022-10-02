@@ -61,7 +61,12 @@ class AutonomousRepository implements IAutonomousRepository {
     return autonomous;
   }
   async read(): Promise<PrismaPromise<Autonomous[]>> {
-    const autonomous = await prisma.autonomous.findMany();
+    const autonomous = await prisma.autonomous.findMany({
+      include: {
+        profile: true,
+        service: true,
+      },
+    });
     return autonomous;
   }
   async update({
@@ -94,8 +99,8 @@ class AutonomousRepository implements IAutonomousRepository {
       },
       include: {
         profile: true,
-        service: true
-      }
+        service: true,
+      },
     });
     return newAutonomous;
   }
