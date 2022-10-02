@@ -1,10 +1,14 @@
-import { Request, Response } from 'express';
+import { json, Request, Response } from 'express';
 import InterestRepository from '../../repositories/Interest/InterestRepository';
 
 class InterestController {
 
-    async create(req: Request, res: Response) {
+    async join(req: Request, res: Response) {
         const {idAutonomous, idPublication} = req.params
+
+        const interestExists = await InterestRepository.readByAutonomous(Number(idPublication),Number(idAutonomous))
+
+        if (interestExists.length > 0) return res.status(400).json('Autonomous already join on this interest!')
 
         const interest = await InterestRepository.create({ data: { publicationId: Number(idPublication), autonomousId: Number(idAutonomous) } });
         

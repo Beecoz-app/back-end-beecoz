@@ -63,6 +63,16 @@ class InterestRepository implements IInterestRepository {
 
     return interest;
   }
+  async readByAutonomous(publicationId: number,autonomousId: number) {
+    const interest = await prisma.interest.findMany({
+        where: {
+            publicationId,
+            autonomousId
+        }
+    })
+
+    return interest
+  }
   async update({ id, data }: InterestRepositoryUpdateDTO): Promise<Interest> {
     const newInterest = await prisma.interest.update({
       where: {

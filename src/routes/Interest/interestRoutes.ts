@@ -23,7 +23,7 @@ const interestRoutes = Router();
 interestRoutes.post(
   "/join/:idAutonomous/:idPublication",
   async (request, response) => {
-    return InterestController.create(request, response);
+    return InterestController.join(request, response);
   }
 );
 
