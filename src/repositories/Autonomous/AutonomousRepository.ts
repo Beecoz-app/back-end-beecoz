@@ -69,6 +69,20 @@ class AutonomousRepository implements IAutonomousRepository {
     });
     return autonomous;
   }
+  async findAutonomousById({
+    id,
+  }: AutonomousRepositoryFindAutonomousByIdDTO): Promise<Autonomous | null> {
+    const autonomousId = await prisma.autonomous.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        profile: true,
+        service: true,
+      },
+    });
+    return autonomousId;
+  }
   async update({
     id,
     data: { autonomousData, serviceData, profileData },
@@ -111,16 +125,6 @@ class AutonomousRepository implements IAutonomousRepository {
       },
     });
     return deletedAutonomous;
-  }
-  async findAutonomousById({
-    id,
-  }: AutonomousRepositoryFindAutonomousByIdDTO): Promise<Autonomous | null> {
-    const autonomousId = await prisma.autonomous.findUnique({
-      where: {
-        id,
-      },
-    });
-    return autonomousId;
   }
   async findAutonomousByLogin({
     login,
