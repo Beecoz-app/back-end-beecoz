@@ -66,7 +66,7 @@ class AuthAutonomousController {
     return res.json(autonomous);
   }
   async update(req: Request, res: Response) {
-    const { userId } = req;
+    const { id } = req.params;
     const {
       name,
       login,
@@ -77,14 +77,14 @@ class AuthAutonomousController {
     }: Autonomous & { servTypeId: string; biography: string } = req.body;
 
     const autonomousExists = await AutonomousRepository.findAutonomousById({
-      id: Number(userId),
+      id: Number(id),
     });
     if (!autonomousExists) {
       return res.status(400).json({ message: "Autonomous not found" });
     }
 
     const autonomous = await AutonomousRepository.update({
-      id: Number(userId),
+      id: Number(id),
       data: {
         autonomousData: {
           name,
@@ -103,19 +103,19 @@ class AuthAutonomousController {
   }
 
   async delete(req: Request, res: Response) {
-    const { userId } = req;
+    const { id } = req.params;
 
-    console.log(userId)
+    console.log(id)
 
     const clientExists = await AutonomousRepository.findAutonomousById({
-      id: Number(userId),
+      id: Number(id),
     });
 
     if (!clientExists) {
       return res.status(400).json({ message: "Client not found" });
     }
 
-    await AutonomousRepository.delete({ id: Number(userId) });
+    await AutonomousRepository.delete({ id: Number(id) });
 
     return res.status(200).json({ message: "Autonomous deleted successfully" });
   }

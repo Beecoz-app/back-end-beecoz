@@ -11,20 +11,6 @@ autonomousAuthRoutes.post(
     return AuthAutonomousController.register(request, response);
   }
 );
-autonomousAuthRoutes.put(
-  "/update",
-  authenticateToken,
-  async (request: Request, response: Response) => {
-    return AuthAutonomousController.update(request, response);
-  }
-);
-autonomousAuthRoutes.delete(
-  "/delete",
-  authenticateToken,
-  async (request: Request, response: Response) => {
-    return AuthAutonomousController.delete(request, response);
-  }
-);
 autonomousAuthRoutes.get(
   "/read",
   authenticateToken,
@@ -37,6 +23,20 @@ autonomousAuthRoutes.get(
   authenticateToken,
   async (request: Request, response: Response) => {
     return AuthAutonomousController.findById(request, response);
+  }
+);
+autonomousAuthRoutes.put(
+  "/update/:id",
+  authenticateToken,
+  async (request: Request, response: Response) => {
+    return AuthAutonomousController.update(request, response);
+  }
+);
+autonomousAuthRoutes.delete(
+  "/delete/:id",
+  authenticateToken,
+  async (request: Request, response: Response) => {
+    return AuthAutonomousController.delete(request, response);
   }
 );
 
