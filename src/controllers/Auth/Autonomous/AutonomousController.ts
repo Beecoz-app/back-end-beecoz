@@ -6,6 +6,7 @@ import TypeUserRepository from "../../../repositories/TypeUser/TypeUserRepositor
 import AutonomousProfileRepository from "../../../repositories/Autonomous/AutonomousProfile/AutonomousProfileRepository";
 import { hashPassword } from "../../../utils/hashPassword";
 import { generateToken } from "../../../utils/generateToken";
+import PublicationRepository from "../../../repositories/Publication/PublicationRepository";
 
 class AuthAutonomousController {
   async register(req: Request, res: Response) {
@@ -144,6 +145,19 @@ class AuthAutonomousController {
     });
 
     return res.status(200).json({ password});
+  }
+
+  async getPublications(request: Request, response: Response) {
+    const {userId} = request
+
+    const autonomous = await AutonomousRepository.findAutonomousById({id: Number(userId)})
+
+    if (!autonomous) return response.status(400).json({message: 'Autonomous not exists'})
+
+    const publications = await PublicationRepository.readAllByServiceTypeId({})
+
+    return response.json(publications)
+
   }
 }
 
