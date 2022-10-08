@@ -5,6 +5,7 @@ import {
 import {
   PublicationRepositoryCreateDTO,
   PublicationRepositoryDeleteDTO,
+  PublicationRepositoryFindAllPublicationByServiceTypeIdDTO,
   PublicationRepositoryFindPublicationByIdDTO,
   PublicationRepositoryReadDTO,
   PublicationRepositoryUpdateDTO,
@@ -58,6 +59,25 @@ class PublicationRepository implements IPublicationRepository {
     const publication = await prisma.publication.findUnique({
       where: {
         id
+      },
+      include: {
+        interest: {
+          include: {
+            autonomous: {
+              select: {
+                id: true
+              }
+            }
+          }
+        }
+      }
+    })
+    return publication;
+  }
+  async findAllPublicationByServiceTypeId({servTypeId}: PublicationRepositoryFindAllPublicationByServiceTypeIdDTO): Promise<Publication[]> {
+    const publication = await prisma.publication.findMany({
+      where: {
+        servTypeId
       },
       include: {
         interest: {
