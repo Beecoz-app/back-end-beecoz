@@ -15,12 +15,16 @@ class InterestController {
         return res.json({ interest });
     }
 
-    async delete(req: Request, res: Response) {
-        const { id } = req.params;
-        const parsedId = Number(id);
-    
-        const interest = await InterestRepository.delete({ id: parsedId });
-    
+    async exit(req: Request, res: Response) {
+        const {idAutonomous, idPublication, idInterest} = req.params
+
+        const interestExists = await InterestRepository.readByAutonomous(Number(idPublication),Number(idAutonomous))
+
+
+        if (!(interestExists.length > 0)) return res.status(400).json('Autonomous not enter ')
+
+        const interest = await InterestRepository.delete({ id: Number(idInterest) });
+        
         return res.json({ interest });
     }
     

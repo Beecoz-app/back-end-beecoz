@@ -26,5 +26,11 @@ interestRoutes.post(
     return InterestController.join(request, response);
   }
 );
+interestRoutes.post(
+  "/exit/:idAutonomous/:idPublication/:idInterest",
+  async (request, response) => {
+    return InterestController.exit(request, response);
+  }
+);
 
 export { interestRoutes };
