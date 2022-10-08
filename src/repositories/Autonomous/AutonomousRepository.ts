@@ -3,6 +3,8 @@ import {
   Autonomous,
   PrismaPromise,
   Prisma,
+  AutonomousProfile,
+  Service,
 } from "@prisma/client";
 import {
   AutonomousRepositoryCreateDTO,
@@ -56,7 +58,10 @@ class AutonomousRepository implements IAutonomousRepository {
   }
   async findAutonomousById({
     id,
-  }: AutonomousRepositoryFindAutonomousByIdDTO): Promise<Autonomous | null> {
+  }: AutonomousRepositoryFindAutonomousByIdDTO): Promise<(Autonomous & {
+    profile: AutonomousProfile;
+    service: Service[];
+}) | null> {
     const autonomousId = await prisma.autonomous.findUnique({
       where: {
         id,
