@@ -24,3 +24,7 @@ export interface PublicationRepositoryFindPublicationByIdDTO {
   id: number;
   clientId: number;
 }
+
+export interface PublicationRepositoryFindAllPublicationByServiceTypeIdDTO {
+  servTypeId: number
+}
