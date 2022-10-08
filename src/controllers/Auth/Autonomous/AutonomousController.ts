@@ -154,13 +154,10 @@ class AuthAutonomousController {
 
     if (!autonomous) return response.status(400).json({message: 'Autonomous not exists'})
 
-    console.log(autonomous.profile.id)
 
-    
+    const publications = await PublicationRepository.findAllPublicationByServiceTypeId({servTypeId: Number(autonomous.service[0].servTypeId)})
 
-    const publications = await PublicationRepository.findAllPublicationByServiceTypeId({servTypeId: Number(1)})
-
-    return response.json(autonomous)
+    return response.json(publications)
 
   }
 }
