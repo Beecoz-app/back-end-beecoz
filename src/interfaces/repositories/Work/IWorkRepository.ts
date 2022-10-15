@@ -4,7 +4,7 @@ import { WorkRepositoryCreateDTO, WorkRepositoryDeleteDTO, WorkRepositoryFinishD
 export interface IWorkRepository {
     open({interestId, ratingId}: {interestId: number, ratingId: number}): Promise<Work>;
     read(): Promise<PrismaPromise<Work[]>>;
-    finish({id}: WorkRepositoryFinishDTO): Promise<Work>;
+    finish({id, ratingData}: WorkRepositoryFinishDTO): Promise<Work>;
     delete({id}: WorkRepositoryDeleteDTO): Promise<Work>;
     findWorkById({id}: WorkRepositoryFindWorkByIdDTO): Promise<Work | null>;
     findWorkByStatus({status}: WorkRepositoryFindWorkByStatusDTO): Promise<number>;

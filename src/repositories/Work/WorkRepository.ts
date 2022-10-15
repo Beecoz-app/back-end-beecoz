@@ -46,13 +46,20 @@ class WorkRepository implements IWorkRepository {
     });
     return workId;
   }
-  async finish({ id}: WorkRepositoryFinishDTO): Promise<Work> {
+  async finish({ id, ratingData: {stars, comment}}: WorkRepositoryFinishDTO): Promise<Work> {
     const newWork = await prisma.work.update({
       where: {
         id,
       },
       data: {
-        status: 'Completed'
+        status: 'Completed',
+
+        rating: {
+            update: {
+                stars,
+                comment
+            }
+        }
       },
     });
     return newWork;
