@@ -17,6 +17,10 @@ class WorkController {
     async finish(req: Request, res: Response) {
         const { id } = req.params
         const {stars, comment} = req.body
+
+        const isCompletedWork = await WorkRepository.findWorkByStatus({status: 'Completed'})
+
+        if (isCompletedWork) return res.status(401).json({message: 'Work already complete'})
         
         const work = await WorkRepository.finish({ id: Number(id), ratingData: {stars, comment} })
 
