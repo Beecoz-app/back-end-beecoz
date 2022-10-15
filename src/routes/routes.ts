@@ -5,6 +5,7 @@ import { autonomousRoutes } from "./Autonomous/autonomousRoutes";
 import { interestRoutes } from "./Interest/interestRoutes";
 import { publicationRoutes } from "./Publication/publicationRoutes";
 import { serviceTypeRoutes } from "./ServiceType/serviceTypeRoutes";
+import { workRoutes } from "./Work/workRoutes";
 
 const routes = Router()
 
@@ -13,5 +14,6 @@ routes.use('/autonomous', authenticateToken, autonomousRoutes)
 routes.use('/service_type', serviceTypeRoutes)
 routes.use('/publication', authenticateToken , publicationRoutes)
 routes.use('/interest', authenticateToken ,interestRoutes)
+routes.use('/work', authenticateToken ,workRoutes)
 
 export {routes}

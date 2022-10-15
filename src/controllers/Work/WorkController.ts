@@ -3,13 +3,13 @@ import { Request, Response } from "express"
 import WorkRepository from "../../repositories/Work/WorkRepository"
 
 class WorkController {
-    async create(req: Request, res: Response) {
+    async open(req: Request, res: Response) {
         const {idInterest, idRating} = req.params
         const {status}: Work  = req.body
 
         const statusId = await WorkRepository.findWorkByStatus({ status })
 
-        const work = await WorkRepository.create({ data: { status, interestId: Number(idInterest), ratingId: Number(idRating) } })
+        const work = await WorkRepository.open({ data: { status, interestId: Number(idInterest), ratingId: Number(idRating) } })
 
         return res.json({ work })
     }

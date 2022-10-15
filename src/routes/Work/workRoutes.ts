@@ -6,8 +6,8 @@ import { Router } from "express";
 
 const workRoutes = Router();
 
-    workRoutes.post("/create", async (request: Request, response: Response) => {
-        return WorkController.create(request, response);
+    workRoutes.post("/open", async (request: Request, response: Response) => {
+        return WorkController.open(request, response);
     });
 
     workRoutes.delete("/delete/:id", async (request: Request, response: Response) => {
