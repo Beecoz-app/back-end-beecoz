@@ -2,7 +2,7 @@ import { Prisma, PrismaPromise, Work } from "@prisma/client";
 import { WorkRepositoryCreateDTO, WorkRepositoryDeleteDTO, WorkRepositoryUpdateDTO, WorkRepositoryFindWorkByIdDTO, WorkRepositoryFindWorkByStatusDTO } from "../../DTOs/repositories/Work/WorkRepositoryDTO";
 
 export interface IWorkRepository {
-    open(idInterest: string): Promise<Work>;
+    open({interestId, ratingId}: {interestId: number, ratingId: number}): Promise<Work>;
     read(): Promise<PrismaPromise<Work[]>>;
     update({id, data}: WorkRepositoryUpdateDTO): Promise<Work>;
     delete({id}: WorkRepositoryDeleteDTO): Promise<Work>;

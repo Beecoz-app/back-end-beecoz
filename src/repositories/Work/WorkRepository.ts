@@ -10,10 +10,12 @@ import { IWorkRepository } from "../../interfaces/repositories/Work/IWorkReposit
 const prisma = new PrismaClient();
 
 class WorkRepository implements IWorkRepository {
-  async open({ data }: WorkRepositoryCreateDTO): Promise<Work> {
+  async open({interestId, ratingId}: {interestId: number, ratingId: number}): Promise<Work> {
     const work = await prisma.work.create({
       data: {
-        ...data,
+        interestId,
+        status: 'Open',
+        ratingId
       },
     });
     return work;

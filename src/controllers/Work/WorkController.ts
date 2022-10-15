@@ -1,15 +1,15 @@
 import { Work } from "@prisma/client"
 import { Request, Response } from "express"
+import RatingRepository from "../../repositories/Rating/RatingRepository"
 import WorkRepository from "../../repositories/Work/WorkRepository"
 
 class WorkController {
     async open(req: Request, res: Response) {
-        const {idInterest, idRating} = req.params
-        const {status}: Work  = req.body
+        const {idInterest} = req.params
 
-        const statusId = await WorkRepository.findWorkByStatus({ status })
+        const ratingId = await RatingRepository.create({data: {stars: 0, comment: ''}})
 
-        const work = await WorkRepository.open({ data: { status, interestId: Number(idInterest), ratingId: Number(idRating) } })
+        const work = await WorkRepository.open({ interestId: Number(idInterest), ratingId: ratingId.id})
 
         return res.json({ work })
     }
