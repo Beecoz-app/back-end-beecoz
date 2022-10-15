@@ -4,7 +4,7 @@ import {
   WorkRepositoryDeleteDTO,
   WorkRepositoryFindWorkByIdDTO,
   WorkRepositoryFindWorkByStatusDTO,
-  WorkRepositoryUpdateDTO,
+  WorkRepositoryFinishDTO,
 } from "../../interfaces/DTOs/repositories/Work/WorkRepositoryDTO";
 import { IWorkRepository } from "../../interfaces/repositories/Work/IWorkRepository";
 const prisma = new PrismaClient();
@@ -46,13 +46,13 @@ class WorkRepository implements IWorkRepository {
     });
     return workId;
   }
-  async update({ id, data }: WorkRepositoryUpdateDTO): Promise<Work> {
+  async finish({ id}: WorkRepositoryFinishDTO): Promise<Work> {
     const newWork = await prisma.work.update({
       where: {
         id,
       },
       data: {
-        ...data,
+        status: 'Completed'
       },
     });
     return newWork;
