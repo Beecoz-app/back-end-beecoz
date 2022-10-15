@@ -16,8 +16,9 @@ class WorkController {
 
     async finish(req: Request, res: Response) {
         const { id } = req.params
+        const {stars, comment} = req.body
         
-        const work = await WorkRepository.finish({ id: Number(id) })
+        const work = await WorkRepository.finish({ id: Number(id), ratingData: {stars, comment} })
 
         return res.json({ work })
     }
