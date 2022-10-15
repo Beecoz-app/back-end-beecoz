@@ -14,12 +14,10 @@ class WorkController {
         return res.json({ work })
     }
 
-    async update(req: Request, res: Response) {
+    async finish(req: Request, res: Response) {
         const { id } = req.params
-        const parsedId = Number( id )
-        const { status }: Work  = req.body
         
-        const work = await WorkRepository.update({ id: parsedId, data: { status } })
+        const work = await WorkRepository.finish({ id: Number(id) })
 
         return res.json({ work })
     }
