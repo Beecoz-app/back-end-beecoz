@@ -6,7 +6,7 @@ import { Router } from "express";
 
 const workRoutes = Router();
 
-    workRoutes.post("/open", async (request: Request, response: Response) => {
+    workRoutes.post("/open/:idInterest", async (request: Request, response: Response) => {
         return WorkController.open(request, response);
     });
 

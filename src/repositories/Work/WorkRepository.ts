@@ -14,7 +14,7 @@ class WorkRepository implements IWorkRepository {
     const work = await prisma.work.create({
       data: {
         interestId,
-        status: 'Open',
+        status: 'Progress',
         ratingId
       },
     });
