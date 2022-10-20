@@ -9,7 +9,7 @@ const workRoutes = Router();
     workRoutes.post("/open/:idInterest", async (request: Request, response: Response) => {
         return WorkController.open(request, response);
     });
-    workRoutes.post("/finish/:id", async (request: Request, response: Response) => {
+    workRoutes.post("/finish/:id/:autonomousId", async (request: Request, response: Response) => {
         return WorkController.finish(request, response);
     });
 

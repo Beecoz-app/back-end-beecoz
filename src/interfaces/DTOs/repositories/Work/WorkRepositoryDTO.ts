@@ -6,6 +6,7 @@ export interface WorkRepositoryCreateDTO {
 export interface WorkRepositoryFinishDTO {
   id: number;
   ratingData: { stars: number; comment: string };
+  autonomousId: number
 }
 export interface WorkRepositoryDeleteDTO {
   id: number;

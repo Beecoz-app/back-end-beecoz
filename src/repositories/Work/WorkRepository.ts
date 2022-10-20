@@ -10,12 +10,12 @@ import { IWorkRepository } from "../../interfaces/repositories/Work/IWorkReposit
 const prisma = new PrismaClient();
 
 class WorkRepository implements IWorkRepository {
-  async open({interestId, ratingId}: {interestId: number, ratingId: number}): Promise<Work> {
+  async open({ interestId }: { interestId: number }): Promise<Work> {
     const work = await prisma.work.create({
       data: {
         interestId,
-        status: 'Progress',
-        ratingId
+        status: "Progress",
+        ratingId: 1,
       },
     });
     return work;
@@ -46,22 +46,69 @@ class WorkRepository implements IWorkRepository {
     });
     return workId;
   }
-  async finish({ id, ratingData: {stars, comment}}: WorkRepositoryFinishDTO): Promise<Work> {
+  async finish({
+    id,
+    ratingData: { stars, comment },
+    autonomousId,
+  }: WorkRepositoryFinishDTO): Promise<Work> {
     const newWork = await prisma.work.update({
       where: {
         id,
       },
       data: {
-        status: 'Completed',
-
-        rating: {
-            update: {
-                stars,
-                comment
-            }
-        }
+        status: "Completed",
+        ratingId: stars,
       },
     });
+
+    const workCountByAutonomousId = await prisma.work.aggregate({
+      where: {
+        interest: {
+          autonomousId,
+        },
+      },
+      _count: true,
+    });
+
+    if (workCountByAutonomousId._count >= 5) {
+      console.log("vc tem tranalhos finzalizdos mais de 5 ");
+
+      const averageToUpateAutonomous = await prisma.work.aggregate({
+        _avg: {
+          ratingId: true,
+        },
+        where: {
+          interest: {
+            autonomousId,
+          },
+        },
+      });
+
+      if (
+        Number(averageToUpateAutonomous._avg.ratingId) >= 3 &&
+        Number(averageToUpateAutonomous._avg.ratingId) < 4
+      ) {
+        await prisma.autonomous.update({
+          data: {
+            typeId: 2,
+          },
+          where: {
+            id: autonomousId,
+          },
+        });
+      }
+      if (Number(averageToUpateAutonomous._avg.ratingId) >= 4) {
+        await prisma.autonomous.update({
+          data: {
+            typeId: 3,
+          },
+          where: {
+            id: autonomousId,
+          },
+        });
+      }
+    }
+
     return newWork;
   }
   async delete({ id }: WorkRepositoryDeleteDTO): Promise<Work> {

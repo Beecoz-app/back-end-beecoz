@@ -41,6 +41,55 @@ async function main() {
         }
     })
 
+    const ratingNothing = await prisma.rating.upsert({
+        where: {id: 1},
+        update: {},
+        create: {
+            stars: 0,
+            comment: 'NOthing Rating'
+        }
+    })
+    const ratingOne = await prisma.rating.upsert({
+        where: {id: 2},
+        update: {},
+        create: {
+            stars: 1,
+            comment: 'Start One'
+        }
+    })
+    const ratingTwo = await prisma.rating.upsert({
+        where: {id: 3},
+        update: {},
+        create: {
+            stars: 2,
+            comment: 'Start Two'
+        }
+    })
+    const ratingThree = await prisma.rating.upsert({
+        where: {id: 4},
+        update: {},
+        create: {
+            stars: 3,
+            comment: 'Start Three'
+        }
+    })
+    const ratingFour = await prisma.rating.upsert({
+        where: {id: 5},
+        update: {},
+        create: {
+            stars: 4,
+            comment: 'Start Four'
+        }
+    })
+    const ratingFive = await prisma.rating.upsert({
+        where: {id: 6},
+        update: {},
+        create: {
+            stars: 5,
+            comment: 'Start Five'
+        }
+    })
+
 }
 
 main()

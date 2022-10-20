@@ -7,22 +7,21 @@ class WorkController {
     async open(req: Request, res: Response) {
         const {idInterest} = req.params
 
-        const ratingId = await RatingRepository.create({data: {stars: 0, comment: ''}})
 
-        const work = await WorkRepository.open({ interestId: Number(idInterest), ratingId: ratingId.id})
+        const work = await WorkRepository.open({ interestId: Number(idInterest)})
 
         return res.json({ work })
     }
 
     async finish(req: Request, res: Response) {
-        const { id } = req.params
+        const { id, autonomousId } = req.params
         const {stars, comment} = req.body
 
-        const isCompletedWork = await WorkRepository.findWorkByStatus({status: 'Completed'})
+        const isCompletedWork = await WorkRepository.findWorkById({id: Number(id)})
 
-        if (isCompletedWork) return res.status(401).json({message: 'Work already complete'})
+        if (isCompletedWork?.status === 'Completed') return res.status(401).json({message: 'Work already complete'})
         
-        const work = await WorkRepository.finish({ id: Number(id), ratingData: {stars, comment} })
+        const work = await WorkRepository.finish({ id: Number(id), ratingData: {stars, comment}, autonomousId: Number(autonomousId) })
 
         return res.json({ work })
     }
