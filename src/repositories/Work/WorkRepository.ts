@@ -70,8 +70,8 @@ class WorkRepository implements IWorkRepository {
       _count: true,
     });
 
-    if (workCountByAutonomousId._count >= 5) {
-      console.log("vc tem tranalhos finzalizdos mais de 5 ");
+    if (workCountByAutonomousId._count >= 10) {
+      console.log("vc tem trabalhos finzalizdos mais de 10 ");
 
       const averageToUpateAutonomous = await prisma.work.aggregate({
         _avg: {
@@ -97,7 +97,7 @@ class WorkRepository implements IWorkRepository {
           },
         });
       }
-      if (Number(averageToUpateAutonomous._avg.ratingId) >= 4) {
+      if (workCountByAutonomousId._count >= 20 && Number(averageToUpateAutonomous._avg.ratingId) >= 4) {
         await prisma.autonomous.update({
           data: {
             typeId: 3,

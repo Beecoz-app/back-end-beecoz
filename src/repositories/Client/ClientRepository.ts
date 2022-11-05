@@ -64,6 +64,10 @@ class ClientRepository implements IClientRepository {
       where: {
         id,
       },
+
+      include: {
+        profile: true
+      }
     });
     return client;
   }
@@ -74,6 +78,11 @@ class ClientRepository implements IClientRepository {
       where: {
         login: login,
       },
+
+      include: {
+        profile: true,
+        
+      }
     });
     return client;
   }

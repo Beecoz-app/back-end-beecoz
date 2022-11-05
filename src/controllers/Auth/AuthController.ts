@@ -28,7 +28,7 @@ class AuthController {
 
       return res
         .status(200)
-        .json({ user: clientExists, token: generateToken('id', clientExists.id), type: "Client" });
+        .json({ user: clientExists, token: generateToken('id', clientExists.id), clientType: "Client" });
     } else {
       const autonomousExists = await AutonomousRepository.findAutonomousByLogin(
         { login }
@@ -45,7 +45,7 @@ class AuthController {
 
       return res
         .status(200)
-        .json({ user: autonomousExists, token: generateToken('id', autonomousExists.id), type: "Autonomous" });
+        .json({ user: autonomousExists, token: generateToken('id', autonomousExists.id), clientType: "Autonomous" });
     }
   }
 

@@ -42,7 +42,9 @@ class PublicationRepository implements IPublicationRepository {
           include: {
             autonomous: {
               select: {
-                id: true
+                id: true,
+                name: true,
+                login: true
               }
             }
           }

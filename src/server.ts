@@ -8,4 +8,4 @@ app.use(express.json())
 app.use(cors())
 app.use(routes)
 
-app.listen(4444, () => console.log('server on 4444 port!'))
+app.listen(8080, () => console.log('server on 8080 port!'))
