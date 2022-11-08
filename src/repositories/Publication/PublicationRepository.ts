@@ -36,7 +36,10 @@ class PublicationRepository implements IPublicationRepository {
   }: PublicationRepositoryReadDTO): Promise<Publication[]> {
     const publications = await prisma.publication.findMany({
       where: {
-        clientId
+        clientId,
+      },
+      orderBy: { 
+        updated_at: 'desc'
       },
       include: {
         interest: {
