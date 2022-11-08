@@ -25,6 +25,11 @@ export interface PublicationRepositoryFindPublicationByIdDTO {
   clientId: number;
 }
 
-export interface PublicationRepositoryFindAllPublicationByServiceTypeIdDTO {
-  servTypeId: number
+export interface PublicationRepositoryFindAllPublicationOnlyQueenOrIntermediateAutonomousDTO {
+  servTypeId: number;
+  level: 'Queen' | 'Intermediate'; 
 }
+export interface PublicationRepositoryFindAllPublicationOnlyBegginerAutonomousDTO {
+  servTypeId: number;
+}
+

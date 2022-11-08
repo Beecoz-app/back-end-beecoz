@@ -5,7 +5,8 @@ import {
 import {
   PublicationRepositoryCreateDTO,
   PublicationRepositoryDeleteDTO,
-  PublicationRepositoryFindAllPublicationByServiceTypeIdDTO,
+  PublicationRepositoryFindAllPublicationOnlyQueenOrIntermediateAutonomousDTO,
+  PublicationRepositoryFindAllPublicationOnlyBegginerAutonomousDTO,
   PublicationRepositoryFindPublicationByIdDTO,
   PublicationRepositoryReadDTO,
   PublicationRepositoryUpdateDTO,
@@ -76,10 +77,32 @@ class PublicationRepository implements IPublicationRepository {
     })
     return publication;
   }
-  async findAllPublicationByServiceTypeId({servTypeId}: PublicationRepositoryFindAllPublicationByServiceTypeIdDTO): Promise<Publication[]> {
+  async findAllPublicationOnlyQueenOrIntermediateAutonomous({servTypeId, level}: PublicationRepositoryFindAllPublicationOnlyQueenOrIntermediateAutonomousDTO): Promise<Publication[]> {
     const publication = await prisma.publication.findMany({
       where: {
-        servTypeId
+        servTypeId,
+        type: level
+      },
+      include: {
+        interest: {
+          include: {
+            autonomous: {
+              select: {
+                id: true
+              }
+            }
+          }
+        }
+      }
+    })
+    return publication;
+  }
+
+  async findAllPublicationOnlyBegginerAutonomous({servTypeId}: PublicationRepositoryFindAllPublicationOnlyBegginerAutonomousDTO): Promise<Publication[]> {
+    const publication = await prisma.publication.findMany({
+      where: {
+        servTypeId,
+        type: 'Beginner'
       },
       include: {
         interest: {
