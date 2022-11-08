@@ -26,7 +26,7 @@ class ClientProfileRepository implements IClientProfileRepository {
         return clientsProfiles
 
     }
-    async update({id, data}: ClientProfileRepositoryUpdateDTO): Promise<Prisma.Prisma__LoginClient<ClientProfile>> {
+    async update({id, data}: ClientProfileRepositoryUpdateDTO): Promise<ClientProfile> {
         const newClientProfile = await prisma.clientProfile.update({
             where: {
                 id
@@ -37,7 +37,7 @@ class ClientProfileRepository implements IClientProfileRepository {
         })
         return newClientProfile
     }
-    async delete({id}: ClientProfileRepositoryDeleteDTO): Promise<Prisma.Prisma__LoginClient<ClientProfile>> {
+    async delete({id}: ClientProfileRepositoryDeleteDTO): Promise<ClientProfile> {
         const deletedClientProfile = await prisma.clientProfile.delete({
             where: {
                 id

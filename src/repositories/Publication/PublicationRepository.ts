@@ -45,10 +45,10 @@ class PublicationRepository implements IPublicationRepository {
               select: {
                 id: true,
                 name: true,
-                login: true
-              }
-            }
-          }
+                login: true,
+              },
+            },
+          },
         }
       }
     })

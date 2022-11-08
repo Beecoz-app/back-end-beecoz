@@ -9,10 +9,12 @@ import { IServiceRepository } from "../../interfaces/repositories/Service/IServi
 const prisma = new PrismaClient();
 
 class ServiceRepository implements IServiceRepository {
-  async create({ data }: ServiceRepositoryCreateDTO): Promise<Service> {
+  async create({ autonomousId, serviceTypeId}: { serviceTypeId: number, autonomousId: number }): Promise<Service> {
+
     const service = await prisma.service.create({
       data: {
-        ...data,
+        autonomousId,
+        servTypeId: serviceTypeId
       },
     });
     return service;

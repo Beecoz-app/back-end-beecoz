@@ -6,7 +6,7 @@ class ServiceController {
     async create(req: Request, res: Response) {
         const {idAutonomous, idServiceType} = req.params
 
-        const service = await ServiceRepository.create({ data: { serviceTypeId: Number(idServiceType), autonomousId: Number(idAutonomous) } });
+        const service = await ServiceRepository.create({ serviceTypeId: Number(idServiceType), autonomousId: Number(idAutonomous)  });
         
         return res.json({ service });
     }
