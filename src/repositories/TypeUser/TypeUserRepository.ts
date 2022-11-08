@@ -1,5 +1,16 @@
-import { PrismaClient, TypeUser, Prisma, PrismaPromise } from "@prisma/client";
-import { TypeUserRepositoryCreateDTO, TypeUserRepositoryDeleteDTO, TypeUserRepositoryFindByLevelDTO, TypeUserRepositoryUpdateDTO } from "../../interfaces/DTOs/repositories/TypeUser/TypeUserRepositoryDTO";
+import {
+  PrismaClient,
+  TypeUser,
+  Prisma,
+  PrismaPromise,
+  Level,
+} from "@prisma/client";
+import {
+  TypeUserRepositoryCreateDTO,
+  TypeUserRepositoryDeleteDTO,
+  TypeUserRepositoryFindByLevelDTO,
+  TypeUserRepositoryUpdateDTO,
+} from "../../interfaces/DTOs/repositories/TypeUser/TypeUserRepositoryDTO";
 import { WorkRepositoryCreateDTO } from "../../interfaces/DTOs/repositories/Work/WorkRepositoryDTO";
 import { IUserTypeRepository } from "../../interfaces/repositories/UserType/IUserTypeRepository";
 const prisma = new PrismaClient();
@@ -17,10 +28,7 @@ class TypeUserRepository implements IUserTypeRepository {
     const typesUser = await prisma.typeUser.findMany();
     return typesUser;
   }
-  async update({
-    id,
-    data,
-  }: TypeUserRepositoryUpdateDTO): Promise<TypeUser> {
+  async update({ id, data }: TypeUserRepositoryUpdateDTO): Promise<TypeUser> {
     const newTypeUser = await prisma.typeUser.update({
       where: {
         id,
@@ -31,9 +39,7 @@ class TypeUserRepository implements IUserTypeRepository {
     });
     return newTypeUser;
   }
-  async delete({
-    id,
-  }: TypeUserRepositoryDeleteDTO): Promise<TypeUser> {
+  async delete({ id }: TypeUserRepositoryDeleteDTO): Promise<TypeUser> {
     const deletedTypeUser = await prisma.typeUser.delete({
       where: {
         id,
@@ -42,15 +48,32 @@ class TypeUserRepository implements IUserTypeRepository {
     return deletedTypeUser;
   }
 
-  async findByLevel({ level }: TypeUserRepositoryFindByLevelDTO): Promise<number> {
+  async findByLevel({
+    level,
+  }: TypeUserRepositoryFindByLevelDTO): Promise<number> {
     const type = await prisma.typeUser.findFirst({
       where: {
         level,
       },
     });
 
-    const id = Number(type?.id)
+    const id = Number(type?.id);
     return id;
+  }
+
+  async returnLevel(typeId: number): Promise<{
+    level: Level;
+  } | null> {
+    const type = await prisma.typeUser.findFirst({
+      where: {
+        id: typeId,
+      },
+      select: {
+        level: true,
+      },
+    });
+
+    return type;
   }
 }
 
