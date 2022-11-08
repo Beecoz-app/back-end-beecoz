@@ -151,13 +151,22 @@ class AuthAutonomousController {
     const {userId} = request
 
     const autonomous = await AutonomousRepository.findAutonomousById({id: Number(userId)})
-
+    
     if (!autonomous) return response.status(400).json({message: 'Autonomous not exists'})
 
-    const publications = await PublicationRepository.findAllPublicationByServiceTypeId({servTypeId: Number(autonomous.service[0].servTypeId)})
+    const typeAutonomous = await TypeUserRepository.returnLevel(autonomous?.typeId as number)
 
-    return response.json(publications)
+    if (String(typeAutonomous?.level) === 'Beginner') {
 
+      const publications = await PublicationRepository.findAllPublicationOnlyBegginerAutonomous({servTypeId: Number(autonomous.service[0].servTypeId)})
+
+
+      return response.json(publications)
+    } else {
+      const publications = await PublicationRepository.findAllPublicationOnlyQueenOrIntermediateAutonomous({servTypeId: Number(autonomous.service[0].servTypeId), level: typeAutonomous?.level as "Intermediate" | "Queen"})
+
+      return response.json(publications)
+    }
   }
 }
 
