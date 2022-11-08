@@ -163,7 +163,9 @@ class AuthAutonomousController {
 
       return response.json(publications)
     } else {
-      const publications = await PublicationRepository.findAllPublicationOnlyQueenOrIntermediateAutonomous({servTypeId: Number(autonomous.service[0].servTypeId), level: typeAutonomous?.level as "Intermediate" | "Queen"})
+      console.log('aaaaaaaaaaaa')
+
+      const publications = await PublicationRepository.findAllPublicationOnlyQueenOrIntermediateAutonomous({servTypeId: Number(autonomous.service[0].servTypeId)})
 
       return response.json(publications)
     }

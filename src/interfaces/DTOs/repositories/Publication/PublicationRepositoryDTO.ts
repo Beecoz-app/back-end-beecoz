@@ -27,7 +27,6 @@ export interface PublicationRepositoryFindPublicationByIdDTO {
 
 export interface PublicationRepositoryFindAllPublicationOnlyQueenOrIntermediateAutonomousDTO {
   servTypeId: number;
-  level: 'Queen' | 'Intermediate'; 
 }
 export interface PublicationRepositoryFindAllPublicationOnlyBegginerAutonomousDTO {
   servTypeId: number;

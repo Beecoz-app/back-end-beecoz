@@ -7,6 +7,6 @@ export interface IPublicationRepository {
     update({ id, data }: PublicationRepositoryUpdateDTO): Promise<Publication>;
     delete({ id }: PublicationRepositoryDeleteDTO): Promise<Publication>;
     findPublicationById({ id }: PublicationRepositoryFindPublicationByIdDTO): Promise<Publication | null>;
-    findAllPublicationOnlyQueenOrIntermediateAutonomous({servTypeId, level}: PublicationRepositoryFindAllPublicationOnlyQueenOrIntermediateAutonomousDTO): Promise<Publication[]>
+    findAllPublicationOnlyQueenOrIntermediateAutonomous({servTypeId}: PublicationRepositoryFindAllPublicationOnlyQueenOrIntermediateAutonomousDTO): Promise<Publication[]>
     findAllPublicationOnlyBegginerAutonomous({servTypeId}: PublicationRepositoryFindAllPublicationOnlyBegginerAutonomousDTO): Promise<Publication[]>
 }

@@ -77,11 +77,11 @@ class PublicationRepository implements IPublicationRepository {
     })
     return publication;
   }
-  async findAllPublicationOnlyQueenOrIntermediateAutonomous({servTypeId, level}: PublicationRepositoryFindAllPublicationOnlyQueenOrIntermediateAutonomousDTO): Promise<Publication[]> {
+  async findAllPublicationOnlyQueenOrIntermediateAutonomous({servTypeId}: PublicationRepositoryFindAllPublicationOnlyQueenOrIntermediateAutonomousDTO): Promise<Publication[]> {
     const publication = await prisma.publication.findMany({
       where: {
         servTypeId,
-        type: level
+        type: 'Queen'
       },
       include: {
         interest: {
