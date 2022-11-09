@@ -91,6 +91,9 @@ class PublicationRepository implements IPublicationRepository {
         servTypeId,
         type: 'Queen'
       },
+      orderBy: { 
+        updated_at: 'desc'
+      },
       include: {
         interest: {
           include: {
@@ -111,6 +114,9 @@ class PublicationRepository implements IPublicationRepository {
       where: {
         servTypeId,
         type: 'Beginner'
+      },
+      orderBy: { 
+        updated_at: 'desc'
       },
       include: {
         interest: {
