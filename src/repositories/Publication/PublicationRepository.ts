@@ -38,6 +38,9 @@ class PublicationRepository implements IPublicationRepository {
       where: {
         clientId
       },
+      orderBy: { 
+        updated_at: 'desc'
+      },
       include: {
         interest: {
           include: {
