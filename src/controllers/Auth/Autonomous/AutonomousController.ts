@@ -48,7 +48,7 @@ class AuthAutonomousController {
       },
     });
 
-    return res.json({ autonomous, token: generateToken("id", autonomous.id) });
+    return res.json({ autonomous, token: generateToken("id", autonomous.id),  clientType: 'Autonomous' });
   }
 
   async findAll(req: Request, res: Response) {

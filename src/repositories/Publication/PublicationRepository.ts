@@ -46,6 +46,11 @@ class PublicationRepository implements IPublicationRepository {
                 id: true,
                 name: true,
                 login: true,
+                type: {
+                  select: {
+                    level: true
+                  }
+                }
               },
             },
           },

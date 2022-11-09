@@ -42,7 +42,7 @@ class ClientController {
       },
     });
 
-    return res.json({ client, token: generateToken('id', client.id) });
+    return res.json({ client, token: generateToken('id', client.id), clientType: 'Client' });
   }
 
   async read(req: Request, res: Response) {
