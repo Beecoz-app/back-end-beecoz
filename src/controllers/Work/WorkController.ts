@@ -7,6 +7,8 @@ class WorkController {
     async open(req: Request, res: Response) {
         const {idInterest} = req.params
 
+        console.log('alooooooooooooooo')
+
 
         const work = await WorkRepository.open({ interestId: Number(idInterest)})
 
@@ -24,6 +26,14 @@ class WorkController {
         const work = await WorkRepository.finish({ id: Number(id), ratingData: {stars, comment}, autonomousId: Number(autonomousId) })
 
         return res.json({ work })
+    }
+
+    async findByInterestId(req: Request, res: Response) {
+        const { interestId } = req.params
+
+        const work = await WorkRepository.findByInterest(Number(interestId))
+
+        return res.json({work})
     }
 
     async delete(req: Request, res: Response) {

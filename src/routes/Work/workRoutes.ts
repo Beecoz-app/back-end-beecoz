@@ -13,6 +13,10 @@ const workRoutes = Router();
         return WorkController.finish(request, response);
     });
 
+    workRoutes.get('/work/interest/:interestId', async (request, response) => {
+        return WorkController.findByInterestId(request, response)
+    })
+
     workRoutes.delete("/delete/:id", async (request: Request, response: Response) => {
         return WorkController.delete(request, response);
     });

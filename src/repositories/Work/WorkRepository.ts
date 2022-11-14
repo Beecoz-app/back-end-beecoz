@@ -127,6 +127,17 @@ class WorkRepository implements IWorkRepository {
 
     return newWork;
   }
+
+  async findByInterest(interestId: number) {
+    const work = await prisma.work.findUnique({
+      where: {
+        interestId: interestId
+      }
+    })
+
+    return work
+  }
+
   async delete({ id }: WorkRepositoryDeleteDTO): Promise<Work> {
     const deletedWork = await prisma.work.delete({
       where: {
