@@ -18,6 +18,23 @@ class WorkRepository implements IWorkRepository {
         ratingId: 1,
       },
     });
+
+    await prisma.work.update({
+      where: {
+        id: work.id
+      },
+      data: {
+        interest: {
+          update: {
+            publication: {
+              update: {
+                status: 'Open'
+              }
+            }
+          }
+        }
+      }
+    })
     return work;
   }
   async read(): Promise<PrismaPromise<Work[]>> {
