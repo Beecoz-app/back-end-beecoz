@@ -141,6 +141,7 @@ model Publication {
   clientId    Int         
   interest    Interest[]
   type        Level       @map("tb_publication_type")
+  status Status
 
   @@map("tb_publications")
 }
