@@ -1,6 +1,5 @@
 import { PrismaClient, Work, Prisma, PrismaPromise } from "@prisma/client";
 import {
-  WorkRepositoryCreateDTO,
   WorkRepositoryDeleteDTO,
   WorkRepositoryFindWorkByIdDTO,
   WorkRepositoryFindWorkByStatusDTO,
