@@ -73,7 +73,7 @@ class PublicationController {
   async update(req: Request, res: Response) {
     const { id } = req.params;
     const { userId } = req;
-    const { title, description, data, region, servTypeId }: Publication =
+    const { title, description, data, region, servTypeId, status }: Publication =
       req.body;
 
     const publication = await PublicationRepository.update({
@@ -85,6 +85,7 @@ class PublicationController {
         data: new Date(data),
         region,
         servTypeId: Number(servTypeId),
+        status
       },
     });
 

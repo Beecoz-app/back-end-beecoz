@@ -19,6 +19,7 @@ class PublicationRepository implements IPublicationRepository {
     const publication = await prisma.publication.create({
       data: {
         ...data,
+        status: 'Progress'
       },
       include: {
         interest: {
