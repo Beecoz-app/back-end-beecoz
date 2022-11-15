@@ -55,7 +55,8 @@ class WorkRepository implements IWorkRepository {
               select: {
                 id: true
               }
-            }
+            },
+            publication: true
           }
         }
       }
