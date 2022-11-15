@@ -1,5 +1,5 @@
 import { Work } from "@prisma/client"
-import { Request, Response } from "express"
+import { json, Request, Response } from "express"
 import RatingRepository from "../../repositories/Rating/RatingRepository"
 import WorkRepository from "../../repositories/Work/WorkRepository"
 
@@ -26,6 +26,14 @@ class WorkController {
         const work = await WorkRepository.finish({ id: Number(id), ratingData: {stars, comment}, autonomousId: Number(autonomousId) })
 
         return res.json({ work })
+    }
+
+    async getAll(req: Request, res: Response) {
+        const {userId} = req
+
+        const works = await WorkRepository.getAll(userId)
+
+        return res.json({works})
     }
 
     async findByInterestId(req: Request, res: Response) {

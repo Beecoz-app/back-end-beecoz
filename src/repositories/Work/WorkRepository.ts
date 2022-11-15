@@ -36,6 +36,33 @@ class WorkRepository implements IWorkRepository {
     })
     return work;
   }
+
+  async getAll(userId: number) {
+    const works = await prisma.work.findMany({
+      where: {
+        interest: {
+          publication: {
+            client: {
+              id: userId
+            }
+          }
+        }
+      },
+      include: {
+        interest: {
+          include: {
+            autonomous: {
+              select: {
+                id: true
+              }
+            }
+          }
+        }
+      }
+    });
+
+    return works
+  }
   async read(): Promise<PrismaPromise<Work[]>> {
     const works = await prisma.work.findMany();
     return works;

@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { request, Request, response, Response } from "express";
 import WorkController from "../../controllers/Work/WorkController";
 
 import { Router } from "express";
@@ -12,8 +12,11 @@ const workRoutes = Router();
     workRoutes.post("/finish/:id/:autonomousId", async (request: Request, response: Response) => {
         return WorkController.finish(request, response);
     });
+    workRoutes.get('/works', async (request: Request, response: Response) => {
+        return WorkController.getAll(request, response)
+    })
 
-    workRoutes.get('/work/interest/:interestId', async (request, response) => {
+    workRoutes.get('/interest/:interestId', async (request, response) => {
         return WorkController.findByInterestId(request, response)
     })
 
