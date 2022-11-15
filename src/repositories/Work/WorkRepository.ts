@@ -53,10 +53,20 @@ class WorkRepository implements IWorkRepository {
           include: {
             autonomous: {
               select: {
-                id: true
+                id: true,
+                login: true
               }
             },
-            publication: true
+            publication: {
+              include: {
+                client: {
+                  select: {
+                    id: true,
+                    login: true
+                  }
+                }
+              }
+            }
           }
         }
       }
