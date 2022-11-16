@@ -170,6 +170,18 @@ class AuthAutonomousController {
       return response.json(publications)
     }
   }
+  
+  async loginExists(request: Request, response: Response) {
+    const {login} = request.body
+    
+    const autonomousExists = await AutonomousRepository.findAutonomousByLogin({login})
+
+    if (autonomousExists) {
+      return response.status(400).json({ message: "Login já existe" })
+    }
+
+    return response.status(200).send()
+  }
 }
 
 export default new AuthAutonomousController();

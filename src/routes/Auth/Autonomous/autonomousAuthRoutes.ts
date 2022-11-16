@@ -47,4 +47,8 @@ autonomousAuthRoutes.patch(
   }
 );
 
+autonomousAuthRoutes.post('/login/exists', async (request: Request, response: Response) => {
+  return AuthAutonomousController.loginExists(request, response);
+})
+
 export { autonomousAuthRoutes };
