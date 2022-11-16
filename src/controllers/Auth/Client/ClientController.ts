@@ -123,6 +123,8 @@ class ClientController {
   async loginExists(req: Request, res: Response) {
     const {login} = req.body
 
+    console.log('1aaaaaaaaaaaaaaa', login)
+
     const clientsExists = await ClientRepository.findClientByLogin({
       login,
     });

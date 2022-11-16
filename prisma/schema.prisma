@@ -66,8 +66,8 @@ model Autonomous {
   password   String            @map("tb_autonomous_password") @db.VarChar(60)
   gender     Gender
   bornDate   DateTime          @map("tb_autonomous_borndate") @db.Date
-  cpf        String            @map("tb_autonomous_cpf") @db.Char(11)
-  cnpj       String?           @map("tb_autonomous_cnpj") @db.Char(14)
+  cpf        String            @map("tb_autonomous_cpf")
+  cnpj       String?           @map("tb_autonomous_cnpj")
   created_at DateTime          @default(now())
   updated_at DateTime          @updatedAt
   profile    AutonomousProfile @relation(fields: [profileId], references: [id])
@@ -88,7 +88,7 @@ model Client {
   password    String        @map("tb_clients_password") @db.VarChar(60)
   gender      Gender
   bornDate    DateTime      @map("tb_clients_borndate") @db.Date
-  cpf         String        @map("tb_clients_cpf") @db.Char(11)
+  cpf         String        @map("tb_clients_cpf")
   created_at  DateTime      @default(now())
   updated_at  DateTime      @updatedAt
   profile     ClientProfile @relation(fields: [profileId], references: [id])
