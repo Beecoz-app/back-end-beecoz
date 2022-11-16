@@ -42,7 +42,11 @@ class ClientController {
       },
     });
 
-    return res.json({ client, token: generateToken('id', client.id), clientType: 'Client' });
+    return res.json({
+      client,
+      token: generateToken("id", client.id),
+      clientType: "Client",
+    });
   }
 
   async read(req: Request, res: Response) {
@@ -70,13 +74,7 @@ class ClientController {
   async update(req: Request, res: Response) {
     const { id } = req.params;
     const parsedId = Number(id);
-    const {
-      name,
-      login,
-      password,
-      lastName,
-    }: Client =
-      req.body;
+    const { name, login, password, lastName }: Client = req.body;
 
     const clientExists = await ClientRepository.findClientById({
       id: parsedId,
@@ -88,7 +86,7 @@ class ClientController {
 
     const client = await ClientRepository.update({
       id: parsedId,
-      data: { name, lastName, login, password: await hashPassword(password)},
+      data: { name, lastName, login, password: await hashPassword(password) },
     });
 
     return res.json({ client });
@@ -96,7 +94,10 @@ class ClientController {
 
   async changePassword(req: Request, res: Response) {
     const { id } = req.params;
-    const { oldPassword, newPassword }: { oldPassword: string; newPassword: string } = req.body;
+    const {
+      oldPassword,
+      newPassword,
+    }: { oldPassword: string; newPassword: string } = req.body;
     const parsedId = Number(id);
 
     const clientsExists = await ClientRepository.findClientById({
@@ -106,17 +107,32 @@ class ClientController {
       return res.status(400).json({ message: "Client not found" });
     }
 
-    const passwordMatch = await clientsExists.password === oldPassword;
+    const passwordMatch = (await clientsExists.password) === oldPassword;
     if (!passwordMatch) {
       return res.status(400).json({ message: "Password does not match" });
     }
 
     await ClientRepository.updatePassword({
       id: parsedId,
-      password: await hashPassword(newPassword) });
+      password: await hashPassword(newPassword),
+    });
 
     return res.status(200).json({ message: "Password updated" });
-}
+  }
+
+  async loginExists(req: Request, res: Response) {
+    const {login} = req.body
+
+    const clientsExists = await ClientRepository.findClientByLogin({
+      login,
+    });
+
+    if (clientsExists) {
+      return res.status(400).json({ message: "Login já existe" })
+    }
+
+    return res.status(200).send()
+  }
 }
 
 export default new ClientController();

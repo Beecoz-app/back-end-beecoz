@@ -84,6 +84,8 @@ class ClientRepository implements IClientRepository {
         
       }
     });
+
+    console.log(client)
     return client;
   }
 }

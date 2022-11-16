@@ -9,6 +9,9 @@ const clientAuthRoutes = Router();
   clientAuthRoutes.post("/register", async (request: Request, response: Response) => {
     return ClientController.register(request, response);
   });
+  clientAuthRoutes.post('/login/exists', async (request: Request, response: Response) => {
+    return ClientController.loginExists(request, response);
+  })
 
   
 
