@@ -36,6 +36,14 @@ class WorkController {
         return res.json({works})
     }
 
+    async getAllAutonomous(req: Request, res: Response) {
+        const {userId} = req
+
+        const works = await WorkRepository.getAll(userId)
+
+        return res.json({works})
+    }
+
     async findByInterestId(req: Request, res: Response) {
         const { interestId } = req.params
 

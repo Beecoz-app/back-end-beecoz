@@ -16,6 +16,10 @@ const workRoutes = Router();
         return WorkController.getAll(request, response)
     })
 
+    workRoutes.get('/works/autonomous', async (request: Request, response: Response) => {
+        return WorkController.getAllAutonomous(request, response)
+    })
+
     workRoutes.get('/interest/:interestId', async (request, response) => {
         return WorkController.findByInterestId(request, response)
     })
